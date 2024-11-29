@@ -3,8 +3,6 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra
 
 # Libraries
-FTPRINTF_PATH = ./includes/ft_printf
-FTPRINTF = $(FTPRINTF_PATH)/libftprintf.a
 LIBFT_PATH	= ./includes/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
 
@@ -21,34 +19,28 @@ NAME = minishell
 all: $(NAME)
 
 # Name rule to create executable
-$(NAME): $(FTPRINTF) $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(FTPRINTF) $(LIBFT) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 # Rule to create libft.a
 $(LIBFT):
 	@make -C $(LIBFT_PATH)
 
-# Rule to create libftprintf.a
-$(FTPRINTF):
-	@make -C $(FTPRINTF_PATH)
-
 # Rule to compile .c files into .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -I $(FTPRINTF_PATH) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
 # Clean up object files
 clean:
 	rm -f $(OBJS)
 	rm -rf $(OBJ_DIR)
 	@make clean -C $(LIBFT_PATH)
-	@make clean -C $(FTPRINTF_PATH)
 
 # Clean up object files, libraries, and executable(s)
 fclean: clean
 	rm -f $(NAME)
 	@make fclean -C $(LIBFT_PATH)
-	@make fclean -C $(FTPRINTF_PATH)
 
 # Recompile all files
 re: fclean all
