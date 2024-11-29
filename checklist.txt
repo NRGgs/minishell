@@ -1,0 +1,62 @@
+1. Project Initialization
+
+	1.1.Create the basic project file structure:
+		Makefile
+		Folders
+		LIBFT
+		include all libs
+
+2. Shell Initialization
+
+	2.1.Implement the main loop to read user commands.
+	2.2.Set up readline behavior:
+		Display the custom prompt.
+		Add input commands to history using add_history.
+
+3. Signal Handling
+
+	3.1.Implement signal handling:
+		SIGINT (ctrl-C) — clear the current input and show a new prompt.
+		SIGQUIT (ctrl-\) — ignore.
+		EOF (ctrl-D) — exit with exit message.
+P.S. Use a global variable to store signal information.
+
+4. Parsing User Commands
+
+	4.1.Process the input string:
+		Remove extra spaces.
+		Tokenize the input string.
+	4.2.Handle quotes:
+		Single quotes ' — ignore metacharacters.
+		Double quotes " — ignore metacharacters except $.
+	4.3.Replace environment variables $VAR with their values.
+	4.4.Support $? to expand the last command's exit status.
+	4.5.Detect and process redirections:
+		<
+		>
+		>>
+		<<.
+	4.6.Handle pipes |.
+
+5. Command Execution
+
+	5.1.Implement external command execution using execve.
+	5.2.Properly use the PATH environment variable.
+	5.3.Set up redirections (dup2) and pipes (pipe).
+	5.4.Implement built-in commands:
+		echo (with -n flag).
+		cd (relative and absolute paths).
+		pwd.
+		export.
+		unset.
+		env.
+	exit.
+
+6. Memory Management
+
+	6.1.Free all allocated memory resources.
+	6.2.Check for memory leaks using valgrind.
+
+7. Testing
+
+8. Bonus ???
