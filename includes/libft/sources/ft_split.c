@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos <nmattos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:13:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/10/10 16:22:33 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:27:42 by nmattos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static int	get_word_count(char *s, char c)
 {
 	int	word_count;
-	int	length_str;
 
-	length_str = ft_strlen(s);
 	word_count = 0;
 	if (*s == '\0')
 		return (0);

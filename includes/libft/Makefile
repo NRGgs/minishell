@@ -25,7 +25,8 @@ SRCS =	$(SRC_PATH)/ft_isalpha.c $(SRC_PATH)/ft_isdigit.c \
 		$(SRC_PATH)/ft_lstsize_bonus.c $(SRC_PATH)/ft_lstlast_bonus.c \
 		$(SRC_PATH)/ft_lstadd_back_bonus.c $(SRC_PATH)/ft_lstdelone_bonus.c \
 		$(SRC_PATH)/ft_lstclear_bonus.c $(SRC_PATH)/ft_lstiter_bonus.c \
-		$(SRC_PATH)/ft_lstmap_bonus.c
+		$(SRC_PATH)/ft_lstmap_bonus.c $(SRC_PATH)/ft_strcmp.c \
+		$(SRC_PATH)/ft_strstr.c $(SRC_PATH)/ft_strndup.c \
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_PATH)/%.c=$(OBJ_DIR)/%.o)

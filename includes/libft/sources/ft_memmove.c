@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos <nmattos@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 15:30:05 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/10/10 10:22:37 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/01 10:27:21 by nmattos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
 	void	*start;
-	int		i;
 
 	start = dest;
-	i = 0;
 	if (dest > src)
 	{
 		dest = (unsigned char *)dest + n - 1;
