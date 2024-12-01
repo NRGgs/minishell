@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:05 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/01 11:48:27 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/01 13:12:21 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,36 +25,70 @@ bool	is_variable(char *str)
 	return (true);
 }
 
-/*	Parse the variable from the string.
+/*	Parse the variable from the string, and insert into linked list.
  *
  *	str: the string to be parsed.
  *
- * 	Return: NULL terminated **array.
- * 			NULL if malloc fails.
+ * 	Return: SUCCESS (1) / FAIL (0).
  */
-char	**parse_variable(char *str)
+int	parse_variable(char *str, t_variable **vars)
 {
-	char	**variable;
-	size_t	len;
+	t_variable	*new_var;
+	size_t		len;
+	char		*name;
+	char		*value;
 
-	variable = malloc(sizeof(char *) * 3);
-	if (variable == NULL)
-		return (NULL);
 	len = ft_strchr(str, '=') - str;
-	variable[0] = ft_strndup(str, len);
-	if (variable[0] == NULL)
-	{
-		free(variable);
-		return (NULL);
-	}
+	name = ft_strndup(str, len);
+	if (name == NULL)
+		return (FAIL);
 	len = (ft_strrchr(str, '"')) - (ft_strchr(str, '"') + 1);
-	variable[1] = ft_strndup(ft_strchr(str, '"') + 1, len);
-	if (variable[1] == NULL)
+	value = ft_strndup(ft_strchr(str, '"') + 1, len);
+	if (value == NULL)
 	{
-		free(variable[0]);
-		free(variable);
-		return (NULL);
+		free(name);
+		return (FAIL);
 	}
-	variable[2] = NULL;
-	return (variable);
+	new_var = var_new(name, value);
+	free(name);
+	free(value);
+	if (new_var == NULL)
+		return (FAIL);
+	var_add_back(vars, new_var);
+	return (SUCCESS);
+}
+
+/*	Replace the variable in the string.
+ *
+ *	str: the string to be replaced.
+ *
+ *	Return: the new string.
+ *			NULL if failed.
+ */
+char	*replace_variable(char *str, t_variable *vars)
+{
+	t_variable	*variable;
+	char		*new_str;
+	char 		*to_replace;
+	int			i;
+
+	to_replace = ft_strchr(str, '$');
+	if (to_replace == NULL)
+		return (str);
+	i = 0;
+	while (to_replace[i] != ' ' && to_replace[i] != '\0')
+		i++;
+	to_replace = ft_strndup(to_replace, i);
+	if (to_replace == NULL)
+		return (NULL);
+	to_replace[0] = '$';
+	variable = var_find(vars, to_replace + 1);
+	if (variable == NULL)
+	{
+		free(to_replace);
+		return (str);
+	}
+	new_str = ft_strreplace(str, to_replace, variable->value);
+	free(to_replace);
+	return (new_str);
 }
