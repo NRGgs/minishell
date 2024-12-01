@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 16:53:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/01 16:55:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:25:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,14 @@ int		cd_home(t_env *env_list);
 int		cd(t_env *env_list, char **argv);
 t_env	*get_env(t_env *env_list, char *identifier);
 int		check_option(char *argv);
+
+// pwd
+int		pwd(char **argv);
+
+// echo
+int		echo(char **argv);
+int		check_echo_option(char *option);
+
+// export
 
 #endif
