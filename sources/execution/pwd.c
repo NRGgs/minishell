@@ -6,14 +6,14 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:13:07 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/01 17:13:41 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:19:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../../includes/execution.h"
 
-int ft_pwd(char **argv)
+int pwd(char **argv)
 {
 	char *cwd;
 
