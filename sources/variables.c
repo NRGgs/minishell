@@ -6,12 +6,19 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 12:09:56 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/01 13:03:37 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/01 13:34:30 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
 
+/*	Create a new variable.
+ *
+ *	name:	the name of the variable.
+ *	value:	the value of the variable.
+ *
+ *	Return: the new variable.
+ */
 t_variable	*var_new(char *name, char *value)
 {
 	t_variable	*new_var;
@@ -36,6 +43,12 @@ t_variable	*var_new(char *name, char *value)
 	return (new_var);
 }
 
+/*	Return the last variable in the linked list.
+ *
+ *	vars:	the linked list of variables.
+ *
+ *	Return: the last variable.
+ */
 t_variable	*var_last(t_variable *vars)
 {
 	t_variable	*last;
@@ -48,6 +61,13 @@ t_variable	*var_last(t_variable *vars)
 	return (last);
 }
 
+/*	Add a new variable to the end of the linked list.
+ *
+ *	vars		the start of the linked list.
+ *	new_var:	the new variable to be added.
+ *
+ * 	Return: void.
+ */
 void	var_add_back(t_variable **vars, t_variable *new_var)
 {
 	t_variable	*last;
@@ -61,6 +81,14 @@ void	var_add_back(t_variable **vars, t_variable *new_var)
 	}
 }
 
+/*	Find a variable in the linked list.
+ *
+ *	vars:	the linked list of variables.
+ *	name:	the name of the variable to be found.
+ *
+ *	Return: the variable.
+ *			NULL if not found.
+ */
 t_variable	*var_find(t_variable *vars, char *name)
 {
 	t_variable	*current;
