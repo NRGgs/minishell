@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 # Libraries
 LIBFT_PATH	= ./includes/libft
@@ -8,7 +8,7 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # Source files and object files
 SRC_DIR = sources
-SRCS =	$(SRC_DIR)/main.c
+SRCS =	$(SRC_DIR)/parse.c
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
