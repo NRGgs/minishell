@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/07 13:59:28 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/01 11:17:07 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/01 12:53:42 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+char	*ft_strreplace(char *str, char *to_replace, char *replacement);
 
 /* String Comparison */
 size_t	ft_strlen(const char *s);
