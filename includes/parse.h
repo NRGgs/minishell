@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/01 12:33:26 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/01 10:44:28 by nmattos           #+#    #+#             */
+/*   Updated: 2024/12/02 10:39:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,35 @@
 # include <stdbool.h>
 # include <stdio.h>
 
+/* Return Values */
 # define FAIL 0
 # define SUCCESS 1
 
+/* In/Out Types */
+# define FILE 0
+# define PIPE 1
+# define STDIN 2
+# define STDOUT 3
+# define HERE_DOC 4
+
+/* Singly linked list. Stores all commands */
+typedef struct s_command
+{
+	char		*command;	// command
+	char		*options;	// options, NULL
+	int			in_type;	// FILE, PIPE, STDIN, HERE_DOC
+	int			out_type;	// FILE, PIPE, STDOUT
+	char		*input;		// filename, here_doc_string, NULL
+	char		*output;	// filename, NULL
+	t_command	*next;
+}	t_command;
+
+/*	Singly linked list. Stores all variables. */
 typedef struct s_variable
 {
-	char				*name;
-	char				*value;
-	struct s_variable	*next;
+	char		*name;
+	char		*value;
+	t_variable	*next;
 }	t_variable;
 
 /*****************************************************************************\
