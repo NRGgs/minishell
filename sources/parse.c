@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/12/02 13:55:37 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:53:25 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_command	*parse_user_input(char *input)
 		else if (is_command(split_input[i]))
 		{
 			// if command, parse and add to *commands
+				// add options '-' to *commands
 			// if HERE_DOC (<<), readlines until EOF
 			// if TEXTFILE (<), set *input/*output to filename
 			// if PIPE (|), set in/out accordingly
