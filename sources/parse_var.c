@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/01 10:44:05 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/01 13:12:21 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_var.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
+/*   Updated: 2024/12/02 16:12:44 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*replace_variable(char *str, t_variable *vars)
 {
 	t_variable	*variable;
 	char		*new_str;
-	char 		*to_replace;
+	char		*to_replace;
 	int			i;
 
 	to_replace = ft_strchr(str, '$');
