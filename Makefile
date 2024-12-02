@@ -1,6 +1,7 @@
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
+LFLAGS = -lreadline
 
 # Libraries
 LIBFT_PATH	= ./includes/libft
@@ -8,7 +9,9 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # Source files and object files
 SRC_DIR = sources
-SRCS =	$(SRC_DIR)/parse.c $(SRC_DIR)/variables.c
+SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
+		$(SRC_DIR)/parse_cmds.c $(SRC_DIR)/parse_var.c $(SRC_DIR)/parse.c
+
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -20,7 +23,7 @@ all: $(NAME)
 
 # Name rule to create executable
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LFLAGS)
 
 # Rule to create libft.a
 $(LIBFT):
