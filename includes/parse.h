@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/03 13:19:36 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/03 15:35:40 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 # include "libft/libft.h"
 # include <stdbool.h>
-# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 /* Return Values */
 # define ERROR -1
@@ -24,10 +25,12 @@
 
 /* In/Out Types */
 # define TEXTFILE 0
-# define PIPE 1
-# define STDIN 2
-# define STDOUT 3
-# define HERE_DOC 4
+# define HERE_DOC 1
+# define APPEND 2
+# define PIPE 3
+# define STDIN 4
+# define STDOUT 5
+# define STD 6
 
 /* Singly linked list. Stores all commands */
 typedef struct s_command
@@ -61,6 +64,11 @@ int		parse_variable(char *str, t_variable **vars);
 int		is_command(char *cmd);
 int		parse_command(char **input, t_command **cmds, int *i);
 
+/* commands.c */
+t_command	*cmd_new(char *command, char *options);
+t_command	*cmd_last(t_command *cmds);
+void		cmd_add_back(t_command **cmds, t_command *new_cmd);
+
 /* parse_var.c */
 bool	is_variable(char *str);
 int		parse_variable(char *str, t_variable **vars);
@@ -72,9 +80,15 @@ t_variable	*var_last(t_variable *vars);
 void		var_add_back(t_variable **vars, t_variable *new_var);
 t_variable	*var_find(t_variable *vars, char *name);
 
-/* commands.c */
-t_command	*cmd_new(char *command, char *options);
-t_command	*cmd_last(t_command *cmds);
-void		cmd_add_back(t_command **cmds, t_command *new_cmd);
+/* parse_redirect.c */
+int		parse_redirect(char **input, t_command **cmds, int *i, int command_index);
+
+/* redirections.c */
+int	textfile_redirection(char *filename, char *redirection, t_command **last);
+int	here_doc_redirection(char *delimiter, t_command **last);
+
+/* parse_clean.c */
+void	clean_variables(t_variable **vars);
+void	clean_commands(t_command **cmds);
 
 #endif

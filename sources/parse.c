@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/03 13:48:41 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/03 14:41:43 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_command	*parse_user_input(char *input)
 	t_variable	*variables;
 	char		**split_input;
 	int			i;
+	int			command_index;
 
 	commands = NULL;
 	variables = NULL;
@@ -46,15 +47,21 @@ t_command	*parse_user_input(char *input)
 		// check token for command
 		else if (is_command(split_input[i]))
 		{
+			command_index = i;
 			// if command, parse and add to *commands (including options)
 			if (parse_command(split_input, &commands, &i) == FAIL)
 			{
 				clean_all(&variables, &commands);
 				return (NULL);
 			}
+			// if REDIRECT (>, <), set *input/*output to filename
 			// if HERE_DOC (<<), readlines until EOF
-			// if TEXTFILE (<), set *input/*output to filename
 			// if PIPE (|), set in/out accordingly
+			if (parse_redirect(split_input, &commands, &i, command_index) == FAIL)
+			{
+				clean_all(&variables, &commands);
+				return (NULL);
+			}
 		}
 		i++;
 	}

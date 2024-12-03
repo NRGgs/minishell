@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/03 13:44:36 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/03 14:49:54 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ static int	parse_options(char **input, int *i, char **options)
 	*options = malloc((size + 1) * sizeof(char));
 	if (*options == NULL)
 		return (FAIL);
-	while (input[*i + 1] != NULL && input[*i + 1][0] == '-')
+	(*i)++;
+	while (input[*i] != NULL && input[*i][0] == '-')
 	{
-		(*i)++;
 		ft_strlcat(*options, input[*i], size + 1);
 		if (input[*i + 1] != NULL && input[*i + 1][0] == '-')
 			ft_strlcat(*options, " ", size);
+		(*i)++;
 	}
 	return (SUCCESS);
 }
