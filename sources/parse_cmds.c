@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_cmds.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:20 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_cmds.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
+/*   Updated: 2024/12/03 13:44:36 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,67 @@ int	is_command(char *cmd)
 	found = check_path(cmd, path);
 	free(path);
 	return (found);
+}
+
+/*	Parse the options of the command.
+ *
+ *	input:		the user input.
+ *	i:			the index of the current token.
+ *	options:	the options of the command.
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
+static int	parse_options(char **input, int *i, char **options)
+{
+	size_t		size;
+	int			j;
+
+	size = 0;
+	j = *i;
+	while (input[j + 1] != NULL && input[j + 1][0] == '-')
+	{
+		j++;
+		size += ft_strlen(input[j]);
+	}
+	if (size <= 0)
+		return (SUCCESS);
+	size += j - *i - 1;
+	*options = malloc((size + 1) * sizeof(char));
+	if (*options == NULL)
+		return (FAIL);
+	while (input[*i + 1] != NULL && input[*i + 1][0] == '-')
+	{
+		(*i)++;
+		ft_strlcat(*options, input[*i], size + 1);
+		if (input[*i + 1] != NULL && input[*i + 1][0] == '-')
+			ft_strlcat(*options, " ", size);
+	}
+	return (SUCCESS);
+}
+
+/*	Parse the command and its options.
+ *
+ *	input:	the user input.
+ *	cmds:	the linked list of commands.
+ *	i:		the index of the current token.
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
+int	parse_command(char **input, t_command **cmds, int *i)
+{
+	t_command	*new_cmd;
+	char		*options;
+	char		*command;
+
+	command = input[*i];
+	options = NULL;
+	if (parse_options(input, i, &options) == FAIL)
+		return (FAIL);
+	new_cmd = cmd_new(command, options);
+	if (options != NULL)
+		free(options);
+	if (new_cmd == NULL)
+		return (FAIL);
+	cmd_add_back(cmds, new_cmd);
+	return (SUCCESS);
 }

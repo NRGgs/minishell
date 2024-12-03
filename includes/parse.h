@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 10:44:28 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:09 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
+/*   Updated: 2024/12/03 13:19:36 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		parse_variable(char *str, t_variable **vars);
 
 /* parse_cmds.c */
 int		is_command(char *cmd);
+int		parse_command(char **input, t_command **cmds, int *i);
 
 /* parse_var.c */
 bool	is_variable(char *str);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/12/02 16:53:36 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   commands.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
+/*   Updated: 2024/12/03 13:39:46 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,18 @@ t_command	*cmd_new(char *command, char *options)
 		free(new_cmd);
 		return (NULL);
 	}
+	if (options == NULL)
+	{
+		new_cmd->options = NULL;
+		return (new_cmd);
+	}
 	new_cmd->options = ft_strdup(options);
+	if (new_cmd->options == NULL)
 	{
 		free(new_cmd->command);
 		free(new_cmd);
 		return (NULL);
 	}
-	new_cmd->in_type = 0;
-	new_cmd->out_type = 0;
-	new_cmd->input = NULL;
-	new_cmd->output = NULL;
-	new_cmd->next = NULL;
 	return (new_cmd);
 }
 
