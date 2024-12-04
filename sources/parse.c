@@ -6,14 +6,15 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:15:58 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:34:42 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
 
-static void	clean_all(t_variable **vars, t_command **cmds)
+static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 {
+	clean_2d_array(split_input);
 	clean_variables(vars);
 	clean_commands(cmds);
 }
@@ -40,7 +41,7 @@ t_command	*parse_user_input(char *input)
 		{
 			if (parse_variable(split_input[i], &variables) == FAIL)
 			{
-				clean_all(&variables, &commands);
+				clean_all(&variables, &commands, split_input);
 				return (NULL);
 			}
 		}
@@ -51,7 +52,7 @@ t_command	*parse_user_input(char *input)
 			// if command, parse and add to *commands (including options)
 			if (parse_command(split_input, &commands, &i) == FAIL)
 			{
-				clean_all(&variables, &commands);
+				clean_all(&variables, &commands, split_input);
 				return (NULL);
 			}
 			// if REDIRECT (>, <), set *input/*output to filename
@@ -59,12 +60,43 @@ t_command	*parse_user_input(char *input)
 			// if PIPE (|), set in/out accordingly
 			if (parse_redirect(split_input, &commands, &i, command_index) == FAIL)
 			{
-				clean_all(&variables, &commands);
+				clean_all(&variables, &commands, split_input);
 				return (NULL);
 			}
 		}
 		i++;
 	}
+	clean_2d_array(split_input);
 	clean_variables(&variables);
 	return (commands);
 }
+
+// int	main(void)
+// {
+// 	printf("Input: ls -l << EOF | wc -w > output.txt\n\n");
+// 	t_command *cmds = parse_user_input("NAME=\"NOAH\" echo \"Hello $NAME\" | wc -w > output.txt");
+// 	if (cmds == NULL)
+// 	{
+// 		printf("Error parsing user input\n");
+// 		return (1);
+// 	}
+// 	printf("Parsed user input successfully\n\n");
+
+// 	printf("cmds->command: %s\n", cmds->command);
+// 	printf("cmds->options: %s\n", cmds->options);
+// 	printf("cmds->in_type: %d\n", cmds->in_type);
+// 	printf("cmds->out_type: %d\n", cmds->out_type);
+// 	printf("cmds->input: %s\n", cmds->input);
+// 	printf("cmds->output: %s\n", cmds->output);
+// 	printf("\n");
+// 	t_command *temp = cmds;
+// 	cmds = cmds->next;
+// 	printf("cmds->command: %s\n", cmds->command);
+// 	printf("cmds->options: %s\n", cmds->options);
+// 	printf("cmds->in_type: %d\n", cmds->in_type);
+// 	printf("cmds->out_type: %d\n", cmds->out_type);
+// 	printf("cmds->input: %s\n", cmds->input);
+// 	printf("cmds->output: %s\n", cmds->output);
+// 	clean_commands(&temp);
+// 	return (0);
+// }

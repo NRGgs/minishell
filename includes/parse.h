@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/03 15:35:40 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:29:52 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	textfile_redirection(char *filename, char *redirection, t_command **last);
 int	here_doc_redirection(char *delimiter, t_command **last);
 
 /* parse_clean.c */
+void	clean_2d_array(char **array);
 void	clean_variables(t_variable **vars);
 void	clean_commands(t_command **cmds);
 

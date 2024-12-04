@@ -6,11 +6,24 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 13:45:47 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/03 13:48:01 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:34:28 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
+
+void	clean_2d_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
 
 void	clean_variables(t_variable **vars)
 {
