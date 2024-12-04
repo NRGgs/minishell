@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 17:13:07 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/03 16:11:43 by iriadyns         ###   ########.fr       */
+/*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
+/*   Updated: 2024/12/04 13:57:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../../includes/execution.h"
 
-int pwd(char **argv)
+int	env(void)
 {
-	char *cwd;
+	extern char **environ;
+	int i;
 
-	if (*(argv + 1) && check_option(*(argv + 1)) == 1)
+	i = 0;
+	while (environ[i])
 	{
-		fprintf(stderr, "pwd: invalid option -- '%s'\n", *(argv + 1));
-		return 1;
+		ft_putstr_fd(environ[i], STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		i++;
 	}
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
-		return 1;
-	}
-	printf("%s\n", cwd);
-	free(cwd);
-	return 0;
+	return (0);
 }

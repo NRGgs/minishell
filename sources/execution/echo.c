@@ -5,18 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 17:19:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/01 17:21:22 by iriadyns         ###   ########.fr       */
+/*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
+/*   Updated: 2024/12/04 13:21:37 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
 
-int	check_echo_option(char *option)
+int check_echo_option(char *option)
 {
-	int	flag;
-	int	i;
+	int flag;
+	int i;
 
 	flag = 0;
 	i = 2;
@@ -32,9 +32,9 @@ int	check_echo_option(char *option)
 	return (flag);
 }
 
-int	echo(char **argv)
+int echo(char **argv)
 {
-	int	flag;
+	int flag;
 
 	flag = 0;
 	argv++;
