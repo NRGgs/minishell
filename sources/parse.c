@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:34:42 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:41:50 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ t_command	*parse_user_input(char *input)
 
 // int	main(void)
 // {
-// 	printf("Input: ls -l << EOF | wc -w > output.txt\n\n");
-// 	t_command *cmds = parse_user_input("NAME=\"NOAH\" echo \"Hello $NAME\" | wc -w > output.txt");
+// 	char *s = "ls -l | wc -w > output.txt";
+// 	printf("%s\n\n", s);
+// 	t_command *cmds = parse_user_input(s);
 // 	if (cmds == NULL)
 // 	{
 // 		printf("Error parsing user input\n");

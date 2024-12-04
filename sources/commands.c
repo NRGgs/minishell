@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/03 14:55:10 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:38:35 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
  *
  *	Return: void.
  */
-static void	initialize_command(t_command *cmd)
+static void	initialize_command(t_command **cmd)
 {
-	cmd->in_type = STDIN;
-	cmd->out_type = STDOUT;
-	cmd->input = NULL;
-	cmd->output = NULL;
-	cmd->next = NULL;
+	(*cmd)->in_type = STDIN;
+	(*cmd)->out_type = STDOUT;
+	(*cmd)->input = NULL;
+	(*cmd)->output = NULL;
+	(*cmd)->next = NULL;
 }
 
 /*	Create a new command.
@@ -59,7 +59,7 @@ t_command	*cmd_new(char *command, char *options)
 		free(new_cmd);
 		return (NULL);
 	}
-	initialize_command(new_cmd);
+	initialize_command(&new_cmd);
 	return (new_cmd);
 }
 
