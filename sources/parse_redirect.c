@@ -6,12 +6,18 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/03 15:55:40 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 11:13:34 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
 
+/*	Returns the type of redirection.
+ *
+ *	str:	token to check
+ *
+ *	Return: type of redirection.
+ */
 static int	get_redirection_type(char *str)
 {
 	if (str != NULL && (ft_strcmp(str, ">") == 0 || ft_strcmp(str, "<") == 0))
@@ -33,13 +39,20 @@ static int	get_redirection_type(char *str)
 	return (STD);
 }
 
+/*	Parses redirections before the command and sets input type and filename.
+ *
+ *	input:	user input split by ' '
+ *	i:		index of current token
+ *	last:	last command in linked list
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 static int	before_command(char **input, int i, t_command **last)
 {
 	int	type;
 
-	if (i == 0 || get_redirection_type(input[i]) == STD)
+	if (i <= 0 || get_redirection_type(input[i]) == STD)
 		return (SUCCESS);
-	i -= 1;
 	type = get_redirection_type(input[i]);
 	if (type == TEXTFILE || type == APPEND)
 	{
@@ -57,6 +70,14 @@ static int	before_command(char **input, int i, t_command **last)
 	return (SUCCESS);
 }
 
+/*	Parses redirections after the command and sets output type and filename.
+ *
+ *	input:	user input split by ' '
+ *	i:		index of current token
+ *	last:	last command in linked list
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 static int	after_command(char **input, int *i, t_command **last)
 {
 	int	type;
@@ -78,19 +99,33 @@ static int	after_command(char **input, int *i, t_command **last)
 	{
 		if (here_doc_redirection(input[*i + 1], last) == FAIL)
 			return (FAIL);
-		*i += 1;
+		*i += 2;
 	}
 	return (SUCCESS);
 }
 
+/*	Parses redirections and sets in/out types and filenames.
+ *
+ *	input: user input split by ' '
+ *	cmds: linked list of commands
+ *	i: index of current token
+ *	command_index: index of command token
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 int	parse_redirect(char **input, t_command **cmds, int *i, int command_index)
 {
 	t_command	*last;
 
 	last = cmd_last(*cmds);
-	if (before_command(input, command_index, &last) == FAIL)
+	if (before_command(input, command_index - 1, &last) == FAIL)
 		return (FAIL);
 	if (after_command(input, i, &last) == FAIL)
 		return (FAIL);
+	if (last->in_type == HERE_DOC)
+	{
+		if (after_command(input, i, &last) == FAIL)
+			return (FAIL);
+	}
 	return (SUCCESS);
 }
