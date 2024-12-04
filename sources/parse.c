@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 12:49:25 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 13:11:34 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,20 @@ t_command	*parse_user_input(char *input)
 				clean_all(&variables, &commands, split_input);
 				return (NULL);
 			}
+			if (cmd_last(commands)->in_type == STRING)
+			{
+				if (split_input[i] != NULL
+					&& split_input[i - 1][ft_strlen(split_input[i - 1]) - 1] == '\"')
+				{
+					char *temp = replace_variable(cmd_last(commands)->input, variables);
+					if (temp == NULL)
+					{
+						clean_all(&variables, &commands, split_input);
+						return (NULL);
+					}
+					cmd_last(commands)->input = temp;
+				}
+			}
 		}
 		i++;
 	}
@@ -73,7 +87,7 @@ t_command	*parse_user_input(char *input)
 
 int	main(void)
 {
-	char *s = "echo \"This is epic sauce!!\" | wc -w > output.txt";
+	char *s = "NAME=\"Noah\" echo \"This is $NAME epic sauce!!\" | wc -w > output.txt";
 	printf("%s\n\n", s);
 	t_command *cmds = parse_user_input(s);
 	if (cmds == NULL)

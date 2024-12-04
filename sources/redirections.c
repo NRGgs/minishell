@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 15:01:53 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 12:55:22 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 13:11:20 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,6 @@ int	string_redirection(char **input, t_command **last, int *i)
 		*i += 1;
 	}
 	(*last)->input = temp;
+	(*last)->in_type = STRING;
 	return (SUCCESS);
 }

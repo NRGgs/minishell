@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 12:48:19 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 13:11:27 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static int	after_command(char **input, int *i, t_command **last)
 	if (input[*i] == NULL || get_redirection_type(input[*i]) == STD)
 		return (SUCCESS);
 	type = get_redirection_type(input[*i]);
-	printf("type: %d\n", type);
 	if (type == TEXTFILE)
 	{
 		if (textfile_redirection(input[*i + 1], input[*i], last) == FAIL)
