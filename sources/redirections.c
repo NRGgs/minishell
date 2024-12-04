@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 15:01:53 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 10:55:22 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 12:55:22 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,49 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	if (input == NULL)
 		return (FAIL);
 	(*last)->input = input;
+	return (SUCCESS);
+}
+
+char	*join_strings(char *str, char *temp, size_t size)
+{
+	ft_strlcat(temp, str, size + 1);
+	if (str != NULL
+		&& str[ft_strlen(str) - 1] != '\"'
+		&& str[ft_strlen(str) - 1] != '\'')
+		ft_strlcat(temp, " ", size + 1);
+	return (temp);
+}
+
+/*	Parses string and sets it as input.
+ *
+ *	input: user input split by ' '
+ *	cmds: linked list of commands
+ *	i: index of current token
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
+int	string_redirection(char **input, t_command **last, int *i)
+{
+	char	*temp;
+	size_t	size;
+	int		j;
+
+	j = *i;
+	size = 0;
+	while (input[j] != NULL && (input[j][ft_strlen(input[j]) - 1] != '\"'
+		&& input[j][ft_strlen(input[j]) - 1] != '\''))
+		size += ft_strlen(input[j++]);
+	size += ft_strlen(input[j]) + (j - *i) - 2;
+	temp = ft_calloc(size + 1, sizeof(char));
+	if (temp == NULL)
+		return (FAIL);
+	temp = join_strings(input[*i] + 1, temp, size);
+	*i += 1;
+	while (*i <= j)
+	{
+		temp = join_strings(input[*i], temp, size);
+		*i += 1;
+	}
+	(*last)->input = temp;
 	return (SUCCESS);
 }

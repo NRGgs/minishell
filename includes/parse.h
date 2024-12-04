@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 11:29:52 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 12:14:32 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@
 # define HERE_DOC 1
 # define APPEND 2
 # define PIPE 3
-# define STDIN 4
-# define STDOUT 5
-# define STD 6
+# define STRING 4
+# define STDIN 5
+# define STDOUT 6
+# define STD 7
 
 /* Singly linked list. Stores all commands */
 typedef struct s_command
@@ -86,6 +87,7 @@ int		parse_redirect(char **input, t_command **cmds, int *i, int command_index);
 /* redirections.c */
 int	textfile_redirection(char *filename, char *redirection, t_command **last);
 int	here_doc_redirection(char *delimiter, t_command **last);
+int	string_redirection(char **input, t_command **last, int *i);
 
 /* parse_clean.c */
 void	clean_2d_array(char **array);

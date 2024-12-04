@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 11:13:34 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/04 12:48:19 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ static int	get_redirection_type(char *str)
 	{
 		return (PIPE);
 	}
+	else if (str != NULL && (str[0] == '\'' || str[0] == '\"'))
+	{
+		return (STRING);
+	}
 	return (STD);
 }
 
@@ -63,7 +67,7 @@ static int	before_command(char **input, int i, t_command **last)
 	{
 		(*last)->in_type = PIPE;
 	}
-	else if (type == HERE_DOC)
+	else if (type == HERE_DOC || type == STRING)
 	{
 		return (FAIL);
 	}
@@ -85,6 +89,7 @@ static int	after_command(char **input, int *i, t_command **last)
 	if (input[*i] == NULL || get_redirection_type(input[*i]) == STD)
 		return (SUCCESS);
 	type = get_redirection_type(input[*i]);
+	printf("type: %d\n", type);
 	if (type == TEXTFILE)
 	{
 		if (textfile_redirection(input[*i + 1], input[*i], last) == FAIL)
@@ -92,14 +97,17 @@ static int	after_command(char **input, int *i, t_command **last)
 		*i += 1;
 	}
 	else if (type == PIPE)
-	{
 		(*last)->out_type = PIPE;
-	}
 	else if (type == HERE_DOC)
 	{
 		if (here_doc_redirection(input[*i + 1], last) == FAIL)
 			return (FAIL);
 		*i += 2;
+	}
+	else if (type == STRING)
+	{
+		if (string_redirection(input, last, i) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
