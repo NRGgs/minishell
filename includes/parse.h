@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/08 10:53:59 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:53:43 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 /* Return Values */
 # define ERROR -1
