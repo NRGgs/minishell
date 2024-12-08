@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 12:10:00 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:31:09 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ static int	parse_options(char **input, int *i, char **options)
 		j++;
 		size += ft_strlen(input[j]);
 	}
-	(*i)++;
 	if (size <= 0)
 		return (SUCCESS);
+	(*i)++;
 	size += j - *i;
 	*options = ft_calloc((size + 1), sizeof(char));
 	if (*options == NULL)
@@ -103,6 +103,7 @@ static int	parse_options(char **input, int *i, char **options)
 			ft_strlcat(*options, " ", size);
 		(*i)++;
 	}
+	(*i)--;
 	return (SUCCESS);
 }
 

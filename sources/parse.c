@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/08 11:11:34 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:32:00 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_command	*parse_user_input(char *input)
 				}
 			}
 		}
+		i++;
 	}
 	clean_2d_array(split_input);
 	clean_variables(&variables);

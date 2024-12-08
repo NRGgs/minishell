@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/08 11:10:41 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:31:50 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,18 @@ static int	after_command(char **input, int *i, t_command **last)
 {
 	int	type;
 
+	(*i)++;
 	if (input[*i] == NULL || get_redirection_type(input[*i]) == STD)
+	{
+		(*i)--;
 		return (SUCCESS);
+	}
 	type = get_redirection_type(input[*i]);
 	if (type == TEXTFILE)
 	{
 		if (textfile_redirection(input[*i + 1], input[*i], last) == FAIL)
 			return (FAIL);
-		*i += 2;
+		*i += 1;
 	}
 	else if (type == PIPE)
 		(*last)->out_type = PIPE;
@@ -101,7 +105,7 @@ static int	after_command(char **input, int *i, t_command **last)
 	{
 		if (here_doc_redirection(input[*i + 1], last) == FAIL)
 			return (FAIL);
-		*i += 2;
+		*i += 1;
 	}
 	else if (type == STRING)
 	{
@@ -131,7 +135,7 @@ int	parse_redirect(char **input, t_command **cmds, int *i, int command_index)
 		return (FAIL);
 	if (last->in_type == HERE_DOC)
 	{
-		if (after_command(input, i, &last) == FAIL)
+		if (after_command(input, i + 1, &last) == FAIL)
 			return (FAIL);
 	}
 	return (SUCCESS);
