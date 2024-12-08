@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 13:11:27 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:10:41 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int	after_command(char **input, int *i, t_command **last)
 	{
 		if (textfile_redirection(input[*i + 1], input[*i], last) == FAIL)
 			return (FAIL);
-		*i += 1;
+		*i += 2;
 	}
 	else if (type == PIPE)
 		(*last)->out_type = PIPE;

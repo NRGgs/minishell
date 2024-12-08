@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 13:11:34 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:11:34 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,40 +78,39 @@ t_command	*parse_user_input(char *input)
 				}
 			}
 		}
-		i++;
 	}
 	clean_2d_array(split_input);
 	clean_variables(&variables);
 	return (commands);
 }
 
-int	main(void)
-{
-	char *s = "NAME=\"Noah\" echo \"This is $NAME epic sauce!!\" | wc -w > output.txt";
-	printf("%s\n\n", s);
-	t_command *cmds = parse_user_input(s);
-	if (cmds == NULL)
-	{
-		printf("Error parsing user input\n");
-		return (1);
-	}
-	printf("Parsed user input successfully\n\n");
+// int	main(void)
+// {
+// 	char *s = "NAME=\"Noah\" echo \"This is $NAME epic sauce!!\" | wc -w > output.txt";
+// 	printf("%s\n\n", s);
+// 	t_command *cmds = parse_user_input(s);
+// 	if (cmds == NULL)
+// 	{
+// 		printf("Error parsing user input\n");
+// 		return (1);
+// 	}
+// 	printf("Parsed user input successfully\n\n");
 
-	printf("cmds->command: %s\n", cmds->command);
-	printf("cmds->options: %s\n", cmds->options);
-	printf("cmds->in_type: %d\n", cmds->in_type);
-	printf("cmds->out_type: %d\n", cmds->out_type);
-	printf("cmds->input: %s\n", cmds->input);
-	printf("cmds->output: %s\n", cmds->output);
-	printf("\n");
-	t_command *temp = cmds;
-	cmds = cmds->next;
-	printf("cmds->command: %s\n", cmds->command);
-	printf("cmds->options: %s\n", cmds->options);
-	printf("cmds->in_type: %d\n", cmds->in_type);
-	printf("cmds->out_type: %d\n", cmds->out_type);
-	printf("cmds->input: %s\n", cmds->input);
-	printf("cmds->output: %s\n", cmds->output);
-	clean_commands(&temp);
-	return (0);
-}
+// 	printf("cmds->command: %s\n", cmds->command);
+// 	printf("cmds->options: %s\n", cmds->options);
+// 	printf("cmds->in_type: %d\n", cmds->in_type);
+// 	printf("cmds->out_type: %d\n", cmds->out_type);
+// 	printf("cmds->input: %s\n", cmds->input);
+// 	printf("cmds->output: %s\n", cmds->output);
+// 	printf("\n");
+// 	t_command *temp = cmds;
+// 	cmds = cmds->next;
+// 	printf("cmds->command: %s\n", cmds->command);
+// 	printf("cmds->options: %s\n", cmds->options);
+// 	printf("cmds->in_type: %d\n", cmds->in_type);
+// 	printf("cmds->out_type: %d\n", cmds->out_type);
+// 	printf("cmds->input: %s\n", cmds->input);
+// 	printf("cmds->output: %s\n", cmds->output);
+// 	clean_commands(&temp);
+// 	return (0);
+// }

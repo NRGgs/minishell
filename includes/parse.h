@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 10:44:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 12:14:32 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 10:53:59 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ typedef struct s_variable
 \*****************************************************************************/
 
 /* parse.c */
-bool	is_variable(char *str);
-int		parse_variable(char *str, t_variable **vars);
+t_command	*parse_user_input(char *input);
 
 /* parse_cmds.c */
 int		is_command(char *cmd);

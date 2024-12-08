@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/04 11:38:35 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/08 11:13:24 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ t_command	*cmd_new(char *command, char *options)
 		return (NULL);
 	}
 	if (options == NULL)
-	{
 		new_cmd->options = NULL;
-		return (new_cmd);
-	}
-	new_cmd->options = ft_strdup(options);
-	if (new_cmd->options == NULL)
+	else
 	{
-		free(new_cmd->command);
-		free(new_cmd);
-		return (NULL);
+		new_cmd->options = ft_strdup(options);
+		if (new_cmd->options == NULL)
+		{
+			free(new_cmd->command);
+			free(new_cmd);
+			return (NULL);
+		}
 	}
 	initialize_command(&new_cmd);
 	return (new_cmd);
