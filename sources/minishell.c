@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/08 12:16:39 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
+/*   Updated: 2024/12/10 11:34:26 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parse.h"
 
+// Test function (TEMP)
 void	print_commands(t_command *commands)
 {
 	t_command	*tmp;
@@ -43,43 +44,53 @@ void	signal_handler(int signum)
 char	*read_input(void)
 {
 	char	*input;
-	char	prompt[1024];
+	char	*username;
+	char	dir[1024];
+	char	*prompt;
 
-	if (getcwd(prompt, sizeof(prompt)) != NULL) {
-        strcat(prompt, "$ ");
-    } else {
-        perror("getcwd() error");
-        exit(EXIT_FAILURE);
-    }
+	username = getenv("USER");
+	if (username == NULL)
+	{
+		perror("getenv() error");
+		return (NULL);
+	}
+	if (getcwd(dir, sizeof(dir)) != NULL) {
+		strcat(dir, " $ ");
+		prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
+	} else {
+		perror("getcwd() error");
+		return (NULL);
+	}
 	input = readline(prompt);
+	free(prompt);
 	return (input);
 }
 int	main(void)
 {
 	char *input;
-    t_command *commands;
+	t_command *commands;
 
 	signal(SIGINT, signal_handler);		// CTRL + C
 	signal(SIGQUIT, SIG_IGN);			// CTRL + \'
-    while (1)
+	while (1)
 	{
 		input = read_input();
-        if (input == NULL)				// CTRL + D
-            break ;
+		if (input == NULL)				// CTRL + D
+			break ;
 
-        add_history(input);
-        commands = parse_user_input(input);
-        if (commands == NULL) {
-            free(input);
-            continue;
-        }
-        // execute commands
+		add_history(input);
+		commands = parse_user_input(input);
+		if (commands == NULL) {
+			free(input);
+			continue;
+		}
+		// execute commands
 
-        free(input);
-        print_commands(commands);
-        clean_commands(&commands);
-    }
-    clear_history();
+		free(input);
+		print_commands(commands);		// Test function (TEMP)
+		clean_commands(&commands);
+	}
+	clear_history();
 	rl_clear_history();
-    return (0);
+	return (0);
 }
