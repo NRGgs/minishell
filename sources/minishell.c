@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/10 11:34:26 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:11:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,6 @@ void	print_commands(t_command *commands)
 		printf("commands->input: %s\n", tmp->input);
 		printf("commands->output: %s\n", tmp->output);
 		tmp = tmp->next;
-	}
-}
-
-void	signal_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 	}
 }
 
@@ -70,8 +59,7 @@ int	main(void)
 	char *input;
 	t_command *commands;
 
-	signal(SIGINT, signal_handler);		// CTRL + C
-	signal(SIGQUIT, SIG_IGN);			// CTRL + \'
+	check_signals();
 	while (1)
 	{
 		input = read_input();

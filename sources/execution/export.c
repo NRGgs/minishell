@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:58:57 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 13:58:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:05:17 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/execution.h"
 
-int export(t_env *env_list, char *var)
+int my_export(t_env *env_list, char *var)
 {
 	t_env *env_var;
 	char *equal_sign;

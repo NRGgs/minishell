@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 14:03:06 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:08:40 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int execute_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "env", 4) == 0)
 		return (env());
 	else if (ft_strncmp(command->command, "export", 7) == 0)
-		return (export(command->env_list, command->input));
+		return (my_export(command->env_list, command->input));
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
 		return (unset(command->env_list, command->input));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)

@@ -12,7 +12,8 @@ SRC_DIR = sources
 SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/parse_cmds.c $(SRC_DIR)/parse_var.c $(SRC_DIR)/parse.c \
 		$(SRC_DIR)/parse_clean.c $(SRC_DIR)/parse_redirect.c \
-		$(SRC_DIR)/redirections.c $(SRC_DIR)/minishell.c
+		$(SRC_DIR)/redirections.c $(SRC_DIR)/minishell.c \
+		$(SRC_DIR)/signal.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

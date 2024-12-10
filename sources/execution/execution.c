@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:06:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 14:06:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:06:38 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+// #include "../../includes/execution.h"
+#include "../../includes/minishell.h"
 
 extern char **environ;
 

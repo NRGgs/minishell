@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 16:53:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 14:16:31 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/10 12:05:26 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		echo(char **argv);
 int		check_echo_option(char *option);
 
 // export
-int export(t_env *env_list, char *var);
+int my_export(t_env *env_list, char *var);
 
 // unset
 int unset(t_env *env_list, char *var);
