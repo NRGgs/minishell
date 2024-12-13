@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/08 11:31:50 by nmattos       ########   odam.nl         */
+/*   Updated: 2024/12/13 10:43:50 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,9 @@ static int	after_command(char **input, int *i, t_command **last)
 {
 	int	type;
 
-	(*i)++;
-	if (input[*i] == NULL || get_redirection_type(input[*i]) == STD)
-	{
-		(*i)--;
+	if (input[*i + 1] == NULL || get_redirection_type(input[*i + 1]) == STD)
 		return (SUCCESS);
-	}
+	(*i)++;
 	type = get_redirection_type(input[*i]);
 	if (type == TEXTFILE)
 	{
@@ -99,19 +96,17 @@ static int	after_command(char **input, int *i, t_command **last)
 			return (FAIL);
 		*i += 1;
 	}
-	else if (type == PIPE)
-		(*last)->out_type = PIPE;
 	else if (type == HERE_DOC)
 	{
 		if (here_doc_redirection(input[*i + 1], last) == FAIL)
 			return (FAIL);
 		*i += 1;
 	}
+	else if (type == PIPE)
+		(*last)->out_type = PIPE;
 	else if (type == STRING)
-	{
 		if (string_redirection(input, last, i) == FAIL)
 			return (FAIL);
-	}
 	return (SUCCESS);
 }
 
