@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:19:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ t_command	*parse_user_input(char *input)
 			if (parse_variable(split_input[i], &variables) == FAIL)
 				return (clean_all(&variables, &commands, split_input), NULL);
 		}
-		else if (is_command(split_input[i]))
+		// else if (is_command(split_input[i]))
+		else
 			if (parse_full_command(split_input, &commands, &variables, &i) == FAIL)
 				return (clean_all(&variables, &commands, split_input), NULL);
 		i++;
