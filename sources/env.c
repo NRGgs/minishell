@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 14:03:03 by iriadyns         ###   ########.fr       */
+/*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
+/*   Updated: 2024/12/20 12:55:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
-int exit_shell(char *input)
+int	env(void)
 {
-	int exit_code;
+	extern char **environ;
+	int i;
 
-	if (!input)
-		exit_code = 0;
-	else
+	i = 0;
+	while (environ[i])
 	{
-		exit_code = ft_atoi(input, &exit_code);
+		ft_putstr_fd(environ[i], STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		i++;
 	}
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	exit(exit_code);
+	return (0);
 }

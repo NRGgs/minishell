@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   commands.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/08 11:13:24 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
+/*   Updated: 2024/12/20 12:54:37 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parse.h"
+#include "../includes/minishell.h"
 
 /*	Initialize the command's variables.
  *
@@ -25,6 +25,7 @@ static void	initialize_command(t_command **cmd)
 	(*cmd)->input = NULL;
 	(*cmd)->output = NULL;
 	(*cmd)->next = NULL;
+	(*cmd)->env_list = NULL;
 }
 
 /*	Create a new command.

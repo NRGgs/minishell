@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/10 12:08:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:07:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
 int is_builtin(char *command)
 {
@@ -42,15 +42,15 @@ int execute_builtin(t_command *command)
 	}
 	if (ft_strncmp(command->command, "cd", 3) == 0)
 	{
-		if (command->input)
-			return cd(command->env_list, command->input);
-		else
-			return cd_home(command->env_list);
+		// if (command->input)
+		// 	return cd(command->env_list, &command->input);
+		// else
+		// 	return cd_home(command->env_list);
 	}
-	else if (ft_strncmp(command->command, "echo", 5) == 0)
-		return (echo(command->input));
-	else if (ft_strncmp(command->command, "pwd", 4) == 0)
-		return (pwd(command->input));
+	// else if (ft_strncmp(command->command, "echo", 5) == 0)
+	// 	return (echo(&command->input));
+	// else if (ft_strncmp(command->command, "pwd", 4) == 0)
+	// 	return (pwd(command->input));
 	else if (ft_strncmp(command->command, "env", 4) == 0)
 		return (env());
 	else if (ft_strncmp(command->command, "export", 7) == 0)

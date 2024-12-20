@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2024/12/10 11:42:12 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:55:23 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parse.h"
+#include "../includes/minishell.h"
 
 static void	signal_handler(int signum);
 

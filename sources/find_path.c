@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 12:07:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:01:40 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
 char *path_finder(char **env)
 {
@@ -48,7 +48,7 @@ char *true_path(char *argv, char **env)
 	path = path_finder(env);
 	i = 0;
 	res_split = ft_split(path, ':');
-	fn_path(res_split, args[0]);
+	// fn_path(res_split, args[0]);
 	while (res_split[i])
 	{
 		if (access(res_split[i], F_OK) == 0)

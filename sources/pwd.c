@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:13:07 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/03 16:11:43 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:56:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
 int pwd(char **argv)
 {

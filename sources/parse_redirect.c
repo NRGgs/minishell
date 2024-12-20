@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_redirect.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/03 14:25:28 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/13 10:43:50 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_redirect.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
+/*   Updated: 2024/12/20 12:55:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parse.h"
+#include "../includes/minishell.h"
 
 /*	Returns the type of redirection.
  *

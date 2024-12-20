@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_clean.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/03 13:45:47 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/04 11:34:28 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_clean.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
+/*   Updated: 2024/12/20 12:55:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parse.h"
+#include "../includes/minishell.h"
 
 void	clean_2d_array(char **array)
 {

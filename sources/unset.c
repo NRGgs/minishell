@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 14:00:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/04 14:00:29 by iriadyns         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:56:32 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
 int unset(t_env *env_list, char *var)
 {

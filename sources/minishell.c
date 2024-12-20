@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/10 12:11:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:08:08 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/parse.h"
+#include "../includes/minishell.h"
 
 // Test function (TEMP)
 void	print_commands(t_command *commands)
@@ -73,6 +73,7 @@ int	main(void)
 			continue;
 		}
 		// execute commands
+		// execute_commands(commands);
 
 		free(input);
 		print_commands(commands);		// Test function (TEMP)

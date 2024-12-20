@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:58:57 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/10 12:05:17 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 12:56:06 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/execution.h"
+#include "../includes/minishell.h"
 
 int my_export(t_env *env_list, char *var)
 {

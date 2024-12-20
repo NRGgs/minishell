@@ -13,7 +13,17 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/parse_cmds.c $(SRC_DIR)/parse_var.c $(SRC_DIR)/parse.c \
 		$(SRC_DIR)/parse_clean.c $(SRC_DIR)/parse_redirect.c \
 		$(SRC_DIR)/redirections.c $(SRC_DIR)/minishell.c \
-		$(SRC_DIR)/signal.c
+		$(SRC_DIR)/signal.c \
+		$(SRC_DIR)/builtins.c \
+		$(SRC_DIR)/cd.c \
+		$(SRC_DIR)/echo.c \
+		$(SRC_DIR)/env.c \
+		$(SRC_DIR)/exit.c \
+		$(SRC_DIR)/export.c \
+		$(SRC_DIR)/pwd.c \
+		$(SRC_DIR)/unset.c \
+		$(SRC_DIR)/execution.c \
+		$(SRC_DIR)/find_path.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
