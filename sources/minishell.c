@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 13:08:08 by nmattos-         ###   ########.fr       */
+/*   Updated: 2024/12/20 13:21:51 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	print_commands(t_command *commands)
 	tmp = commands;
 	while (tmp != NULL)
 	{
-		printf("commands->command: %s\n", tmp->command);
+		printf("\ncommands->command: %s\n", tmp->command);
 		printf("commands->options: %s\n", tmp->options);
 		printf("commands->in_type: %d\n", tmp->in_type);
 		printf("commands->out_type: %d\n", tmp->out_type);
 		printf("commands->input: %s\n", tmp->input);
-		printf("commands->output: %s\n", tmp->output);
+		printf("commands->output: %s\n\n", tmp->output);
 		tmp = tmp->next;
 	}
 }
