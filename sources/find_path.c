@@ -3,19 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/20 13:01:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:48:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char *path_finder(char **env)
+void	fn_path(char **res_split, char *argv)
 {
-	int i;
-	char *path;
+	int		i;
+	char	*tmp;
+	char	*new_str;
+
+	tmp = NULL;
+	new_str = NULL;
+	i = 0;
+	while (res_split[i])
+	{
+		tmp = ft_strjoin(res_split[i], "/");
+		new_str = ft_strjoin(tmp, argv);
+		free(res_split[i]);
+		res_split[i] = new_str;
+		free(tmp);
+		i++;
+	}
+}
+
+char	*path_finder(char **env)
+{
+	int		i;
+	char	*path;
 
 	i = 0;
 	path = "PATH=";
@@ -31,12 +51,12 @@ char *path_finder(char **env)
 	return (path);
 }
 
-char *true_path(char *argv, char **env)
+char	*true_path(char *argv, char **env)
 {
-	int i;
-	char **res_split;
-	char **args;
-	char *path;
+	int		i;
+	char	**res_split;
+	char	**args;
+	char	*path;
 
 	if (access(argv, F_OK) == 0)
 		return (argv);
@@ -48,7 +68,7 @@ char *true_path(char *argv, char **env)
 	path = path_finder(env);
 	i = 0;
 	res_split = ft_split(path, ':');
-	// fn_path(res_split, args[0]);
+	fn_path(res_split, args[0]);
 	while (res_split[i])
 	{
 		if (access(res_split[i], F_OK) == 0)
@@ -59,11 +79,10 @@ char *true_path(char *argv, char **env)
 	return (NULL);
 }
 
-char *find_path(char *command, char **env)
+char	*find_path(char *command, char **env)
 {
 	if (!command)
 		return (NULL);
-
 	if (command[0] == '/')
 	{
 		if (access(command, F_OK) == 0)
@@ -74,7 +93,7 @@ char *find_path(char *command, char **env)
 	return (true_path(command, env));
 }
 
-void f_error(void)
+void	f_error(void)
 {
 	ft_putstr_fd("Error: Command not found.\n", 2);
 	exit(1);

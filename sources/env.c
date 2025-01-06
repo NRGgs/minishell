@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:46:23 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+extern char	**environ;
+
 int	env(void)
 {
-	extern char **environ;
-	int i;
+	int	i;
 
 	i = 0;
 	while (environ[i])

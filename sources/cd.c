@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:54 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:45:55 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,50 @@ int	change_pwd(t_env *env_list)
 	return 0;
 }
 
+// int	cd_home(t_env *env_list)
+// {
+// 	t_env *ptr;
+// 	char *home;
+// 	int exit_code;
+
+// 	exit_code = change_pwd(env_list);
+// 	if (exit_code != 0)
+// 		return exit_code;
+// 	ptr = get_env(env_list, "HOME");
+// 	if (!ptr)
+// 	{
+// 		perror("Error: HOME not found");
+// 		return 1;
+// 	}
+// 	home = ptr->value;
+// 	exit_code = chdir(home);
+// 	if (exit_code < 0)
+// 	{
+// 		perror("chdir");
+// 		return 1;
+// 	}
+
+// 	return change_pwd(env_list);
+// }
 int	cd_home(t_env *env_list)
 {
 	t_env *ptr;
 	char *home;
-	int exit_code;
 
-	exit_code = change_pwd(env_list);
-	if (exit_code != 0)
-		return exit_code;
 	ptr = get_env(env_list, "HOME");
-	if (!ptr)
+	if (!ptr || !(home = ptr->value))
 	{
-		perror("Error: HOME not found");
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		return 0;
+	}
+	if (chdir(home) < 0)
+	{
+		perror("cd");
 		return 1;
 	}
-	home = ptr->value;
-	exit_code = chdir(home);
-	if (exit_code < 0)
-	{
-		perror("chdir");
-		return 1;
-	}
-
 	return change_pwd(env_list);
 }
+
 
 int cd(t_env *env_list, char **argv)
 {
