@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 13:21:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/06 09:50:24 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(void)
 			continue;
 		}
 		// execute commands
-		// execute_commands(commands);
+		execute_commands(commands);
 
 		free(input);
 		print_commands(commands);		// Test function (TEMP)
