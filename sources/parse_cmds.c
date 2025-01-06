@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/01/06 12:28:12 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/01/06 12:31:53 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ static bool	is_special(char *command)
 	return (false);
 }
 
+/*	Parse the string of the special commands.
+ *
+ *	input:		the user input.
+ *	i:			the index of the current token.
+ *	options:	the options of the command.
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 static int parse_string(char **input, int *i, char **options)
 {
 	size_t	size;
@@ -130,6 +138,14 @@ static int parse_string(char **input, int *i, char **options)
 	return (SUCCESS);
 }
 
+/*	Parse the options of the special commands.
+ *
+ *	input:		the user input.
+ *	i:			the index of the current token.
+ *	options:	the options of the command.
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 static int special_parse_options(char **input, int *i, char **options)
 {
 	size_t		size;
@@ -139,7 +155,6 @@ static int special_parse_options(char **input, int *i, char **options)
 	j = *i;
 	if (input[j + 1] == NULL)
 		return (SUCCESS);
-
 	if (ft_strchr(input[j + 1], '\"') != NULL)
 	{
 		(*i)++;
@@ -147,7 +162,6 @@ static int special_parse_options(char **input, int *i, char **options)
 			return (FAIL);
 		return (SUCCESS);
 	}
-
 	size = ft_strlen(input[j + 1]);
 	*options = ft_calloc((size + 1), sizeof(char));
 	if (*options == NULL)
