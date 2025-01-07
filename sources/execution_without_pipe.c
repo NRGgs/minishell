@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/06 09:47:51 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:36:23 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ void	handle_child_process(t_command *commands, char *path, char *args[])
 	}
 	if (!path)
 	{
-		ft_putstr_fd("Error: Command not found.\n", 2);
-		exit(127);
+		// ft_putstr_fd("Error: Command not found.\n", 2);
+		// exit(127);
 	}
 	if (execve(path, args, environ) == -1)
 	{
-		ft_putstr_fd("Error: Execve failed.\n", 2);
+		// ft_putstr_fd("Error: Execve failed.\n", 2);
 		exit(126);
 	}
 }

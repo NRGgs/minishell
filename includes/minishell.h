@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/06 09:49:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:55:52 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,10 @@ int		setup_pipe(int *pipe_fd);
 /* cd.c */
 int		change_pwd(t_env *env_list);
 int		cd_home(t_env *env_list);
-int 	cd(t_env *env_list, char **argv);
+// int 	cd(t_env *env_list, char **argv);
+int	cd(t_env *env_list, t_command *command);
 t_env	*get_env(t_env *env_list, char *identifier);
 int		check_option(char *argv);
-void	init_global_env(char **envp);
-t_env	*get_global_env(void);
-void	print_env_list(t_env *env_list);
 
 /* pwd.c */
 int		pwd(char **argv);
@@ -180,5 +178,6 @@ int		handle_input_redirection(t_command *cmd);
 int		handle_output_redirection(t_command *cmd);
 int		handle_heredoc(t_command *cmd);
 int		process_redirections(t_command *cmd);
+
 
 #endif
