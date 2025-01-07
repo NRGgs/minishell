@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/06 09:50:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:37:31 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ int	main(void)
 			continue;
 		}
 		// execute commands
+		print_commands(commands);
 		execute_commands(commands);
 
 		free(input);
-		print_commands(commands);		// Test function (TEMP)
+		// print_commands(commands);		// Test function (TEMP)
 		clean_commands(&commands);
 	}
 	clear_history();
