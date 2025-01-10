@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/06 09:50:24 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/01/10 10:47:13 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	print_commands(t_command *commands)
 		printf("commands->in_type: %d\n", tmp->in_type);
 		printf("commands->out_type: %d\n", tmp->out_type);
 		printf("commands->input: %s\n", tmp->input);
-		printf("commands->output: %s\n\n", tmp->output);
+		printf("commands->output: %s\n", tmp->output);
+		printf("commands->pattern: %s\n\n", tmp->pattern);
 		tmp = tmp->next;
 	}
 }
@@ -68,6 +69,7 @@ int	main(void)
 
 		add_history(input);
 		commands = parse_user_input(input);
+		print_commands(commands);		// Test function (TEMP)
 		if (commands == NULL) {
 			free(input);
 			continue;
