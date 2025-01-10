@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/01/10 10:48:18 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/01/10 11:01:07 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int	is_command(char *cmd)
 	return (found);
 }
 
+/*	Check if the command is a command with string input
+ *
+ *	command: the command to be checked.
+ *
+ * 	Return: true (1) / false (0).
+ */
 static bool	is_special(char *command)
 {
 	if (ft_strncmp(command, "grep", 5) == 0 || ft_strncmp(command, "fgrep", 6) == 0
