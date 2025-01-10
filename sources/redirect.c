@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/23 12:25:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:28:22 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int handle_output_redirection(t_command *cmd)
 	int flags;
 
 	flags = (cmd->out_type == APPEND) ? (O_WRONLY | O_CREAT | O_APPEND) : (O_WRONLY | O_CREAT | O_TRUNC);
-	fd = open(cmd->output, flags, 0644);
+	fd = open(cmd->output, flags, 0777);
 	if (fd == -1)
 	{
 		perror("Error opening output file");

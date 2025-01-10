@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/06 09:45:34 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:01:16 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	is_builtin(char *command)
 
 int	handle_cd(t_command *command)
 {
-	if (command->input)
-		return (cd(command->env_list, &command->input));
+	if (command->options)
+		return (cd(command->env_list, command));
 	return (cd_home(command->env_list));
 }
 

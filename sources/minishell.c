@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/01/10 10:47:13 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/01/10 10:55:07 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,11 @@ int	main(void)
 			continue;
 		}
 		// execute commands
+		print_commands(commands);
 		execute_commands(commands);
 
 		free(input);
-		print_commands(commands);		// Test function (TEMP)
+		// print_commands(commands);		// Test function (TEMP)
 		clean_commands(&commands);
 	}
 	clear_history();
