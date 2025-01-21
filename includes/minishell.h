@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 15:21:42 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:56:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@
 # define STDIN 5
 # define STDOUT 6
 # define STD 7
+
+/* Exit Statuses */
+# define MINOR 1
+# define MAJOR 2
+# define CMD_NOT_FOUND 127
+# define ILLEGAL_INSTRUCTION 132
+# define ILLEGAL_DIVISION 133
+# define FAILED_ASSERTION 134
+# define INT_OVERFLOW 136
+# define MEMORY_OVERFLOW 137
+# define UNALIGNED_MEM_ACCESS 138
+# define SEG_FAULT 139
+
+extern int	exit_status;
 
 /* Singly linked list. Stores all environments. */
 typedef struct s_env

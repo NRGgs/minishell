@@ -6,11 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/21 15:22:11 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:41:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	exit_status = 0;
 
 // Test function (TEMP)
 void	print_commands(t_command *commands)
@@ -42,6 +44,7 @@ char	*read_input(void)
 	if (username == NULL)
 	{
 		perror("getenv() error");
+		exit_status = 0;
 		return (NULL);
 	}
 	if (getcwd(dir, sizeof(dir)) != NULL) {
@@ -84,5 +87,5 @@ int	main(void)
 	}
 	clear_history();
 	rl_clear_history();
-	return (0);
+	return (exit_status);
 }
