@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_cmds.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/01/10 11:01:07 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_cmds.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/01/21 14:23:27 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,49 @@ static int	parse_options(char **input, int *i, char **options)
 	return (SUCCESS);
 }
 
+static bool	is_redirect(char *str)
+{
+	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
+		|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0
+		|| ft_strcmp(str, "||") == 0)
+	{
+		return (true);
+	}
+	return (false);
+}
+
+static char	*get_pattern(char **input, int *i, char *pattern)
+{
+	char	*new_pattern;
+	size_t	len_pattern;
+	size_t	len_string;
+
+	new_pattern = NULL;
+	len_pattern = 0;
+	len_string = 0;
+	if (input[*i + 1] == NULL)
+		return (pattern);
+	while (!is_command(input[*i + 1]) && !is_redirect(input[*i + 1]))
+	{
+		if (pattern != NULL)
+			len_pattern = ft_strlen(pattern);
+		len_string = ft_strlen(input[*i + 1]);
+		if (pattern == NULL)
+			new_pattern = ft_strdup(input[*i + 1]);
+		else
+		{
+			new_pattern = ft_strndup(pattern, len_pattern + len_string);
+			ft_strlcat(new_pattern, input[*i + 1], len_pattern + len_string);
+		}
+		free(pattern);
+		pattern = new_pattern;
+		(*i)++;
+		if (input[*i + 1] == NULL)
+			break;
+	}
+	return (new_pattern);
+}
+
 /*	Parse the command and its options.
  *
  *	input:	the user input.
@@ -247,6 +290,7 @@ int	parse_command(char **input, t_command **cmds, int *i)
 		free(options);
 	if (new_cmd == NULL)
 		return (FAIL);
+	pattern = get_pattern(input, i, pattern);
 	new_cmd->pattern = pattern;
 	cmd_add_back(cmds, new_cmd);
 	return (SUCCESS);

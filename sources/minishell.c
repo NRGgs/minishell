@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/01/10 10:55:07 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
+/*   Updated: 2025/01/21 13:41:41 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(void)
 
 		add_history(input);
 		commands = parse_user_input(input);
-		print_commands(commands);		// Test function (TEMP)
+		// print_commands(commands);		// Test function (TEMP)
 		if (commands == NULL) {
 			free(input);
 			continue;

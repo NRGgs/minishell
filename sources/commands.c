@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   commands.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/01/10 10:47:02 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/01/21 13:33:38 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,19 @@ t_command	*cmd_new(char *command, char *options)
 		return (NULL);
 	new_cmd->command = ft_strdup(command);
 	if (new_cmd->command == NULL)
-	{
-		free(new_cmd);
-		return (NULL);
-	}
+		return (free(new_cmd), NULL);
 	if (options == NULL)
 		new_cmd->options = NULL;
 	else
 	{
 		new_cmd->options = ft_strdup(options);
 		if (new_cmd->options == NULL)
-		{
-			free(new_cmd->command);
-			free(new_cmd);
-			return (NULL);
-		}
+			return (free(new_cmd->command), free(new_cmd), NULL);
 	}
 	initialize_command(&new_cmd);
+	new_cmd->env = getenv("PATH");
+	if (new_cmd->env == NULL)
+		return (free(new_cmd->command), free(new_cmd), NULL);
 	return (new_cmd);
 }
 
