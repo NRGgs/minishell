@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 13:30:55 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:00:34 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,9 @@ int		check_option(char *argv);
 int		pwd(char **argv);
 
 /* echo.c */
-int		echo(char **argv);
+int		echo(t_command *command);
 int		check_echo_option(char *option);
+void	ft_free_split(char **split);
 
 /* export.c */
 int		my_export(t_env **env_list, char *var);
