@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 14:23:27 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 14:35:13 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,13 @@ static char	*get_pattern(char **input, int *i, char *pattern)
 	return (new_pattern);
 }
 
+static bool	options_possible(char *command)
+{
+	if (ft_strncmp(command, "exit", 5) == 0)
+		return (false);
+	return (true);
+}
+
 /*	Parse the command and its options.
  *
  *	input:	the user input.
@@ -278,13 +285,12 @@ int	parse_command(char **input, t_command **cmds, int *i)
 	command = input[*i];
 	options = NULL;
 	pattern = NULL;
-	if (parse_options(input, i, &options) == FAIL)
-		return (FAIL);
+	if (options_possible(command))
+		if (parse_options(input, i, &options) == FAIL)
+			return (FAIL);
 	if (is_special(command))
-	{
 		if (special_parse_pattern(input, i, &pattern) == FAIL)
 			return (FAIL);
-	}
 	new_cmd = cmd_new(command, options);
 	if (options != NULL)
 		free(options);
