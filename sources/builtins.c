@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/21 15:01:58 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:43:58 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	execute_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
 		return (unset(command->env_list, command->input));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
-		return (exit_shell(command->input));
+		return (exit_shell(command->pattern));
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 	return (1);
 }
