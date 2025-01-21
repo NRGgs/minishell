@@ -3,54 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:01:14 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-
-int check_echo_option(char *option)
+int	check_echo_option(char *option)
 {
-	int flag;
-	int i;
+	int	i;
 
-	flag = 0;
+	if (!option || ft_strncmp(option, "-n", 2) != 0)
+		return (0);
 	i = 2;
-	if (!ft_strncmp(option, "-n", i))
-	{
-		while (option[i] == 'n')
-			i++;
-		if (option[i])
-			flag = 0;
-		else
-			flag = 1;
-	}
-	return (flag);
+	while (option[i] == 'n')
+		i++;
+	return (option[i] == '\0');
 }
 
-int echo(char **argv)
+int	echo(t_command *command)
 {
-	int flag;
+	int		flag;
+	char	**args;
+	int		i;
 
-	flag = 0;
-	argv++;
-	while (check_echo_option(*argv))
+	if (!command || !command->pattern)
+		return (1);
+
+	flag = check_echo_option(command->options);
+	args = ft_split(command->pattern, ' ');
+	if (!args)
+		return (1);
+	i = 0;
+	while (args[i])
 	{
-		flag = 1;
-		argv++;
-	}
-	while (*argv)
-	{
-		ft_putstr_fd(*argv, STDOUT_FILENO);
-		if (*(argv + 1))
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
-		argv++;
+		i++;
 	}
 	if (!flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_free_split(args);
 	return (0);
+}
+
+void	ft_free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

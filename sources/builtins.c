@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/07 10:01:16 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:01:58 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	execute_builtin(t_command *command)
 	if (ft_strncmp(command->command, "cd", 3) == 0)
 		return (handle_cd(command));
 	else if (ft_strncmp(command->command, "echo", 5) == 0)
-		return (echo(&command->input));
+		return (echo(command));
 	else if (ft_strncmp(command->command, "pwd", 4) == 0)
 		return (pwd(&command->input));
 	else if (ft_strncmp(command->command, "env", 4) == 0)
