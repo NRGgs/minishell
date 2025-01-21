@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 15:05:48 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:31:18 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ static bool	is_redirect(char *str)
 {
 	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
 		|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0
-		|| ft_strcmp(str, "||") == 0)
+		|| ft_strcmp(str, "|") == 0)
 	{
 		return (true);
 	}
