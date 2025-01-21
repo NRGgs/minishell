@@ -6,11 +6,27 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/21 15:01:14 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:42:03 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static void	print_arg_with_env(char *arg)
+{
+	char	*env_value;
+
+	if (arg && arg[0] == '$')
+	{
+		env_value = getenv(arg + 1);
+		if (env_value)
+			ft_putstr_fd(env_value, STDOUT_FILENO);
+		else
+			ft_putstr_fd("", STDOUT_FILENO);
+	}
+	else
+		ft_putstr_fd(arg, STDOUT_FILENO);
+}
 
 int	check_echo_option(char *option)
 {
@@ -40,7 +56,7 @@ int	echo(t_command *command)
 	i = 0;
 	while (args[i])
 	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
+		print_arg_with_env(args[i]);
 		if (args[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
