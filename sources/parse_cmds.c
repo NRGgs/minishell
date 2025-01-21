@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 14:35:13 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:05:48 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,14 +242,15 @@ static char	*get_pattern(char **input, int *i, char *pattern)
 	while (!is_command(input[*i + 1]) && !is_redirect(input[*i + 1]))
 	{
 		if (pattern != NULL)
-			len_pattern = ft_strlen(pattern);
+			len_pattern = ft_strlen(pattern) + 1;
 		len_string = ft_strlen(input[*i + 1]);
 		if (pattern == NULL)
 			new_pattern = ft_strdup(input[*i + 1]);
 		else
 		{
 			new_pattern = ft_strndup(pattern, len_pattern + len_string);
-			ft_strlcat(new_pattern, input[*i + 1], len_pattern + len_string);
+			ft_strlcat(new_pattern, " ", len_pattern + len_string + 1);
+			ft_strlcat(new_pattern, input[*i + 1], len_pattern + len_string + 1);
 		}
 		free(pattern);
 		pattern = new_pattern;
