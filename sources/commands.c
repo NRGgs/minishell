@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 13:33:38 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:22:04 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@ t_command	*cmd_new(char *command, char *options)
 			return (free(new_cmd->command), free(new_cmd), NULL);
 	}
 	initialize_command(&new_cmd);
-	new_cmd->env = getenv("PATH");
-	if (new_cmd->env == NULL)
-		return (free(new_cmd->command), free(new_cmd), NULL);
 	return (new_cmd);
 }
 
