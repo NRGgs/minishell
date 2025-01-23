@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 16:07:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:58:23 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,14 @@ static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 		clean_2d_array(split_input);
 }
 
-int parse_full_command(char **split_input, t_command **commands, t_variable **variables, int *i)
+int	parse_full_command(\
+	char **split_input, \
+	t_command **commands, \
+	t_variable **variables, \
+	int *i)
 {
-	int	command_index;
+	int		command_index;
+	char	*temp;
 
 	command_index = *i;
 	if (parse_command(split_input, commands, i) == FAIL)
@@ -36,7 +41,7 @@ int parse_full_command(char **split_input, t_command **commands, t_variable **va
 		if (split_input[*i] != NULL
 			&& split_input[*i - 1][ft_strlen(split_input[*i - 1]) - 1] == '\"')
 		{
-			char *temp = replace_variable(cmd_last(*commands)->input, *variables);
+			temp = replace_variable(cmd_last(*commands)->input, *variables);
 			if (temp == NULL)
 			{
 				clean_all(variables, commands, split_input);
@@ -65,11 +70,11 @@ t_command	*parse_user_input(char *input)
 	{
 		if (is_variable(split_input[i]))
 		{
-			if (parse_variable(split_input[i], &variables) == FAIL)
+			if (!parse_variable(split_input[i], &variables))
 				return (clean_all(&variables, &commands, split_input), NULL);
 		}
 		else
-			if (parse_full_command(split_input, &commands, &variables, &i) == FAIL)
+			if (!parse_full_command(split_input, &commands, &variables, &i))
 				return (clean_all(&variables, &commands, split_input), NULL);
 		i++;
 	}
