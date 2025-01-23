@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/23 13:51:50 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:00:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	exit_status = -1;
+int	g_exit_status = -1;
 
 // Test function (TEMP)
 void	print_commands(t_command *commands)
@@ -33,6 +33,12 @@ void	print_commands(t_command *commands)
 	}
 }
 
+void	set_error(char *error_msg, int error_code)
+{
+	perror(error_msg);
+	g_exit_status = error_code;
+}
+
 char	*read_input(void)
 {
 	char	*input;
@@ -43,8 +49,7 @@ char	*read_input(void)
 	username = getenv("USER");
 	if (username == NULL)
 	{
-		perror("getenv() error");
-		exit_status = MINOR;
+		set_error("getenv() error", MINOR);
 		return (NULL);
 	}
 	if (getcwd(dir, sizeof(dir)) != NULL)
@@ -54,42 +59,38 @@ char	*read_input(void)
 	}
 	else
 	{
-		perror("getcwd() error");
-		exit_status = MINOR;
+		set_error("getenv() error", MINOR);
 		return (NULL);
 	}
 	input = readline(prompt);
 	free(prompt);
 	return (input);
 }
+
 int	main(void)
 {
-	char *input;
-	t_command *commands;
+	char		*input;
+	t_command	*commands;
 
 	check_signals();
 	while (1)
 	{
 		input = read_input();
-		if (input == NULL)				// CTRL + D
+		if (input == NULL)
 			break ;
-
 		add_history(input);
 		commands = parse_user_input(input);
-		// print_commands(commands);		// Test function (TEMP)
-		if (commands == NULL) {
+		if (commands == NULL)
+		{
 			free(input);
-			continue;
+			continue ;
 		}
-		// execute commands
-		print_commands(commands);
+		print_commands(commands);// Test function (TEMP)
 		execute_commands(commands);
-
 		free(input);
-		// print_commands(commands);		// Test function (TEMP)
 		clean_commands(&commands);
 	}
 	clear_history();
 	rl_clear_history();
-	return (exit_status);
+	return (g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 15:56:00 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:56:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define UNALIGNED_MEM_ACCESS 138
 # define SEG_FAULT 139
 
-extern int	exit_status;
+extern int	g_exit_status;
 
 /* Singly linked list. Stores all environments. */
 typedef struct s_env
@@ -88,6 +88,9 @@ typedef struct s_variable
 /*****************************************************************************\
 *                             Function Prototypes                             *
 \*****************************************************************************/
+
+/* minishell.c */
+void	set_error(char *error_msg, int error_code);
 
 /* signal.c */
 void	check_signals(void);
