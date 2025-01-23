@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 15:31:18 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:03:24 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,20 @@ int	is_command(char *cmd)
  */
 static bool	is_special(char *command)
 {
-	if (ft_strncmp(command, "grep", 5) == 0 || ft_strncmp(command, "fgrep", 6) == 0
-		|| ft_strncmp(command, "egrep", 6) == 0 || ft_strncmp(command, "awk", 4) == 0
-		|| ft_strncmp(command, "sed", 4) == 0 || ft_strncmp(command, "find", 4) == 0
-		|| ft_strncmp(command, "cd", 3) == 0 || ft_strncmp(command, "cat", 3) == 0
-		|| ft_strncmp(command, "unset", 6) == 0 || ft_strncmp(command, "export", 7) == 0
-		|| ft_strncmp(command, "echo", 5) == 0 || ft_strncmp(command, "pwd", 4) == 0
-		|| ft_strncmp(command, "env", 4) == 0 || ft_strncmp(command, "exit", 5) == 0)
+	if (ft_strncmp(command, "grep", 5) == 0
+		|| ft_strncmp(command, "fgrep", 6) == 0
+		|| ft_strncmp(command, "egrep", 6) == 0
+		|| ft_strncmp(command, "awk", 4) == 0
+		|| ft_strncmp(command, "sed", 4) == 0
+		|| ft_strncmp(command, "find", 4) == 0
+		|| ft_strncmp(command, "cd", 3) == 0
+		|| ft_strncmp(command, "cat", 3) == 0
+		|| ft_strncmp(command, "unset", 6) == 0
+		|| ft_strncmp(command, "export", 7) == 0
+		|| ft_strncmp(command, "echo", 5) == 0
+		|| ft_strncmp(command, "pwd", 4) == 0
+		|| ft_strncmp(command, "env", 4) == 0
+		|| ft_strncmp(command, "exit", 5) == 0)
 		return (true);
 	return (false);
 }
@@ -96,7 +103,7 @@ static bool	is_special(char *command)
  *
  *	Return: SUCCESS (1) / FAIL (0).
  */
-static int parse_string(char **input, int *i, char **options)
+static int	parse_string(char **input, int *i, char **options)
 {
 	size_t	size;
 	int		j;
@@ -105,7 +112,6 @@ static int parse_string(char **input, int *i, char **options)
 
 	size = 0;
 	j = *i;
-
 	first = ft_strchr(input[j], '\"');
 	second = ft_strchr(first + 1, '\"');
 	if (first != second && second != NULL)
@@ -155,7 +161,7 @@ static int parse_string(char **input, int *i, char **options)
  *
  *	Return: SUCCESS (1) / FAIL (0).
  */
-static int special_parse_pattern(char **input, int *i, char **pattern)
+static int	special_parse_pattern(char **input, int *i, char **pattern)
 {
 	size_t		size;
 	int			j;
@@ -250,13 +256,14 @@ static char	*get_pattern(char **input, int *i, char *pattern)
 		{
 			new_pattern = ft_strndup(pattern, len_pattern + len_string);
 			ft_strlcat(new_pattern, " ", len_pattern + len_string + 1);
-			ft_strlcat(new_pattern, input[*i + 1], len_pattern + len_string + 1);
+			ft_strlcat(new_pattern, input[*i + 1], \
+				len_pattern + len_string + 1);
 		}
 		free(pattern);
 		pattern = new_pattern;
 		(*i)++;
 		if (input[*i + 1] == NULL)
-			break;
+			break ;
 	}
 	return (new_pattern);
 }
