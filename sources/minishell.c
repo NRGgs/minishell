@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/21 15:41:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:08:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ char	*read_input(void)
 	if (username == NULL)
 	{
 		perror("getenv() error");
-		exit_status = 0;
+		exit_status = MINOR;
 		return (NULL);
 	}
-	if (getcwd(dir, sizeof(dir)) != NULL) {
+	if (getcwd(dir, sizeof(dir)) != NULL)
+	{
 		strcat(dir, " $ ");
 		prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
-	} else {
+	}
+	else
+	{
 		perror("getcwd() error");
+		exit_status = MINOR;
 		return (NULL);
 	}
 	input = readline(prompt);
