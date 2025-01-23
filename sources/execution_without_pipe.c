@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/23 12:32:17 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:22:23 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	execution_without_pipe(t_command *commands)
 	}
 	path = true_path(commands->command, environ);
 	args[0] = commands->command;
-	args[1] = commands->pattern;
+	args[1] = commands->options;
 	args[2] = NULL;
 	execute_command(commands, path, args);
 }

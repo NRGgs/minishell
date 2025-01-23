@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/23 12:33:25 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:22:54 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ char	**get_command_args(t_command *current)
 
 	if (current->input && ft_strlen(current->input) > 0)
 		args = ft_split(current->input, ' ');
-	else if (current->pattern)
+	else if (current->options)
 	{
 		args = malloc(sizeof(char *) * 3);
 		if (!args)
 			return (NULL);
 		args[0] = ft_strdup(current->command);
-		args[1] = ft_strdup(current->pattern);
+		args[1] = ft_strdup(current->options);
 		args[2] = NULL;
 	}
 	else
