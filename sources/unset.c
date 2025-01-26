@@ -3,42 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 14:00:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2024/12/20 12:56:32 by nmattos-         ###   ########.fr       */
+/*   Created: 2025/01/26 16:24:43 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/01/26 16:25:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int unset(t_env *env_list, char *var)
+int	remove_env_var(t_env **env_list, const char *var_name)
 {
-	t_env *prev;
-	t_env *current;
-	unsigned int len;
-
-	len = ft_strlen(var);
-	current = env_list;
-	prev = NULL;
+	t_env	*current = *env_list;
+	t_env	*prev = NULL;
 
 	while (current)
 	{
-		if (ft_strlen(current->name) == len && ft_strncmp(current->name, var, len) == 0)
+		if (strcmp(current->name, var_name) == 0)
 		{
-			if (prev)
-				prev->next = current->next;
+			if (!prev)
+				*env_list = current->next;
 			else
-				env_list = current->next;
+				prev->next = current->next;
 			free(current->name);
 			free(current->value);
 			free(current);
-			return (0);
+			return (1);
 		}
 		prev = current;
 		current = current->next;
 	}
+	return (0);
+}
 
-	ft_putstr_fd("unset: variable not found\n", 2);
-	return (1);
+int my_unset(t_env **env_list, char **args)
+{
+	int i = 0;
+
+	if (!args || !args[0])
+	{
+		return (0);
+	}
+	while (args[i])
+	{
+		remove_env_var(env_list, args[i]);
+		i++;
+	}
+	return (0);
+}
+
+char **parse_args_for_unset(t_command *command)
+{
+	if (!command->pattern)
+		return (NULL);
+	return ft_split(command->pattern, ' ');
 }
