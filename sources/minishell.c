@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/23 14:00:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:24:09 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ int	main(void)
 {
 	char		*input;
 	t_command	*commands;
+	t_env		*my_env_list;
 
+	my_env_list = init_env_list();
 	check_signals();
 	while (1)
 	{
@@ -84,6 +86,12 @@ int	main(void)
 		{
 			free(input);
 			continue ;
+		}
+		t_command *tmp = commands;
+		while (tmp)
+		{
+			tmp->env_list = my_env_list;
+			tmp = tmp->next;
 		}
 		print_commands(commands);// Test function (TEMP)
 		execute_commands(commands);
