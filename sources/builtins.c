@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:17:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/21 15:43:58 by iriadyns         ###   ########.fr       */
+/*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/01/26 16:08:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	is_builtin(char *command)
 
 int	handle_cd(t_command *command)
 {
-	if (command->options)
+	if (command->pattern)
 		return (cd(command->env_list, command));
 	return (cd_home(command->env_list));
 }
 
-int	execute_builtin(t_command *command)
+int execute_builtin(t_command *command)
 {
 	if (!command || !command->command)
 	{
@@ -54,13 +54,38 @@ int	execute_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "pwd", 4) == 0)
 		return (pwd(&command->input));
 	else if (ft_strncmp(command->command, "env", 4) == 0)
-		return (env());
+		return (env(command->env_list));
 	else if (ft_strncmp(command->command, "export", 7) == 0)
-		return (my_export(&command->env_list, command->input));
+	{
+		char **args = ft_split(command->pattern, ' ');
+		int ret = my_export(&(command->env_list), args);
+		free_args(args);
+		return ret;
+	}
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
-		return (unset(command->env_list, command->input));
+	{
+		char **args = parse_args_for_unset(command);
+		int ret = my_unset(&(command->env_list), args);
+		free_args(args);
+		return (ret);
+	}
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
 		return (exit_shell(command->pattern));
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 	return (1);
+}
+
+void	free_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	if (!args)
+		return;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
 }
