@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/23 13:53:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:23:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ char	*find_path(char *command, char **env)
 void	f_error(void)
 {
 	ft_putstr_fd("Error: Command not found.\n", 2);
-	exit_status = CMD_NOT_FOUND;
+	g_exit_status = CMD_NOT_FOUND;
 }
 
