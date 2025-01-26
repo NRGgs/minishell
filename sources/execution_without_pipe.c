@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/26 16:18:33 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:40:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	execute_command(t_command *commands, char *path, char *args[])
 void	execution_without_pipe(t_command *commands)
 {
 	char	*path;
-	char	*args[3];
+	char	*args[4];
+	int		i = 0;
 
 	if (!commands || !commands->command)
 	{
@@ -59,14 +60,15 @@ void	execution_without_pipe(t_command *commands)
 	}
 	if (is_builtin(commands->command))
 	{
-		if (execute_builtin(commands) == 1)
-		{
-		}
+		execute_builtin(commands);
 		return ;
 	}
 	path = true_path(commands->command, environ);
-	args[0] = commands->command;
-	args[1] = commands->options;
-	args[2] = NULL;
+	args[i++] = commands->command;
+	if (commands->options)
+		args[i++] = commands->options;
+	if (commands->pattern)
+		args[i++] = commands->pattern;
+	args[i] = NULL;
 	execute_command(commands, path, args);
 }
