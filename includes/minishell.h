@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/23 13:56:35 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/26 16:22:00 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	clean_commands(t_command **cmds);
 int		is_builtin(char *command);
 int		handle_cd(t_command *command);
 int		execute_builtin(t_command *command);
+void	free_args(char **args);
 
 /* find_path.c */
 char 	*true_path(char *argv, char **env);
@@ -145,6 +146,8 @@ void	fn_path(char **res_split, char *argv);
 
 /* execution.c */
 void	execute_commands(t_command *commands);
+t_env	*create_env_node(const char *name, const char *value);
+t_env	*init_env_list(void);
 
 /* execution_without_pipe */
 void	handle_child_process(t_command *commands, char *path, char *args[]);
@@ -181,22 +184,27 @@ int		check_echo_option(char *option);
 void	ft_free_split(char **split);
 
 /* export.c */
-int		my_export(t_env **env_list, char *var);
+t_env *find_env_var(t_env *env_list, const char *name);
+t_env *create_env_var(t_env **env_list, const char *name, const char *value);
+void print_exported_vars(t_env *env_list);
+int my_export(t_env **env_list, char **args);
+
 
 /* unset.c */
-int 	unset(t_env *env_list, char *var);
+int my_unset(t_env **env_list, char **args);
+int remove_env_var(t_env **env_list, const char *var_name);
+char **parse_args_for_unset(t_command *command);
 
 /* exit.c */
 int 	exit_shell(char *input);
 
 /* env.c */
-int		env(void);
+int env(t_env *env_list);
 
 /* redirect.c */
 int		handle_input_redirection(t_command *cmd);
 int		handle_output_redirection(t_command *cmd);
 int		handle_heredoc(t_command *cmd);
 int		process_redirections(t_command *cmd);
-
 
 #endif
