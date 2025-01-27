@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:38:03 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:59:19 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,9 @@ static void	print_arg_with_env(char *arg)
 
 int	check_echo_option(char *option)
 {
-	int	i;
-
 	if (!option || ft_strncmp(option, "-n", 2) != 0)
 		return (0);
-	i = 2;
-	while (option[i] == 'n')
-		i++;
-	return (option[i] == '\0');
+	return (1);
 }
 
 int	echo(t_command *command)
