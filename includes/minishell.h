@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/26 16:22:00 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:18:22 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,12 +188,20 @@ t_env *find_env_var(t_env *env_list, const char *name);
 t_env *create_env_var(t_env **env_list, const char *name, const char *value);
 void print_exported_vars(t_env *env_list);
 int my_export(t_env **env_list, char **args);
+int	run_export_builtin(t_command *command);
 
+/* export_2.c */
+void	add_env_to_list(t_env **env_list, t_env *new_var);
+t_env	*alloc_env_node(const char *name, const char *value);
+void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign);
+void	handle_export_no_equal(t_env **env_list, char *arg);
+void	process_export_arg(t_env **env_list, char *arg);
 
 /* unset.c */
 int my_unset(t_env **env_list, char **args);
 int remove_env_var(t_env **env_list, const char *var_name);
 char **parse_args_for_unset(t_command *command);
+int	run_unset_builtin(t_command *command);
 
 /* exit.c */
 int 	exit_shell(char *input);

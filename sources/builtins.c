@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/26 16:08:06 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:56:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_cd(t_command *command)
 	return (cd_home(command->env_list));
 }
 
-int execute_builtin(t_command *command)
+int	execute_builtin(t_command *command)
 {
 	if (!command || !command->command)
 	{
@@ -56,19 +56,9 @@ int execute_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "env", 4) == 0)
 		return (env(command->env_list));
 	else if (ft_strncmp(command->command, "export", 7) == 0)
-	{
-		char **args = ft_split(command->pattern, ' ');
-		int ret = my_export(&(command->env_list), args);
-		free_args(args);
-		return ret;
-	}
+		return (run_export_builtin(command));
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
-	{
-		char **args = parse_args_for_unset(command);
-		int ret = my_unset(&(command->env_list), args);
-		free_args(args);
-		return (ret);
-	}
+		return (run_unset_builtin(command));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
 		return (exit_shell(command->pattern));
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
@@ -81,7 +71,7 @@ void	free_args(char **args)
 
 	i = 0;
 	if (!args)
-		return;
+		return ;
 	while (args[i])
 	{
 		free(args[i]);
