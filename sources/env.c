@@ -6,17 +6,17 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/26 16:10:20 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:39:35 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-extern char	**environ;
-
 int	env(t_env *env_list)
 {
-	t_env	*tmp = env_list;
+	t_env	*tmp;
+
+	tmp = env_list;
 	while (tmp)
 	{
 		if (tmp->value)
@@ -25,6 +25,5 @@ int	env(t_env *env_list)
 			printf("%s=\n", tmp->name);
 		tmp = tmp->next;
 	}
-	return 0;
+	return (0);
 }
-
