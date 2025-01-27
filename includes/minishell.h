@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 14:42:46 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:53:21 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,11 @@ t_env	*init_env_list(void);
 /* execution_without_pipe */
 void	handle_child_process(t_command *commands, char *path, char *args[]);
 void	execute_command(t_command *commands, char *path, char *args[]);
+void	exec_external_no_pipe(t_command *commands);
+void	exec_builtin_no_pipe(t_command *commands);
+void	restore_fds(int in, int out);
+
+/* execution_without_pipe_2 */
 void	execution_without_pipe(t_command *commands);
 
 /* execution_with_pipe_1.c */
