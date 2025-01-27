@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:14:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:16:06 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,3 @@ void	f_error(void)
 	ft_putstr_fd("Error: Command not found.\n", 2);
 	g_exit_status = CMD_NOT_FOUND;
 }
-
