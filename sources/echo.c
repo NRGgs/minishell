@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/23 13:30:34 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:38:03 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	echo(t_command *command)
 	if (!command)
 		return (1);
 	if (!command->pattern)
-	{
-		printf("\n");
-		return (0);
-	}
+		return (printf("\n"), 0);
 	flag = check_echo_option(command->options);
 	args = ft_split(command->pattern, ' ');
 	if (!args)
@@ -76,7 +73,7 @@ void	ft_free_split(char **split)
 	int	i;
 
 	if (!split)
-		return;
+		return ;
 	i = 0;
 	while (split[i])
 	{
