@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:16:06 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:56:36 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,52 @@ char	*path_finder(char **env)
 	return (path);
 }
 
+static void	free_2d_array(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 char	*true_path(char *argv, char **env)
 {
-	int		i;
 	char	**res_split;
 	char	**args;
-	char	*path;
+	char	*tmp_path;
+	char	*found;
+	int		i;
 
 	if (access(argv, F_OK) == 0)
 		return (argv);
 	if (ft_strchr(argv, '/') != NULL)
-		f_error();
-	path = "PATH=";
-	i = 0;
+		f_error(); 
+	tmp_path = path_finder(env);
+	res_split = ft_split(tmp_path, ':');
 	args = ft_split(argv, ' ');
-	path = path_finder(env);
-	i = 0;
-	res_split = ft_split(path, ':');
 	fn_path(res_split, args[0]);
+	i = 0;
 	while (res_split[i])
 	{
 		if (access(res_split[i], F_OK) == 0)
-			return (res_split[i]);
+		{
+			found = ft_strdup(res_split[i]);
+			free_2d_array(res_split);
+			free_2d_array(args);
+			return (found);
+		}
 		i++;
 	}
-	f_error();
+	free_2d_array(res_split);
+	free_2d_array(args);
+	f_error(); 
 	return (NULL);
 }
 
