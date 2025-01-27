@@ -6,15 +6,15 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/07 09:28:22 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:57:12 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int handle_input_redirection(t_command *cmd)
+int	handle_input_redirection(t_command *cmd)
 {
-	int fd;
+	int	fd;
 
 	fd = open(cmd->input, O_RDONLY);
 	if (fd == -1)
@@ -32,10 +32,10 @@ int handle_input_redirection(t_command *cmd)
 	return (SUCCESS);
 }
 
-int handle_output_redirection(t_command *cmd)
+int	handle_output_redirection(t_command *cmd)
 {
-	int fd;
-	int flags;
+	int	fd;
+	int	flags;
 
 	flags = (cmd->out_type == APPEND) ? (O_WRONLY | O_CREAT | O_APPEND) : (O_WRONLY | O_CREAT | O_TRUNC);
 	fd = open(cmd->output, flags, 0777);
@@ -54,10 +54,10 @@ int handle_output_redirection(t_command *cmd)
 	return (SUCCESS);
 }
 
-int handle_heredoc(t_command *cmd)
+int	handle_heredoc(t_command *cmd)
 {
-	int pipefd[2];
-	char *line;
+	int		pipefd[2];
+	char	*line;
 
 	if (pipe(pipefd) == -1)
 	{
@@ -67,8 +67,10 @@ int handle_heredoc(t_command *cmd)
 	while (1)
 	{
 		line = readline("> ");
+		if (!line)
+			break ;
 		if (!line || ft_strcmp(line, cmd->input) == 0)
-			break;
+			break ;
 		write(pipefd[1], line, ft_strlen(line));
 		write(pipefd[1], "\n", 1);
 		free(line);
@@ -85,7 +87,7 @@ int handle_heredoc(t_command *cmd)
 	return (SUCCESS);
 }
 
-int process_redirections(t_command *cmd)
+int	process_redirections(t_command *cmd)
 {
 	if (cmd->in_type == TEXTFILE && handle_input_redirection(cmd) == ERROR)
 		return (ERROR);
