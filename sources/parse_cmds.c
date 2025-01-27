@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 14:30:37 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:15:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,17 @@ static bool	is_special(char *command)
 	return (false);
 }
 
+static bool	is_redirect(char *str)
+{
+	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
+		|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0
+		|| ft_strcmp(str, "|") == 0)
+	{
+		return (true);
+	}
+	return (false);
+}
+
 /*	Parse the string of the special commands.
  *
  *	input:		the user input.
@@ -167,7 +178,7 @@ static int	special_parse_pattern(char **input, int *i, char **pattern)
 
 	size = 0;
 	j = *i;
-	if (input[j + 1] == NULL)
+	if (input[j + 1] == NULL || is_redirect(input[j + 1]))
 		return (SUCCESS);
 	if (ft_strchr(input[j + 1], '\"') != NULL)
 	{
@@ -220,17 +231,6 @@ static int	parse_options(char **input, int *i, char **options)
 	}
 	(*i)--;
 	return (SUCCESS);
-}
-
-static bool	is_redirect(char *str)
-{
-	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
-		|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0
-		|| ft_strcmp(str, "|") == 0)
-	{
-		return (true);
-	}
-	return (false);
 }
 
 static char	*get_pattern(char **input, int *i, char *pattern)
