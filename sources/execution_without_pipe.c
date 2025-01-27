@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 16:54:05 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:46:10 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,52 @@
 
 extern char	**environ;
 
-void	handle_child_process(t_command *commands, char *path, char *args[])
+void handle_child_process(t_command *commands, char *path, char *args[])
 {
 	if (process_redirections(commands) == ERROR)
 	{
 		ft_putstr_fd("Error: Redirection failed.\n", 2);
 		exit(1);
 	}
+	if (commands->in_type == HERE_DOC && commands->input)
+	{
+		int pipefd[2];
+		if (pipe(pipefd) == -1)
+		{
+			perror("pipe");
+			exit(1);
+		}
+		write(pipefd[1], commands->input, ft_strlen(commands->input));
+		close(pipefd[1]);
+		if (dup2(pipefd[0], STDIN_FILENO) == -1)
+		{
+			perror("dup2");
+			close(pipefd[0]);
+			exit(1);
+		}
+		close(pipefd[0]);
+	}
 	if (!path)
-	{
-	}
+		exit(127);
 	if (execve(path, args, environ) == -1)
-	{
 		exit(126);
-	}
 }
+
+// void	handle_child_process(t_command *commands, char *path, char *args[])
+// {
+// 	if (process_redirections(commands) == ERROR)
+// 	{
+// 		ft_putstr_fd("Error: Redirection failed.\n", 2);
+// 		exit(1);
+// 	}
+// 	if (!path)
+// 	{
+// 	}
+// 	if (execve(path, args, environ) == -1)
+// 	{
+// 		exit(126);
+// 	}
+// }
 
 void	execute_command(t_command *commands, char *path, char *args[])
 {

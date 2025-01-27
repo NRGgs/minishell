@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/26 16:20:53 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 17:01:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	execute_commands(t_command *commands)
 
 t_env	*create_env_node(const char *name, const char *value)
 {
-	t_env	*new_node = malloc(sizeof(t_env));
+	t_env	*new_node;
+
+	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
 	new_node->name = strdup(name);
@@ -54,10 +56,12 @@ t_env	*create_env_node(const char *name, const char *value)
 
 t_env	*init_env_list(void)
 {
-	t_env	*env_list = NULL;
+	t_env	*env_list;
 	t_env	*tmp;
-	int	i = 0;
+	int		i;
 
+	env_list = NULL;
+	i = 0;
 	while (environ[i])
 	{
 		char	*equal_pos = strchr(environ[i], '=');
