@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/23 14:03:24 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:12:05 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static bool	is_special(char *command)
 		|| ft_strncmp(command, "cd", 3) == 0
 		|| ft_strncmp(command, "cat", 3) == 0
 		|| ft_strncmp(command, "unset", 6) == 0
-		|| ft_strncmp(command, "export", 7) == 0
 		|| ft_strncmp(command, "echo", 5) == 0
 		|| ft_strncmp(command, "pwd", 4) == 0
 		|| ft_strncmp(command, "env", 4) == 0
