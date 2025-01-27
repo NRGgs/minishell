@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 14:18:22 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:42:46 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 
 # define REDIRECT_INPUT 1
 # define REDIRECT_OUTPUT 2
+
+# define AFTER 0
+# define BEFORE 1
 
 /* Return Values */
 # define ERROR -1
@@ -122,7 +125,7 @@ t_variable	*var_find(t_variable *vars, char *name);
 int		parse_redirect(char **input, t_command **cmds, int *i, int command_index);
 
 /* redirections.c */
-int		textfile_redirection(char *filename, char *redirection, t_command **last);
+int		textfile_redirection(char *fn, char *redirect, t_command **last, int place);
 int		here_doc_redirection(char *delimiter, t_command **last);
 int		string_redirection(char **input, t_command **last, int *i);
 

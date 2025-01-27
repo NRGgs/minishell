@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:12 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:34:20 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	before_command(char **input, int i, t_command **last)
 	type = get_redirection_type(input[i]);
 	if (type == TEXTFILE || type == APPEND)
 	{
-		if (textfile_redirection(input[i - 1], input[i], last) == FAIL)
+		if (textfile_redirection(input[i - 1], input[i], last, BEFORE) == FAIL)
 			return (FAIL);
 	}
 	else if (type == PIPE)
@@ -92,7 +92,7 @@ static int	after_command(char **input, int *i, t_command **last)
 	type = get_redirection_type(input[*i]);
 	if (type == TEXTFILE)
 	{
-		if (textfile_redirection(input[*i + 1], input[*i], last) == FAIL)
+		if (textfile_redirection(input[*i + 1], input[*i], last, AFTER) == FAIL)
 			return (FAIL);
 		*i += 1;
 	}

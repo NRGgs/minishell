@@ -6,28 +6,33 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:21 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:38:36 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	textfile_redirection(char *filename, char *redirection, t_command **last)
+int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
 {
-	if (ft_strcmp(redirection, ">") == 0 || ft_strcmp(redirection, ">>") == 0)
+	if (ft_strcmp(redirect, ">") == 0 || ft_strcmp(redirect, ">>") == 0)
 	{
-		(*last)->output = ft_strdup(filename);
-		if (ft_strcmp(redirection, ">>") == 0)
+		(*last)->output = ft_strdup(fn);
+		if (ft_strcmp(redirect, ">>") == 0)
 			(*last)->out_type = APPEND;
-		else
+		else if (place == AFTER)
 			(*last)->out_type = TEXTFILE;
+		else if (place == BEFORE)
+			(*last)->in_type = TEXTFILE;
 		if ((*last)->output == NULL)
 			return (FAIL);
 	}
-	else if (ft_strcmp(redirection, "<") == 0)
+	else if (ft_strcmp(redirect, "<") == 0)
 	{
-		(*last)->input = ft_strdup(filename);
-		(*last)->in_type = TEXTFILE;
+		(*last)->input = ft_strdup(fn);
+		if (place == AFTER)
+			(*last)->in_type = TEXTFILE;
+		else if (place == BEFORE)
+			(*last)->out_type = TEXTFILE;
 		if ((*last)->input == NULL)
 			return (FAIL);
 	}
