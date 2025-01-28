@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:00:24 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:02:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:16:56 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	parse_env_var(char *env_str, char **name, char **value)
 	char	*equal_pos;
 	size_t	name_len;
 
-	equal_pos = strchr(env_str, '=');
+	equal_pos = ft_strchr(env_str, '=');
 	if (!equal_pos)
 		return (FAIL);
 	name_len = equal_pos - env_str;
-	*name = strndup(env_str, name_len);
+	*name = ft_strndup(env_str, name_len);
 	if (!*name)
 		return (FAIL);
-	*value = strdup(equal_pos + 1);
+	*value = ft_strdup(equal_pos + 1);
 	if (!*value)
 	{
 		free(*name);

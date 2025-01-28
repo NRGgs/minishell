@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:01:26 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:14:50 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,50 +48,11 @@ t_env	*create_env_node(const char *name, const char *value)
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->name = strdup(name);
+	new_node->name = ft_strdup(name);
 	if (value)
-		new_node->value = strdup(value);
+		new_node->value = ft_strdup(value);
 	else
 		new_node->value = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
-
-// t_env	*init_env_list(void)
-// {
-// 	t_env	*env_list;
-// 	t_env	*tmp;
-// 	int		i;
-// 	char	*equal_pos;
-// 	size_t	name_len;
-// 	char	*name;
-// 	char	*value;
-// 	t_env	*new_node;
-
-// 	env_list = NULL;
-// 	i = 0;
-// 	while (environ[i])
-// 	{
-// 		equal_pos = strchr(environ[i], '=');
-// 		if (equal_pos)
-// 		{
-// 			name_len = equal_pos - environ[i];
-// 			name = strndup(environ[i], name_len);
-// 			value = strdup(equal_pos + 1);
-// 			new_node = create_env_node(name, value);
-// 			free(name);
-// 			free(value);
-// 			if (!env_list)
-// 				env_list = new_node;
-// 			else
-// 			{
-// 				tmp = env_list;
-// 				while (tmp->next)
-// 					tmp = tmp->next;
-// 				tmp->next = new_node;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	return (env_list);
-// }

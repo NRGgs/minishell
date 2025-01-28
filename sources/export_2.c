@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:18:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:15:24 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ t_env	*alloc_env_node(const char *name, const char *value)
 	node = (t_env *)malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node->name = strdup(name);
+	node->name = ft_strdup(name);
 	if (!node->name)
 	{
 		free(node);
 		return (NULL);
 	}
 	if (value)
-		node->value = strdup(value);
+		node->value = ft_strdup(value);
 	else
 		node->value = NULL;
 	node->next = NULL;
@@ -56,10 +56,10 @@ void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign)
 	t_env	*existing;
 
 	name_len = equal_sign - arg;
-	name = strndup(arg, name_len);
+	name = ft_strndup(arg, name_len);
 	if (!name)
 		return ;
-	value = strdup(equal_sign + 1);
+	value = ft_strdup(equal_sign + 1);
 	if (!value)
 	{
 		free(name);
@@ -89,7 +89,7 @@ void	process_export_arg(t_env **env_list, char *arg)
 {
 	char	*equal_sign;
 
-	equal_sign = strchr(arg, '=');
+	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign)
 		handle_export_equal(env_list, arg, equal_sign);
 	else

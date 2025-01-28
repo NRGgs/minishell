@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 12:43:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:16:35 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,40 +65,6 @@ void	free_2d_array(char **arr)
 	}
 	free(arr);
 }
-
-// char	*true_path(char *argv, char **env)
-// {
-// 	char	**res_split;
-// 	char	**args;
-// 	char	*tmp_path;
-// 	char	*found;
-// 	int		i;
-
-// 	if (access(argv, F_OK) == 0)
-// 		return (argv);
-// 	if (ft_strchr(argv, '/') != NULL)
-// 		f_error();
-// 	tmp_path = path_finder(env);
-// 	res_split = ft_split(tmp_path, ':');
-// 	args = ft_split(argv, ' ');
-// 	fn_path(res_split, args[0]);
-// 	i = 0;
-// 	while (res_split[i])
-// 	{
-// 		if (access(res_split[i], F_OK) == 0)
-// 		{
-// 			found = ft_strdup(res_split[i]);
-// 			free_2d_array(res_split);
-// 			free_2d_array(args);
-// 			return (found);
-// 		}
-// 		i++;
-// 	}
-// 	free_2d_array(res_split);
-// 	free_2d_array(args);
-// 	f_error();
-// 	return (NULL);
-// }
 
 char	*find_path(char *command, char **env)
 {
