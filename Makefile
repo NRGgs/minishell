@@ -29,7 +29,8 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/execution_with_pipe_1.c \
 		$(SRC_DIR)/execution_with_pipe_2.c \
 		$(SRC_DIR)/export_2.c \
-		$(SRC_DIR)/execution_without_pipe_2.c
+		$(SRC_DIR)/execution_without_pipe_2.c \
+		$(SRC_DIR)/find_path_2.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

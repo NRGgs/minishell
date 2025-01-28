@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 16:53:21 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:45:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,15 @@ void	free_args(char **args);
 char 	*true_path(char *argv, char **env);
 char 	*path_finder(char **env);
 char 	*find_path(char *command, char **env);
-void 	f_error(void);
 void	fn_path(char **res_split, char *argv);
+void	free_2d_array(char **arr);
+
+/* find_path_2.c */
+char	*search_in_paths(char **res_split, char **args);
+char	**split_args(char *argv);
+char	**split_paths(char **env);
+char	*check_argv_executable(char *argv);
+void	f_error(void);
 
 /* execution.c */
 void	execute_commands(t_command *commands);
@@ -222,5 +229,8 @@ int		handle_input_redirection(t_command *cmd);
 int		handle_output_redirection(t_command *cmd);
 int		handle_heredoc(t_command *cmd);
 int		process_redirections(t_command *cmd);
+
+/* utils.c */
+
 
 #endif
