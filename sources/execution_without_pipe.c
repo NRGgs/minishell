@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 18:46:10 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:48:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 extern char	**environ;
 
-void handle_child_process(t_command *commands, char *path, char *args[])
+void	handle_child_process(t_command *commands, char *path, char *args[])
 {
+	int	pipefd[2];
+
 	if (process_redirections(commands) == ERROR)
-	{
-		ft_putstr_fd("Error: Redirection failed.\n", 2);
 		exit(1);
-	}
 	if (commands->in_type == HERE_DOC && commands->input)
 	{
-		int pipefd[2];
 		if (pipe(pipefd) == -1)
 		{
 			perror("pipe");
@@ -44,22 +42,6 @@ void handle_child_process(t_command *commands, char *path, char *args[])
 	if (execve(path, args, environ) == -1)
 		exit(126);
 }
-
-// void	handle_child_process(t_command *commands, char *path, char *args[])
-// {
-// 	if (process_redirections(commands) == ERROR)
-// 	{
-// 		ft_putstr_fd("Error: Redirection failed.\n", 2);
-// 		exit(1);
-// 	}
-// 	if (!path)
-// 	{
-// 	}
-// 	if (execve(path, args, environ) == -1)
-// 	{
-// 		exit(126);
-// 	}
-// }
 
 void	execute_command(t_command *commands, char *path, char *args[])
 {

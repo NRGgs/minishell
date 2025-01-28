@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 12:45:32 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:02:23 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void	f_error(void);
 /* execution.c */
 void	execute_commands(t_command *commands);
 t_env	*create_env_node(const char *name, const char *value);
-t_env	*init_env_list(void);
 
 /* execution_without_pipe */
 void	handle_child_process(t_command *commands, char *path, char *args[]);
@@ -181,6 +180,7 @@ void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path);
 void	handle_parent(int *pipe_fd, int *pipe_in);
 void	execution_with_pipe(t_command *commands);
 int		setup_pipe(int *pipe_fd);
+int		process_single_command(t_command *current, int *pipe_in);
 
 /* cd.c */
 int		change_pwd(t_env *env_list);
@@ -229,6 +229,11 @@ int		handle_input_redirection(t_command *cmd);
 int		handle_output_redirection(t_command *cmd);
 int		handle_heredoc(t_command *cmd);
 int		process_redirections(t_command *cmd);
+
+/* init_env_list.c */
+int	parse_env_var(char *env_str, char **name, char **value);
+void	append_env_node(t_env **list, t_env *new_node);
+t_env	*init_env_list(void);
 
 /* utils.c */
 

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 15:48:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:50:47 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ extern char	**environ;
 char	**get_command_args(t_command *current)
 {
 	char	**args;
-	int		i = 0;
+	int		i;
 
+	i = 0;
 	args = malloc(sizeof(char *) * 4);
 	if (!args)
 		return (NULL);
@@ -53,8 +54,11 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 }
-void execute_command_pipe(t_command *current, char *path)
+
+void	execute_command_pipe(t_command *current, char *path)
 {
+	char	**args;
+
 	if (process_redirections(current) == ERROR)
 	{
 		ft_putstr_fd("Error: Redirection failed.\n", 2);
@@ -70,7 +74,7 @@ void execute_command_pipe(t_command *current, char *path)
 		if (!path)
 			exit(127);
 		{
-			char **args = get_command_args(current);
+			args = get_command_args(current);
 			if (!args || execve(path, args, environ) == -1)
 			{
 				perror("execve");
