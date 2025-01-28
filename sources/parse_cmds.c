@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 15:09:43 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:58:21 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,59 +117,161 @@ static bool	is_redirect(char *str)
 	return (false);
 }
 
-static int	parse_string_helper(char *first, char *second, char **options)
+static int	parse_string_helper(char *first, char *second, char **pattern)
 {
 	size_t	size;
 
 	size = second - first;
-	*options = ft_calloc((size + 1), sizeof(char));
-	if (*options == NULL)
+	*pattern = ft_calloc((size + 1), sizeof(char));
+	if (*pattern == NULL)
 		return (FAIL);
-	ft_strlcpy(*options, first + 1, size);
+	ft_strlcpy(*pattern, first + 1, size);
+	return (SUCCESS);
 }
 
-/*	Parse the string of the special commands.
- *
- *	input:		the user input.
- *	i:			the index of the current token.
- *	options:	the options of the command.
- *
- *	Return: SUCCESS (1) / FAIL (0).
- */
-static int	parse_string(char **input, int *i, char **options)
+static bool	air_quote_exists(char **input, int j)
 {
+	while (input[j] != NULL)
+	{
+		if (ft_strchr(input[j], '\"') != NULL)
+			return (true);
+		j++;
+	}
+	return (false);
+}
+
+static int	n_chars_till_quote(char **input, int j)
+{
+	int		start;
+	int		k;
 	size_t	size;
+
+	size = 0;
+	start = j - 1;
+	while (input[j] != NULL)
+	{
+		if (ft_strchr(input[j], '\"') != NULL)
+		{
+			k = 0;
+			while (input[j][k] != '\"')
+			{
+				size++;
+				k++;
+			}
+			return (size + (j - start));
+		}
+		size += ft_strlen(input[j]) + 1;
+		j++;
+	}
+	return (size);
+}
+
+static int	find_quote(char **input, int *i, char **pattern)
+{
+	int		j;
+	size_t	size;
+
+	j = *i;
+	size = ft_strlen(ft_strchr(input[j], '\"') + 1);
+	size += n_chars_till_quote(input, *i + 1) + 1;
+	*pattern = ft_calloc((size), sizeof(char));
+	if (*pattern == NULL)
+		return (FAIL);
+	ft_strlcpy(*pattern, ft_strchr(input[j], '\"') + 1, size);
+	(*i)++;
+	while (input[*i] != NULL)
+	{
+		if (ft_strchr(input[*i], '\"') != NULL)
+		{
+			space_strlcat(*pattern, input[*i], size);
+			break ;
+		}
+		space_strlcat(*pattern, input[*i], size);
+		(*i)++;
+	}
+	return (SUCCESS);
+}
+
+static char	*add_newline(char *input)
+{
+	char	*temp;
+
+	if (input[0] == '\0')
+		return (input);
+	temp = ft_strjoin(input, "\n");
+	if (temp == NULL)
+	{
+		free(input);
+		return (NULL);
+	}
+	free(input);
+	input = ft_strdup(temp);
+	free(temp);
+	return (input);
+}
+
+static char	*read_till_quotes(char *delimiter, char **pattern)
+{
+	char	*buffer;
+	char	*temp;
+
+	while (1)
+	{
+		buffer = readline("\\ ");
+		if (buffer != NULL && ft_strcmp(buffer, delimiter) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		*pattern = add_newline(*pattern);
+		if (*pattern == NULL)
+			return (free(buffer), NULL);
+		temp = ft_strjoin(*pattern, buffer);
+		free(buffer);
+		if (temp == NULL)
+			return (free(*pattern), NULL);
+		free(*pattern);
+		*pattern = ft_strdup(temp);
+		if (*pattern == NULL)
+			return (free(temp), NULL);
+		free(temp);
+	}
+	return (*pattern);
+}
+
+static int	receive_input_till_quotes(char **input, int *i, char **pattern)
+{
+	*pattern = ft_strdup(ft_strchr(input[*i], '\"') + 1);
+	if (*pattern == NULL)
+		return (FAIL);
+	if (read_till_quotes("\"", pattern) == NULL)
+		return (FAIL);
+	return (SUCCESS);
+}
+
+static int	parse_string(char **input, int *i, char **pattern)
+{
 	int		j;
 	char	*first;
 	char	*second;
 
-	size = 0;
 	j = *i;
 	first = ft_strchr(input[j], '\"');
 	second = ft_strchr(first + 1, '\"');
 	if (first != second && second != NULL)
-		parse_string_helper(first, second, options);
-	size = ft_strlen(first);
+		if (parse_string_helper(first, second, pattern) == FAIL)
+			return (FAIL);
 	if (second == NULL)
 	{
-		while (input[j + 1] != NULL)
+		if (air_quote_exists(input, (*i) + 1))
 		{
-			second = ft_strchr(input[j + 1], '\"');
-			if (second != NULL)
-			{
-				size += (second - input[j + 1]) + 1;
-				*options = ft_calloc((size + 1), sizeof(char));
-				if (*options == NULL)
-					return (FAIL);
-				ft_strlcat(*options, first + 1, size);
-				(*i)++;
-				while (*i < j + 1)
-					space_strlcat(*options, input[(*i)++], size);
-				space_strlcat(*options, input[*i], size);
-				break ;
-			}
-			size += ft_strlen(input[j + 1]) + 1;
-			j++;
+			if (find_quote(input, i, pattern) == FAIL)
+				return (FAIL);
+		}
+		else
+		{
+			if (receive_input_till_quotes(input, i, pattern) == FAIL)
+				return (FAIL);
 		}
 	}
 	return (SUCCESS);
