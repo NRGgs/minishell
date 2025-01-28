@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/27 17:06:31 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:38:31 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,11 +128,5 @@ int	parse_redirect(char **input, t_command **cmds, int *i, int command_index)
 		return (FAIL);
 	if (after_command(input, i, &last) == FAIL)
 		return (FAIL);
-	printf("IN TYPE: %d\n", last->in_type);
-	// if (last->in_type == HERE_DOC)
-	// {
-	// 	if (after_command(input, i + 1, &last) == FAIL)
-	// 		return (FAIL);
-	// }
 	return (SUCCESS);
 }
