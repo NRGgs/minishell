@@ -6,11 +6,11 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 13:02:23 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:10:29 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	MINISHELL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "libft/libft.h"
@@ -64,7 +64,7 @@ typedef struct s_env
 	char			*name;
 	char			*value;
 	struct s_env	*next;
-} t_env;
+}	t_env;
 
 /* Singly linked list. Stores all commands. */
 typedef struct s_command
@@ -93,17 +93,17 @@ typedef struct s_variable
 \*****************************************************************************/
 
 /* minishell.c */
-void	set_error(char *error_msg, int error_code);
+void		set_error(char *error_msg, int error_code);
 
 /* signal.c */
-void	check_signals(void);
+void		check_signals(void);
 
 /* parse.c */
 t_command	*parse_user_input(char *input);
 
 /* parse_cmds.c */
-int		is_command(char *cmd);
-int		parse_command(char **input, t_command **cmds, int *i);
+int			is_command(char *cmd);
+int			parse_command(char **input, t_command **cmds, int *i);
 
 /* commands.c */
 t_command	*cmd_new(char *command, char *options);
@@ -111,9 +111,9 @@ t_command	*cmd_last(t_command *cmds);
 void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 
 /* parse_var.c */
-bool	is_variable(char *str);
-int		parse_variable(char *str, t_variable **vars);
-char	*replace_variable(char *str, t_variable *vars);
+bool		is_variable(char *str);
+int			parse_variable(char *str, t_variable **vars);
+char		*replace_variable(char *str, t_variable *vars);
 
 /* variables.c */
 t_variable	*var_new(char *name, char *value);
@@ -122,120 +122,123 @@ void		var_add_back(t_variable **vars, t_variable *new_var);
 t_variable	*var_find(t_variable *vars, char *name);
 
 /* parse_redirect.c */
-int		parse_redirect(char **input, t_command **cmds, int *i, int command_index);
+int			parse_redirect(char **input, t_command **cmds,
+				int *i, int command_index);
 
 /* redirections.c */
-int		textfile_redirection(char *fn, char *redirect, t_command **last, int place);
-int		here_doc_redirection(char *delimiter, t_command **last);
-int		string_redirection(char **input, t_command **last, int *i);
+int			textfile_redirection(char *fn, char *redirect,
+				t_command **last, int place);
+int			here_doc_redirection(char *delimiter, t_command **last);
+int			string_redirection(char **input, t_command **last, int *i);
 
 /* parse_clean.c */
-void	clean_2d_array(char **array);
-void	clean_variables(t_variable **vars);
-void	clean_commands(t_command **cmds);
+void		clean_2d_array(char **array);
+void		clean_variables(t_variable **vars);
+void		clean_commands(t_command **cmds);
 
 /* builtins.c */
-int		is_builtin(char *command);
-int		handle_cd(t_command *command);
-int		execute_builtin(t_command *command);
-void	free_args(char **args);
+int			is_builtin(char *command);
+int			handle_cd(t_command *command);
+int			execute_builtin(t_command *command);
+void		free_args(char **args);
 
 /* find_path.c */
-char 	*true_path(char *argv, char **env);
-char 	*path_finder(char **env);
-char 	*find_path(char *command, char **env);
-void	fn_path(char **res_split, char *argv);
-void	free_2d_array(char **arr);
+char		*true_path(char *argv, char **env);
+char		*path_finder(char **env);
+char		*find_path(char *command, char **env);
+void		fn_path(char **res_split, char *argv);
+void		free_2d_array(char **arr);
 
 /* find_path_2.c */
-char	*search_in_paths(char **res_split, char **args);
-char	**split_args(char *argv);
-char	**split_paths(char **env);
-char	*check_argv_executable(char *argv);
-void	f_error(void);
+char		*search_in_paths(char **res_split, char **args);
+char		**split_args(char *argv);
+char		**split_paths(char **env);
+char		*check_argv_executable(char *argv);
+void		f_error(void);
 
 /* execution.c */
-void	execute_commands(t_command *commands);
-t_env	*create_env_node(const char *name, const char *value);
+void		execute_commands(t_command *commands);
+t_env		*create_env_node(const char *name, const char *value);
 
 /* execution_without_pipe */
-void	handle_child_process(t_command *commands, char *path, char *args[]);
-void	execute_command(t_command *commands, char *path, char *args[]);
-void	exec_external_no_pipe(t_command *commands);
-void	exec_builtin_no_pipe(t_command *commands);
-void	restore_fds(int in, int out);
+void		handle_child_process(t_command *commands, char *path, char *args[]);
+void		execute_command(t_command *commands, char *path, char *args[]);
+void		exec_external_no_pipe(t_command *commands);
+void		exec_builtin_no_pipe(t_command *commands);
+void		restore_fds(int in, int out);
 
 /* execution_without_pipe_2 */
-void	execution_without_pipe(t_command *commands);
+void		execution_without_pipe(t_command *commands);
 
 /* execution_with_pipe_1.c */
-char	**get_command_args(t_command *current);
-void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd);
-void	execute_command_pipe(t_command *current, char *path);
-int		create_child_process(t_command *current, int pipe_in, int *pipe_fd, char *path);
-void	wait_for_children(void);
+char		**get_command_args(t_command *current);
+void		setup_input_output(t_command *current, int pipe_in, int *pipe_fd);
+void		execute_command_pipe(t_command *current, char *path);
+int			create_child_process(t_command *current, int pipe_in,
+				int *pipe_fd, char *path);
+void		wait_for_children(void);
 
 /* execution_with_pipe_2.c */
-void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path);
-void	handle_parent(int *pipe_fd, int *pipe_in);
-void	execution_with_pipe(t_command *commands);
-int		setup_pipe(int *pipe_fd);
-int		process_single_command(t_command *current, int *pipe_in);
+void		handle_child(t_command *current, int pipe_in,
+				int *pipe_fd, char *path);
+void		handle_parent(int *pipe_fd, int *pipe_in);
+void		execution_with_pipe(t_command *commands);
+int			setup_pipe(int *pipe_fd);
+int			process_single_command(t_command *current, int *pipe_in);
 
 /* cd.c */
-int		change_pwd(t_env *env_list);
-int		cd_home(t_env *env_list);
-// int 	cd(t_env *env_list, char **argv);
-int	cd(t_env *env_list, t_command *command);
-t_env	*get_env(t_env *env_list, char *identifier);
-int		check_option(char *argv);
+int			change_pwd(t_env *env_list);
+int			cd_home(t_env *env_list);
+int			cd(t_env *env_list, t_command *command);
+t_env		*get_env(t_env *env_list, char *identifier);
+int			check_option(char *argv);
 
 /* pwd.c */
-int		pwd(char **argv);
+int			pwd(char **argv);
 
 /* echo.c */
-int		echo(t_command *command);
-int		check_echo_option(char *option);
-void	ft_free_split(char **split);
+int			echo(t_command *command);
+int			check_echo_option(char *option);
+void		ft_free_split(char **split);
 
 /* export.c */
-t_env *find_env_var(t_env *env_list, const char *name);
-t_env *create_env_var(t_env **env_list, const char *name, const char *value);
-void print_exported_vars(t_env *env_list);
-int my_export(t_env **env_list, char **args);
-int	run_export_builtin(t_command *command);
+t_env		*find_env_var(t_env *env_list, const char *name);
+t_env		*create_env_var(t_env **env_list, const char *name,
+				const char *value);
+void		print_exported_vars(t_env *env_list);
+int			my_export(t_env **env_list, char **args);
+int			run_export_builtin(t_command *command);
 
 /* export_2.c */
-void	add_env_to_list(t_env **env_list, t_env *new_var);
-t_env	*alloc_env_node(const char *name, const char *value);
-void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign);
-void	handle_export_no_equal(t_env **env_list, char *arg);
-void	process_export_arg(t_env **env_list, char *arg);
+void		add_env_to_list(t_env **env_list, t_env *new_var);
+t_env		*alloc_env_node(const char *name, const char *value);
+void		handle_export_equal(t_env **env_list, char *arg, char *equal_sign);
+void		handle_export_no_equal(t_env **env_list, char *arg);
+void		process_export_arg(t_env **env_list, char *arg);
 
 /* unset.c */
-int my_unset(t_env **env_list, char **args);
-int remove_env_var(t_env **env_list, const char *var_name);
-char **parse_args_for_unset(t_command *command);
-int	run_unset_builtin(t_command *command);
+int			my_unset(t_env **env_list, char **args);
+int			remove_env_var(t_env **env_list, const char *var_name);
+char		**parse_args_for_unset(t_command *command);
+int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int 	exit_shell(char *input);
+int			exit_shell(char *input);
 
 /* env.c */
-int env(t_env *env_list);
+int			env(t_env *env_list);
 
 /* redirect.c */
-int		handle_input_redirection(t_command *cmd);
-int		handle_output_redirection(t_command *cmd);
-int		handle_heredoc(t_command *cmd);
-int		process_redirections(t_command *cmd);
+int			handle_input_redirection(t_command *cmd);
+int			handle_output_redirection(t_command *cmd);
+int			handle_heredoc(t_command *cmd);
+int			process_redirections(t_command *cmd);
 
 /* init_env_list.c */
-int	parse_env_var(char *env_str, char **name, char **value);
-void	append_env_node(t_env **list, t_env *new_node);
-t_env	*init_env_list(void);
+int			parse_env_var(char *env_str, char **name, char **value);
+void		append_env_node(t_env **list, t_env *new_node);
+t_env		*init_env_list(void);
 
 /* utils.c */
-
 
 #endif

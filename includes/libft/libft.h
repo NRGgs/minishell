@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   libft.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/10/07 13:59:28 by nmattos-      #+#    #+#                 */
-/*   Updated: 2024/12/01 12:53:42 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/07 13:59:28 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/01/28 13:10:44 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strstr(const char *big, const char *little);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-
 
 /* Number Functions */
 int		ft_atoi(const char *nptr, int *error);
