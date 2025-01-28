@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/26 16:24:09 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:12:59 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,23 @@ void	print_commands(t_command *commands)
 	}
 }
 
+/*	Sets the error message and the exit status.
+ *
+ *	error_msg: the error message to be printed.
+ *	error_code: the exit status to be set.
+ *
+ * 	Returns: none.
+ */
 void	set_error(char *error_msg, int error_code)
 {
 	perror(error_msg);
 	g_exit_status = error_code;
 }
 
+/*	Reads the user input and returns it as a string.
+ *
+ *	Returns: the user input as a string.
+ */
 char	*read_input(void)
 {
 	char	*input;

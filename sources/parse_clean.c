@@ -6,12 +6,18 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:10:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*	Clean a two dimensional array
+ *
+ *	array:	the array to clean
+ *
+ *	Return: none.
+ */
 void	clean_2d_array(char **array)
 {
 	int	i;
@@ -25,6 +31,12 @@ void	clean_2d_array(char **array)
 	free(array);
 }
 
+/*	Clean the variables linked list
+ *
+ *	vars:	the linked list to clean
+ *
+ *	Return: none.
+ */
 void	clean_variables(t_variable **vars)
 {
 	t_variable	*current;
@@ -42,6 +54,12 @@ void	clean_variables(t_variable **vars)
 	*vars = NULL;
 }
 
+/*	Clean the commands linked list
+ *
+ *	cmds:	the linked list to clean
+ *
+ *	Return: none.
+ */
 void	clean_commands(t_command **cmds)
 {
 	t_command	*current;

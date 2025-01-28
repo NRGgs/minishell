@@ -6,11 +6,17 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 17:06:53 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:09:43 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	space_strlcat(char *dst, char *src, size_t size)
+{
+	ft_strlcat(dst, " ", size);
+	ft_strlcat(dst, src, size);
+}
 
 /*	Check all paths in the PATH environment variable for the command.
  *
@@ -94,6 +100,12 @@ static bool	is_special(char *command)
 	return (false);
 }
 
+/*	Check if the string is a redirect.
+ *
+ *	str: the string to be checked.
+ *
+ * 	Return: true (1) / false (0).
+ */
 static bool	is_redirect(char *str)
 {
 	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
@@ -103,6 +115,17 @@ static bool	is_redirect(char *str)
 		return (true);
 	}
 	return (false);
+}
+
+static int	parse_string_helper(char *first, char *second, char **options)
+{
+	size_t	size;
+
+	size = second - first;
+	*options = ft_calloc((size + 1), sizeof(char));
+	if (*options == NULL)
+		return (FAIL);
+	ft_strlcpy(*options, first + 1, size);
 }
 
 /*	Parse the string of the special commands.
@@ -125,21 +148,15 @@ static int	parse_string(char **input, int *i, char **options)
 	first = ft_strchr(input[j], '\"');
 	second = ft_strchr(first + 1, '\"');
 	if (first != second && second != NULL)
-	{
-		size = second - first;
-		*options = ft_calloc((size + 1), sizeof(char));
-		if (*options == NULL)
-			return (FAIL);
-		ft_strlcpy(*options, first + 1, size);
-	}
+		parse_string_helper(first, second, options);
 	size = ft_strlen(first);
 	if (second == NULL)
 	{
 		while (input[j + 1] != NULL)
 		{
-			if (ft_strchr(input[j + 1], '\"') != NULL)
+			second = ft_strchr(input[j + 1], '\"');
+			if (second != NULL)
 			{
-				second = ft_strchr(input[j + 1], '\"');
 				size += (second - input[j + 1]) + 1;
 				*options = ft_calloc((size + 1), sizeof(char));
 				if (*options == NULL)
@@ -147,13 +164,8 @@ static int	parse_string(char **input, int *i, char **options)
 				ft_strlcat(*options, first + 1, size);
 				(*i)++;
 				while (*i < j + 1)
-				{
-					ft_strlcat(*options, " ", size);
-					ft_strlcat(*options, input[*i], size);
-					(*i)++;
-				}
-				ft_strlcat(*options, " ", size);
-				ft_strlcat(*options, input[*i], size);
+					space_strlcat(*options, input[(*i)++], size);
+				space_strlcat(*options, input[*i], size);
 				break ;
 			}
 			size += ft_strlen(input[j + 1]) + 1;
@@ -233,6 +245,14 @@ static int	parse_options(char **input, int *i, char **options)
 	return (SUCCESS);
 }
 
+/*	Get the pattern of the command.
+ *
+ *	input:		the user input.
+ *	i:			the index of the current token.
+ *	pattern:	the pattern of the command.
+ *
+ *	Return: the new pattern.
+ */
 static char	*get_pattern(char **input, int *i, char *pattern)
 {
 	char	*new_pattern;
@@ -242,33 +262,32 @@ static char	*get_pattern(char **input, int *i, char *pattern)
 	new_pattern = NULL;
 	len_pattern = 0;
 	len_string = 0;
-	if (input[*i + 1] == NULL || is_command(input[*i + 1]) || is_redirect(input[*i + 1]))
+	while (input[*i + 1] != NULL && !is_command(input[*i + 1])
+		&& !is_redirect(input[*i + 1]))
 	{
-		return (pattern);
-	}
-	while (!is_command(input[*i + 1]) && !is_redirect(input[*i + 1]))
-	{
-		if (pattern != NULL)
-			len_pattern = ft_strlen(pattern) + 1;
 		len_string = ft_strlen(input[*i + 1]);
 		if (pattern == NULL)
 			new_pattern = ft_strdup(input[*i + 1]);
 		else
 		{
+			len_pattern = ft_strlen(pattern) + 1;
 			new_pattern = ft_strndup(pattern, len_pattern + len_string);
-			ft_strlcat(new_pattern, " ", len_pattern + len_string + 1);
-			ft_strlcat(new_pattern, input[*i + 1], \
+			space_strlcat(new_pattern, input[*i + 1], \
 				len_pattern + len_string + 1);
 		}
 		free(pattern);
 		pattern = new_pattern;
 		(*i)++;
-		if (input[*i + 1] == NULL)
-			break ;
 	}
 	return (new_pattern);
 }
 
+/*	Check if the command supports options.
+ *
+ *	command: the command to be checked.
+ *
+ * 	Return: true (1) / false (0).
+ */
 static bool	options_possible(char *command)
 {
 	if (ft_strncmp(command, "exit", 5) == 0)
@@ -305,7 +324,9 @@ int	parse_command(char **input, t_command **cmds, int *i)
 		free(options);
 	if (new_cmd == NULL)
 		return (FAIL);
-	pattern = get_pattern(input, i, pattern);
+	if (input[*i + 1] != NULL && !is_command(input[*i + 1])
+		&& !is_redirect(input[*i + 1]))
+		pattern = get_pattern(input, i, pattern);
 	new_cmd->pattern = pattern;
 	cmd_add_back(cmds, new_cmd);
 	return (SUCCESS);

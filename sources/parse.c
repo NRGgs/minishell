@@ -6,12 +6,20 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/27 14:22:31 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:41:14 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*	Clean all allocated memory.
+ *
+ *	vars:			the variables to be cleaned.
+ *	cmds:			the commands to be cleaned.
+ *	split_input:	the split input to be cleaned.
+ *
+ *	Return: none.
+ */
 static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 {
 	if (vars != NULL)
@@ -22,6 +30,15 @@ static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 		clean_2d_array(split_input);
 }
 
+/*	Parse the command given by the user.
+ *
+ *	split_input:	the split user input.
+ *	commands:		the linked list of commands.
+ *	variables:		the linked list of variables.
+ *	i:				the index of the current token.
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+*/
 int	parse_full_command(\
 	char **split_input, \
 	t_command **commands, \
@@ -53,6 +70,12 @@ int	parse_full_command(\
 	return (SUCCESS);
 }
 
+/*	Parse the user input.
+ *
+ *	input:	the user input.
+ *
+ *	Return: the linked list of commands.
+ */
 t_command	*parse_user_input(char *input)
 {
 	t_command	*commands;
