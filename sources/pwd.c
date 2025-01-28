@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:13:07 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/06 09:49:13 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/01/28 13:31:10 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int	pwd(char **argv)
 
 	if (*(argv + 1) && check_option(*(argv + 1)) == 1)
 	{
-		fprintf(stderr, "pwd: invalid option -- '%s'\n", *(argv + 1));
+		ft_putstr_fd("pwd: invalid option -- '", STDERR_FILENO);
+		ft_putstr_fd(argv[1], STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
 		return (1);
 	}
 	cwd = getcwd(NULL, 0);
