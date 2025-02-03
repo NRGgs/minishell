@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:59:28 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 13:10:44 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:16:27 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int		ft_tolower(int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
 char	*ft_strreplace(char *str, char *to_replace, char *replacement);
+char	*add_newline(char *str);
+void	space_strlcat(char *dst, char *src, size_t size);
 
 /* String Comparison */
 size_t	ft_strlen(const char *s);

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/27 14:38:36 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:16:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
 			return (FAIL);
 	}
 	return (SUCCESS);
-}
-
-static char	*add_newline(char *input)
-{
-	char	*temp;
-
-	if (input[0] == '\0')
-		return (input);
-	temp = ft_strjoin(input, "\n");
-	if (temp == NULL)
-	{
-		free(input);
-		return (NULL);
-	}
-	free(input);
-	input = ft_strdup(temp);
-	free(temp);
-	return (input);
 }
 
 static char	*read_here_doc(char *delimiter, char *input)

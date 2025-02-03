@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 13:10:29 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:15:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,21 @@ void		check_signals(void);
 /* parse.c */
 t_command	*parse_user_input(char *input);
 
-/* parse_cmds.c */
+/* parse_checks.c */
+bool		is_special(char *command);
+bool		is_redirect(char *str);
 int			is_command(char *cmd);
+bool		options_possible(char *command);
+int			check_path(char *cmd, char *path);
+
+/* parse_string.c */
+int			parse_string(char **input, int *i, char **pattern);
+
+/* parse_string_utils.c */
+int			n_chars_till_quote(char **input, int j);
+char		*read_till_quotes(char *delimiter, char **pattern);
+
+/* parse_cmds.c */
 int			parse_command(char **input, t_command **cmds, int *i);
 
 /* commands.c */
