@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 15:18:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:25:43 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	contains_quote(char *str)
 	return ('0');
 }
 
-int	n_chars_till_quote(char **input, int j)
+int	n_chars_till_quote(char **input, int j, char quote)
 {
 	int		start;
 	int		k;
@@ -31,10 +31,10 @@ int	n_chars_till_quote(char **input, int j)
 	start = j - 1;
 	while (input[j] != NULL)
 	{
-		if (ft_strchr(input[j], '\"') != NULL)
+		if (ft_strchr(input[j], quote) != NULL)
 		{
 			k = 0;
-			while (input[j][k] != '\"')
+			while (input[j][k] != quote)
 			{
 				size++;
 				k++;

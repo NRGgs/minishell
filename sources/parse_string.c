@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:01:21 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 15:22:00 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:28:32 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ static int	find_quote(char **input, int *i, char **pattern, char quote)
 
 	j = *i;
 	size = ft_strlen(ft_strchr(input[j], quote) + 1);
-	size += n_chars_till_quote(input, *i + 1);
-	*pattern = ft_calloc((size), sizeof(char));
+	size += n_chars_till_quote(input, *i + 1, quote);
+	*pattern = malloc((size + 1) * sizeof(char));
 	if (*pattern == NULL)
 		return (FAIL);
-	ft_strlcpy(*pattern, ft_strchr(input[j], quote) + 1, size);
+	ft_strlcpy(*pattern, ft_strchr(input[j], quote) + 1, size + 1);
 	(*i)++;
 	while (input[*i] != NULL)
 	{

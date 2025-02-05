@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 16:06:46 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:39:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			parse_string(char **input, int *i, char **pattern, char quote);
 
 /* parse_string_utils.c */
 char		contains_quote(char *str);
-int			n_chars_till_quote(char **input, int j);
+int			n_chars_till_quote(char **input, int j, char quote);
 char		*read_till_quotes(char delimiter, char **pattern);
 
 /* parse_cmds.c */
@@ -130,7 +130,7 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 /* parse_var.c */
 bool		is_variable(char *str);
 int			parse_variable(char *str, t_variable **vars);
-char		*replace_variable(char *str, t_variable *vars);
+char		*replace_variable(char *str, t_variable *vars, char quote);
 
 /* variables.c */
 t_variable	*var_new(char *name, char *value);

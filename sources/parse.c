@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 12:33:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:12:33 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	parse_full_command(\
 			&& (split_input[*i][ft_strlen(split_input[*i]) - 1] == '\"'
 			|| split_input[*i][ft_strlen(split_input[*i]) - 1] == '\''))
 		{
-			temp = replace_variable(cmd_last(*commands)->pattern, *variables);
+			temp = replace_variable(cmd_last(*commands)->pattern, *variables, \
+					split_input[*i][ft_strlen(split_input[*i]) - 1]);
 			if (temp == NULL)
 			{
 				clean_all(variables, commands, split_input);

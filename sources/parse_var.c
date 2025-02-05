@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 12:14:01 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:19:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ char	*escape_dollar(char *str)
 	char	*new_str;
 	size_t	new_str_len;
 
+	printf("str: %s\n", str);
 	to_replace = ft_strchr(str, '$');
 	if (to_replace == NULL)
 		return (str);
@@ -80,9 +81,12 @@ char	*escape_dollar(char *str)
 	new_str = malloc(new_str_len);
 	if (new_str == NULL)
 		return (NULL);
-	ft_strlcat(new_str, str, to_replace - str);
+	ft_strlcat(new_str, str, to_replace - str + 1);
+	printf("new_str: %s\n", new_str);
 	ft_strlcat(new_str, "\\", new_str_len);
+	printf("new_str: %s\n", new_str);
 	ft_strlcat(new_str, to_replace, new_str_len);
+	printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 
@@ -93,14 +97,14 @@ char	*escape_dollar(char *str)
  *	Return: the new string.
  *			NULL if failed.
  */
-char	*replace_variable(char *str, t_variable *vars)
+char	*replace_variable(char *str, t_variable *vars, char quote)
 {
 	t_variable	*variable;
 	char		*new_str;
 	char		*to_replace;
 	int			i;
 
-	if (str[0] == '\'')
+	if (quote == '\'')
 		return (escape_dollar(str));
 	to_replace = ft_strchr(str, '$');
 	if (to_replace == NULL)
