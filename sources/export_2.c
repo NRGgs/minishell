@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:15:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/05 13:58:54 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign)
 		return ;
 	value = ft_strdup(equal_sign + 1);
 	if (!value)
-	{
-		free(name);
-		return ;
-	}
+		return (free(name), (void)0);
 	existing = find_env_var(*env_list, name);
 	if (existing)
 	{
@@ -72,7 +69,10 @@ void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign)
 		existing->value = value;
 	}
 	else
+	{
 		create_env_var(env_list, name, value);
+		free(value);
+	}
 	free(name);
 }
 
