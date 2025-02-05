@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/28 15:10:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:39:28 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	clean_commands(t_command **cmds)
 			free(current->input);
 		if (current->output != NULL)
 			free(current->output);
+		if (current->pattern != NULL)
+			free(current->pattern);
 		free(current);
 		current = next;
 	}
