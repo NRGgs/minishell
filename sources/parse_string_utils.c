@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 16:25:43 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:13:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ static char	*remove_delimiter(char *str, char delimiter)
 
 	new_str = malloc(ft_strlen(str));
 	if (new_str == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	i = 0;
 	j = 0;
 	while (str[i] != '\0')
@@ -68,6 +71,7 @@ static char	*remove_delimiter(char *str, char delimiter)
 		i++;
 	}
 	new_str[j] = '\0';
+	free(str);
 	return (new_str);
 }
 
