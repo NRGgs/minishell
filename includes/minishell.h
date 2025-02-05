@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 12:21:28 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:41:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,9 @@ typedef struct s_variable
 
 /* minishell.c */
 void		set_error(char *error_msg, int error_code);
+
+/* free.c */
+void		free_null(void **ptr);
 
 /* signal.c */
 void		check_signals(void);

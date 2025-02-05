@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 15:10:09 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:54:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ int	main(void)
 	my_env_list = init_env_list();
 	check_signals();
 	run_commands(my_env_list);
+	// free(my_env_list);
 	clear_history();
 	rl_clear_history();
 	return (g_exit_status);

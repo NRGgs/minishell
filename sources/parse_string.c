@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:01:21 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 12:33:29 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:22:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ static int	find_quote(char **input, int *i, char **pattern, char quote)
 	{
 		if (ft_strchr(input[*i], quote) != NULL)
 		{
-			space_strlcat(*pattern, input[*i], size);
+			space_strlcat(*pattern, input[*i], size + 1);
 			break ;
 		}
-		space_strlcat(*pattern, input[*i], size);
+		space_strlcat(*pattern, input[*i], size + 1);
 		(*i)++;
 	}
 	return (SUCCESS);

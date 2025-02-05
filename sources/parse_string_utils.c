@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 12:33:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:18:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	n_chars_till_quote(char **input, int j)
 			}
 			return (size + (j - start));
 		}
-		size += ft_strlen(input[j]) + 1;
+		size += ft_strlen(input[j]);
 		j++;
 	}
 	return (size);

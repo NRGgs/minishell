@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 12:48:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:53:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

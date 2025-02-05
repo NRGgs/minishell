@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 12:39:28 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:53:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,11 @@ void	clean_commands(t_command **cmds)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->command);
-		if (current->options != NULL)
-			free(current->options);
-		if (current->input != NULL)
-			free(current->input);
-		if (current->output != NULL)
-			free(current->output);
-		if (current->pattern != NULL)
-			free(current->pattern);
+		free_null((void **)&current->command);
+        free_null((void **)&current->options);
+        free_null((void **)&current->input);
+        free_null((void **)&current->output);
+        free_null((void **)&current->pattern);
 		free(current);
 		current = next;
 	}
