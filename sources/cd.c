@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:33:13 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:45:18 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,25 @@ int	change_pwd(t_env *env_list)
 {
 	char	*tmp;
 	char	*pwd;
+	char	*new_pwd;
 
 	(void)env_list;
 	pwd = getenv("PWD");
 	if (!pwd)
-	{
-		perror("Error: PWD not found");
-		return (1);
-	}
+		return (perror("Error: PWD not found"), 1);
 	tmp = ft_strdup(pwd);
 	if (!tmp)
+		return (perror("strdup"), 1);
+	new_pwd = getcwd(NULL, 0);
+	if (!new_pwd)
+		return (free(tmp), 1);
+	if (setenv("PWD", new_pwd, 1) < 0)
 	{
-		perror("strdup");
-		return (1);
-	}
-	if (setenv("PWD", getcwd(NULL, 0), 1) < 0)
-	{
-		perror("setenv");
+		free(new_pwd);
 		free(tmp);
-		return (1);
+		return (perror("setenv"), 1);
 	}
+	free(new_pwd);
 	free(tmp);
 	return (0);
 }
