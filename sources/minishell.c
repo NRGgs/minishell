@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/28 15:12:59 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:10:09 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*read_input(void)
 	}
 	if (getcwd(dir, sizeof(dir)) != NULL)
 	{
-		strcat(dir, " $ ");
+		ft_strlcat(dir, " $ ", 1024);
 		prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
 	}
 	else
@@ -78,27 +78,23 @@ char	*read_input(void)
 	return (input);
 }
 
-int	main(void)
+void	run_commands(t_env *my_env_list)
 {
 	char		*input;
 	t_command	*commands;
-	t_env		*my_env_list;
+	t_command	*tmp;
 
-	my_env_list = init_env_list();
-	check_signals();
 	while (1)
 	{
 		input = read_input();
 		if (input == NULL)
-			break ;
+			return ;
 		add_history(input);
 		commands = parse_user_input(input);
+		free(input);
 		if (commands == NULL)
-		{
-			free(input);
 			continue ;
-		}
-		t_command *tmp = commands;
+		tmp = commands;
 		while (tmp)
 		{
 			tmp->env_list = my_env_list;
@@ -106,9 +102,17 @@ int	main(void)
 		}
 		print_commands(commands);// Test function (TEMP)
 		execute_commands(commands);
-		free(input);
 		clean_commands(&commands);
 	}
+}
+
+int	main(void)
+{
+	t_env		*my_env_list;
+
+	my_env_list = init_env_list();
+	check_signals();
+	run_commands(my_env_list);
 	clear_history();
 	rl_clear_history();
 	return (g_exit_status);
