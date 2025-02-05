@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 15:54:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:05:39 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int	main(void)
 	my_env_list = init_env_list();
 	check_signals();
 	run_commands(my_env_list);
-	// free(my_env_list);
 	clear_history();
 	rl_clear_history();
+	clear_env_list(my_env_list);
 	return (g_exit_status);
 }

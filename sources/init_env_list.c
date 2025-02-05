@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:00:24 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:16:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:05:51 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,19 @@ t_env	*init_env_list(void)
 		i++;
 	}
 	return (env_list);
+}
+
+void	clear_env_list(t_env *env_list)
+{
+	t_env	*tmp;
+
+	while (env_list)
+	{
+		tmp = env_list;
+		env_list = env_list->next;
+		free(tmp->name);
+		if (tmp->value)
+			free(tmp->value);
+		free(tmp);
+	}
 }

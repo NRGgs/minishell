@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 15:41:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:06:46 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,6 @@ int			process_redirections(t_command *cmd);
 int			parse_env_var(char *env_str, char **name, char **value);
 void		append_env_node(t_env **list, t_env *new_node);
 t_env		*init_env_list(void);
-
-/* utils.c */
+void		clear_env_list(t_env *env_list);
 
 #endif
