@@ -35,7 +35,8 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/parse_checks.c \
 		$(SRC_DIR)/parse_string_utils.c \
 		$(SRC_DIR)/parse_string.c \
-		$(SRC_DIR)/free.c
+		$(SRC_DIR)/free.c \
+		$(SRC_DIR)/execution_with_pipe_3.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

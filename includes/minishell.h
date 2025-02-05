@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 16:39:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:01:30 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,8 @@ void		handle_child(t_command *current, int pipe_in,
 void		handle_parent(int *pipe_fd, int *pipe_in);
 void		execution_with_pipe(t_command *commands);
 int			setup_pipe(int *pipe_fd);
+
+/* execution_with_pipe_3.c */
 int			process_single_command(t_command *current, int *pipe_in);
 
 /* cd.c */
