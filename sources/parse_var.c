@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:15 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:14:01 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,34 @@ int	parse_variable(char *str, t_variable **vars)
 	return (SUCCESS);
 }
 
+bool	valid_char(char c)
+{
+	if ((c >= 65 && c <= 90)
+		|| (c >= 97 && c <= 122)
+		|| (c >= 48 && c <= 57))
+		return (true);
+	return (false);
+}
+
+char	*escape_dollar(char *str)
+{
+	char	*to_replace;
+	char	*new_str;
+	size_t	new_str_len;
+
+	to_replace = ft_strchr(str, '$');
+	if (to_replace == NULL)
+		return (str);
+	new_str_len = ft_strlen(str) + 2;
+	new_str = malloc(new_str_len);
+	if (new_str == NULL)
+		return (NULL);
+	ft_strlcat(new_str, str, to_replace - str);
+	ft_strlcat(new_str, "\\", new_str_len);
+	ft_strlcat(new_str, to_replace, new_str_len);
+	return (new_str);
+}
+
 /*	Replace the variable in the string.
  *
  *	str: the string to be replaced.
@@ -72,11 +100,13 @@ char	*replace_variable(char *str, t_variable *vars)
 	char		*to_replace;
 	int			i;
 
+	if (str[0] == '\'')
+		return (escape_dollar(str));
 	to_replace = ft_strchr(str, '$');
 	if (to_replace == NULL)
 		return (str);
-	i = 0;
-	while (to_replace[i] != ' ' && to_replace[i] != '\0')
+	i = 1;
+	while (valid_char(to_replace[i]))
 		i++;
 	to_replace = ft_strndup(to_replace, i);
 	if (to_replace == NULL)
@@ -84,10 +114,7 @@ char	*replace_variable(char *str, t_variable *vars)
 	to_replace[0] = '$';
 	variable = var_find(vars, to_replace + 1);
 	if (variable == NULL)
-	{
-		free(to_replace);
-		return (str);
-	}
+		return (free(to_replace), str);
 	new_str = ft_strreplace(str, to_replace, variable->value);
 	free(to_replace);
 	return (new_str);

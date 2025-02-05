@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/03 14:12:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:53:45 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,17 @@ static int	special_parse_pattern(char **input, int *i, char **pattern)
 {
 	size_t		size;
 	int			j;
+	char		quote;
 
 	size = 0;
 	j = *i;
 	if (input[j + 1] == NULL || is_redirect(input[j + 1]))
 		return (SUCCESS);
-	if (ft_strchr(input[j + 1], '\"') != NULL)
+	quote = contains_quote(input[j + 1]);
+	if (quote != '0')
 	{
 		(*i)++;
-		if (parse_string(input, i, pattern) == FAIL)
+		if (parse_string(input, i, pattern, quote) == FAIL)
 			return (FAIL);
 		return (SUCCESS);
 	}

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/28 14:41:14 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/05 12:33:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ int	parse_full_command(\
 		return (clean_all(variables, commands, split_input), FAIL);
 	if (parse_redirect(split_input, commands, i, command_index) == FAIL)
 		return (clean_all(variables, commands, split_input), FAIL);
-	if (cmd_last(*commands)->in_type == STRING)
+	if (cmd_last(*commands)->in_type == STRING
+		|| cmd_last(*commands)->pattern != NULL)
 	{
 		if (split_input[*i] != NULL
-			&& split_input[*i - 1][ft_strlen(split_input[*i - 1]) - 1] == '\"')
+			&& (split_input[*i][ft_strlen(split_input[*i]) - 1] == '\"'
+			|| split_input[*i][ft_strlen(split_input[*i]) - 1] == '\''))
 		{
-			temp = replace_variable(cmd_last(*commands)->input, *variables);
+			temp = replace_variable(cmd_last(*commands)->pattern, *variables);
 			if (temp == NULL)
 			{
 				clean_all(variables, commands, split_input);
 				return (FAIL);
 			}
-			cmd_last(*commands)->input = temp;
+			cmd_last(*commands)->pattern = temp;
 		}
 	}
 	return (SUCCESS);
