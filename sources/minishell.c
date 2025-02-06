@@ -6,13 +6,13 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 16:05:39 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:06:03 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_exit_status = -1;
+int	g_exit_status = 0;
 
 // Test function (TEMP)
 void	print_commands(t_command *commands)
@@ -100,7 +100,7 @@ void	run_commands(t_env *my_env_list)
 			tmp->env_list = my_env_list;
 			tmp = tmp->next;
 		}
-		print_commands(commands);// Test function (TEMP)
+		// print_commands(commands);// Test function (TEMP)
 		execute_commands(commands);
 		clean_commands(&commands);
 	}
