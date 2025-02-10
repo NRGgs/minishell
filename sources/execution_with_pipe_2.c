@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/05 16:58:37 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:14:49 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,62 +25,6 @@ void	handle_parent(int *pipe_fd, int *pipe_in)
 	close(pipe_fd[1]);
 	*pipe_in = pipe_fd[0];
 }
-
-// int	process_single_command(t_command *current, int *pipe_in)
-// {
-// 	char	*path;
-// 	int		pipe_fd[2];
-// 	pid_t	pid;
-
-// 	path = true_path(current->command, environ);
-// 	if (current->next)
-// 	{
-// 		if (pipe(pipe_fd) == -1)
-// 		{
-// 			perror("pipe");
-// 			free(path);
-// 			return (FAIL);
-// 		}
-// 	}
-// 	pid = fork();
-// 	if (pid < 0)
-// 	{
-// 		perror("fork");
-// 		if (current->next)
-// 		{
-// 			close(pipe_fd[0]);
-// 			close(pipe_fd[1]);
-// 		}
-// 		free(path);
-// 		return (FAIL);
-// 	}
-// 	else if (pid == 0)
-// 	{
-// 		if (current->next)
-// 			handle_child(current, *pipe_in, pipe_fd, path);
-// 		else
-// 		{
-// 			if (*pipe_in != STDIN_FILENO)
-// 			{
-// 				if (dup2(*pipe_in, STDIN_FILENO) == -1)
-// 				{
-// 					perror("dup2");
-// 					exit(1);
-// 				}
-// 				close(*pipe_in);
-// 			}
-// 			execute_command_pipe(current, path);
-// 			exit(g_exit_status);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		if (current->next)
-// 			handle_parent(pipe_fd, pipe_in);
-// 		free(path);
-// 	}
-// 	return (SUCCESS);
-// }
 
 void	execution_with_pipe(t_command *commands)
 {

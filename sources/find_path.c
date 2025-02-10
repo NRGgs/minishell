@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:16:35 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:14:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*find_path(char *command, char **env)
 		return (NULL);
 	if (command[0] == '/')
 	{
-		if (access(command, F_OK) == 0)
+		if (access(command, X_OK) == 0)
 			return (command);
 		else
 			return (NULL);

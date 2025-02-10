@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 12:45:07 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:14:42 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ void	f_error(void)
 
 char	*check_argv_executable(char *argv)
 {
-	if (access(argv, F_OK) == 0)
-		return (argv);
 	if (ft_strchr(argv, '/') != NULL)
-		f_error();
+	{
+		if (access(argv, X_OK) == 0)
+			return (argv);
+		else
+			f_error();
+		return (NULL);
+	}
 	return (NULL);
 }
 
@@ -49,7 +53,7 @@ char	*search_in_paths(char **res_split, char **args)
 	i = 0;
 	while (res_split[i])
 	{
-		if (access(res_split[i], F_OK) == 0)
+		if (access(res_split[i], X_OK) == 0)
 		{
 			found = ft_strdup(res_split[i]);
 			free_2d_array(res_split);
