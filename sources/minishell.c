@@ -3,35 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/06 14:06:03 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:47:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status = 0;
-
-// Test function (TEMP)
-void	print_commands(t_command *commands)
-{
-	t_command	*tmp;
-
-	tmp = commands;
-	while (tmp != NULL)
-	{
-		printf("\ncommands->command: %s\n", tmp->command);
-		printf("commands->options: %s\n", tmp->options);
-		printf("commands->in_type: %d\n", tmp->in_type);
-		printf("commands->out_type: %d\n", tmp->out_type);
-		printf("commands->input: %s\n", tmp->input);
-		printf("commands->output: %s\n", tmp->output);
-		printf("commands->pattern: %s\n\n", tmp->pattern);
-		tmp = tmp->next;
-	}
-}
 
 /*	Sets the error message and the exit status.
  *
@@ -78,6 +59,12 @@ char	*read_input(void)
 	return (input);
 }
 
+/*	Parses the user's input, and runs them as commands.
+ *
+ *	my_env_list: the environment variables list.
+ *
+ *	Returns: none.
+ */
 void	run_commands(t_env *my_env_list)
 {
 	char		*input;
@@ -100,7 +87,6 @@ void	run_commands(t_env *my_env_list)
 			tmp->env_list = my_env_list;
 			tmp = tmp->next;
 		}
-		// print_commands(commands);// Test function (TEMP)
 		execute_commands(commands);
 		clean_commands(&commands);
 	}
