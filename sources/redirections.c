@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 14:29:50 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:56:23 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int	read_here_doc(char *delimiter, char **input)
 {
 	char	*buffer;
 	char	*temp;
+
 	while (1)
 	{
 		buffer = readline("heredoc> ");
