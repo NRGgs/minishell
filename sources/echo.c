@@ -6,21 +6,21 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 18:59:19 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:44:13 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	print_arg_with_env(char *arg)
+static void	print_arg_with_env(t_env *env_list, char *arg)
 {
-	char	*env_value;
+	t_env	*var;
 
 	if (arg && arg[0] == '$')
 	{
-		env_value = getenv(arg + 1);
-		if (env_value)
-			ft_putstr_fd(env_value, STDOUT_FILENO);
+		var = find_env_var(env_list, arg + 1);
+		if (var && var->value)
+			ft_putstr_fd(var->value, STDOUT_FILENO);
 		else
 			ft_putstr_fd("", STDOUT_FILENO);
 	}
@@ -44,7 +44,7 @@ int	echo(t_command *command)
 	if (!command)
 		return (1);
 	if (!command->pattern)
-		return (printf("\n"), 0);
+		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
 	flag = check_echo_option(command->options);
 	args = ft_split(command->pattern, ' ');
 	if (!args)
@@ -52,7 +52,7 @@ int	echo(t_command *command)
 	i = 0;
 	while (args[i])
 	{
-		print_arg_with_env(args[i]);
+		print_arg_with_env(command->env_list, args[i]);
 		if (args[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
