@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 12:59:18 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:23:32 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ void	exec_external_no_pipe(t_command *commands)
 		args[i++] = commands->pattern;
 	args[i] = NULL;
 	execute_command(commands, path, args);
-	// free(path);
+	free(path);
 }
