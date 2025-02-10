@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 13:23:32 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:53:37 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ void	exec_builtin_no_pipe(t_command *commands)
 		restore_fds(backup_in, backup_out);
 		return ;
 	}
-	execute_builtin(commands);
+	execute_builtin(&commands, &commands->env_list);
 	restore_fds(backup_in, backup_out);
 }
+
 
 void	exec_external_no_pipe(t_command *commands)
 {

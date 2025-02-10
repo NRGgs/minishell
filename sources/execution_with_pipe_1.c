@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/05 16:53:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:00:51 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,25 @@ void	execute_command_pipe(t_command *current, char *path)
 	}
 	if (is_builtin(current->command))
 	{
-		execute_builtin(current);
+		execute_builtin(&current, &current->env_list);
 		exit(0);
 	}
 	else
 	{
 		if (!path)
-			exit(127);
 		{
-			args = get_command_args(current);
-			if (!args || execve(path, args, environ) == -1)
-			{
-				perror("execve");
-				exit(126);
-			}
+			clean_commands(&current);
+			exit(127);
+		}
+		args = get_command_args(current);
+		if (!args || execve(path, args, environ) == -1)
+		{
+			perror("execve");
+			exit(126);
 		}
 	}
 }
+
 
 int	create_child_process(t_command *current, int pipe_in,
 		int *pipe_fd, char *path)

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 12:56:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:49:01 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	handle_cd(t_command *command)
 	return (cd_home(command->env_list));
 }
 
-int	execute_builtin(t_command *command)
+int	execute_builtin(t_command **cmd_list, t_env **env_list)
 {
+	t_command *command = *cmd_list;
+
 	if (!command || !command->command)
 	{
 		ft_putstr_fd("Error: Invalid command structure.\n", 2);
@@ -60,7 +62,9 @@ int	execute_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
 		return (run_unset_builtin(command));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
-		return (exit_shell(command->pattern));
+	{
+		return(exit_shell(command->pattern, cmd_list, env_list));
+	}
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 	return (1);
 }
