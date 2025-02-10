@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 13:21:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:29:50 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,31 +56,31 @@ int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
  *
  *	Return:		new string (input).
  */
-static char	*read_here_doc(char *delimiter, char *input)
+static int	read_here_doc(char *delimiter, char **input)
 {
 	char	*buffer;
 	char	*temp;
-
 	while (1)
 	{
-		// check_signals(delimiter);
 		buffer = readline("heredoc> ");
+		if (buffer == NULL)
+			return (free_null((void **)input), SUCCESS);
 		if (buffer == NULL || ft_strcmp(buffer, delimiter) == 0)
-			return (free(buffer), input);
-		input = add_newline(input);
-		if (input == NULL)
-			return (free(buffer), NULL);
-		temp = ft_strjoin(input, buffer);
+			return (free(buffer), SUCCESS);
+		*input = add_newline(*input);
+		if (*input == NULL)
+			return (free(buffer), FAIL);
+		temp = ft_strjoin(*input, buffer);
 		free(buffer);
 		if (temp == NULL)
-			return (free(input), NULL);
-		free(input);
-		input = ft_strdup(temp);
-		if (input == NULL)
-			return (free(temp), NULL);
+			return (free_null((void **)input), FAIL);
+		free_null((void **)input);
+		*input = ft_strdup(temp);
 		free(temp);
+		if (*input == NULL)
+			return (FAIL);
 	}
-	return (input);
+	return (SUCCESS);
 }
 
 /*	Handles here_doc redirection.
@@ -98,8 +98,7 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	input = ft_calloc(1, 1);
 	if (input == NULL)
 		return (FAIL);
-	input = read_here_doc(delimiter, input);
-	if (input == NULL)
+	if (read_here_doc(delimiter, &input) == FAIL)
 		return (FAIL);
 	(*last)->pattern = input;
 	return (SUCCESS);
