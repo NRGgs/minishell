@@ -2,7 +2,7 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 LFLAGS = -lreadline
-
+# -fsanitize=address
 # Libraries
 LIBFT_PATH	= ./includes/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
@@ -36,7 +36,8 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/parse_string_utils.c \
 		$(SRC_DIR)/parse_string.c \
 		$(SRC_DIR)/free.c \
-		$(SRC_DIR)/execution_with_pipe_3.c
+		$(SRC_DIR)/execution_with_pipe_3.c \
+		$(SRC_DIR)/execution_with_pipe_4.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 15:13:39 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:43:59 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+
+# define SHELL_CONTINUE 0
+# define SHELL_EXIT 1
 
 # define REDIRECT_INPUT 1
 # define REDIRECT_OUTPUT 2
@@ -156,7 +159,7 @@ void		clean_commands(t_command **cmds);
 /* builtins.c */
 int			is_builtin(char *command);
 int			handle_cd(t_command *command);
-int execute_builtin(t_command **cmd_list, t_env **env_list);
+int			execute_builtin(t_command **cmd_list);
 void		free_args(char **args);
 
 /* find_path.c */
@@ -174,18 +177,18 @@ char		*check_argv_executable(char *argv);
 void		f_error(void);
 
 /* execution.c */
-void		execute_commands(t_command *commands);
+int			execute_commands(t_command *commands);
 t_env		*create_env_node(const char *name, const char *value);
 
 /* execution_without_pipe */
 void		handle_child_process(t_command *commands, char *path, char *args[]);
 void		execute_command(t_command *commands, char *path, char *args[]);
-void		exec_external_no_pipe(t_command *commands);
-void		exec_builtin_no_pipe(t_command *commands);
+int			exec_external_no_pipe(t_command *commands);
+int			exec_builtin_no_pipe(t_command *commands);
 void		restore_fds(int in, int out);
 
 /* execution_without_pipe_2 */
-void		execution_without_pipe(t_command *commands);
+int			execution_without_pipe(t_command *commands);
 
 /* execution_with_pipe_1.c */
 char		**get_command_args(t_command *current);
@@ -199,7 +202,7 @@ void		wait_for_children(void);
 void		handle_child(t_command *current, int pipe_in,
 				int *pipe_fd, char *path);
 void		handle_parent(int *pipe_fd, int *pipe_in);
-void		execution_with_pipe(t_command *commands);
+int			execution_with_pipe(t_command *commands);
 int			setup_pipe(int *pipe_fd);
 
 /* execution_with_pipe_3.c */
@@ -242,7 +245,7 @@ char		**parse_args_for_unset(t_command *command);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int	exit_shell(char *pattern, t_command **cmd_list, t_env **env_list);
+int			exit_shell(char *pattern, t_command **cmd_list);
 
 /* env.c */
 int			env(t_env *env_list);

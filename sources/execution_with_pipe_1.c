@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 15:00:51 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:23:08 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,6 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 }
-
-void	execute_command_pipe(t_command *current, char *path)
-{
-	char	**args;
-
-	if (process_redirections(current) == ERROR)
-	{
-		ft_putstr_fd("Error: Redirection failed.\n", 2);
-		exit(1);
-	}
-	if (is_builtin(current->command))
-	{
-		execute_builtin(&current, &current->env_list);
-		exit(0);
-	}
-	else
-	{
-		if (!path)
-		{
-			clean_commands(&current);
-			exit(127);
-		}
-		args = get_command_args(current);
-		if (!args || execve(path, args, environ) == -1)
-		{
-			perror("execve");
-			exit(126);
-		}
-	}
-}
-
 
 int	create_child_process(t_command *current, int pipe_in,
 		int *pipe_fd, char *path)

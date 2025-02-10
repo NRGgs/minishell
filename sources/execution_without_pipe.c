@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 14:53:37 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:49:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,11 @@ void	execute_command(t_command *commands, char *path, char *args[])
 	else if (pid == 0)
 		handle_child_process(commands, path, args);
 	else
+	{
 		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+	}
 }
 
 void	restore_fds(int in, int out)
@@ -68,24 +72,25 @@ void	restore_fds(int in, int out)
 	close(out);
 }
 
-void	exec_builtin_no_pipe(t_command *commands)
+int	exec_builtin_no_pipe(t_command *commands)
 {
 	int	backup_in;
 	int	backup_out;
+	int	ret;
 
 	backup_in = dup(STDIN_FILENO);
 	backup_out = dup(STDOUT_FILENO);
 	if (process_redirections(commands) == ERROR)
 	{
 		restore_fds(backup_in, backup_out);
-		return ;
+		return (SHELL_CONTINUE);
 	}
-	execute_builtin(&commands, &commands->env_list);
+	ret = execute_builtin(&commands);
 	restore_fds(backup_in, backup_out);
+	return (ret);
 }
 
-
-void	exec_external_no_pipe(t_command *commands)
+int	exec_external_no_pipe(t_command *commands)
 {
 	char	*args[4];
 	char	*path;
@@ -93,6 +98,10 @@ void	exec_external_no_pipe(t_command *commands)
 
 	i = 0;
 	path = true_path(commands->command, environ);
+	if (!path)
+	{
+		return (SHELL_CONTINUE);
+	}
 	args[i++] = commands->command;
 	if (commands->options)
 		args[i++] = commands->options;
@@ -101,4 +110,5 @@ void	exec_external_no_pipe(t_command *commands)
 	args[i] = NULL;
 	execute_command(commands, path, args);
 	free(path);
+	return (SHELL_CONTINUE);
 }

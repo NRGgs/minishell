@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 13:14:49 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:48:57 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_parent(int *pipe_fd, int *pipe_in)
 	*pipe_in = pipe_fd[0];
 }
 
-void	execution_with_pipe(t_command *commands)
+int	execution_with_pipe(t_command *commands)
 {
 	int			pipe_in;
 	t_command	*current;
@@ -36,10 +36,11 @@ void	execution_with_pipe(t_command *commands)
 	while (current)
 	{
 		if (process_single_command(current, &pipe_in) == FAIL)
-			return ;
+			return (SHELL_CONTINUE);
 		current = current->next;
 	}
 	wait_for_children();
+	return (SHELL_CONTINUE);
 }
 
 int	setup_pipe(int *pipe_fd)

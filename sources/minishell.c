@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 14:36:20 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:24:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,44 +65,83 @@ char	*read_input(void)
  *
  *	Returns: none.
  */
-void	run_commands(t_env *my_env_list)
+// void	run_commands(t_env *my_env_list)
+// {
+// 	char		*input;
+// 	t_command	*commands;
+// 	t_command	*tmp;
+
+// 	while (1)
+// 	{
+// 		input = read_input();
+// 		if (input == NULL)
+// 			return ;
+// 		add_history(input);
+// 		commands = parse_user_input(input);
+// 		free(input);
+// 		if (commands == NULL)
+// 			continue ;
+// 		tmp = commands;
+// 		while (tmp)
+// 		{
+// 			tmp->env_list = my_env_list;
+// 			tmp = tmp->next;
+// 		}
+// 		printf("commands->command: %s\n", commands->command);
+// 		printf("pattern: %s\n", commands->pattern);
+// 		printf("input: %s\n", commands->input);
+// 		printf("output: %s\n", commands->output);
+// 		execute_commands(commands);
+// 		clean_commands(&commands);
+// 	}
+// }
+static int	parse_and_exec(char *input, t_env *env_list)
 {
-	char		*input;
 	t_command	*commands;
 	t_command	*tmp;
+	int			ret;
+
+	commands = parse_user_input(input);
+	free(input);
+	if (!commands)
+		return (SHELL_CONTINUE);
+	tmp = commands;
+	while (tmp)
+	{
+		tmp->env_list = env_list;
+		tmp = tmp->next;
+	}
+	ret = execute_commands(commands);
+	clean_commands(&commands);
+	return (ret);
+}
+
+int	run_commands(t_env *my_env_list)
+{
+	char	*input;
+	int		ret;
 
 	while (1)
 	{
 		input = read_input();
-		if (input == NULL)
-			return ;
+		if (!input)
+			return (SHELL_EXIT);
 		add_history(input);
-		commands = parse_user_input(input);
-		free(input);
-		if (commands == NULL)
-			continue ;
-		tmp = commands;
-		while (tmp)
-		{
-			tmp->env_list = my_env_list;
-			tmp = tmp->next;
-		}
-		printf("commands->command: %s\n", commands->command);
-		printf("pattern: %s\n", commands->pattern);
-		printf("input: %s\n", commands->input);
-		printf("output: %s\n", commands->output);
-		execute_commands(commands);
-		clean_commands(&commands);
+		ret = parse_and_exec(input, my_env_list);
+		if (ret == SHELL_EXIT)
+			return (SHELL_EXIT);
 	}
+	return (SHELL_CONTINUE);
 }
 
 int	main(void)
 {
 	t_env		*my_env_list;
+	int			ret;
 
 	my_env_list = init_env_list();
 	check_signals();
-	run_commands(my_env_list);
+	ret = run_commands(my_env_list);
 	clear_history();
 	rl_clear_history();
 	clear_env_list(my_env_list);

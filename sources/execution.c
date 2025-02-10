@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:14:50 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:45:33 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 extern char	**environ;
 
-void	execute_commands(t_command *commands)
+int	execute_commands(t_command *commands)
 {
 	t_command	*current;
 	int			is_pipe;
+	int			ret;
 
 	if (!commands)
 	{
 		ft_putstr_fd("Error: Command structure is NULL.\n", 2);
-		return ;
+		return (SHELL_CONTINUE);
 	}
 	current = commands;
 	is_pipe = 0;
@@ -36,9 +37,10 @@ void	execute_commands(t_command *commands)
 		current = current->next;
 	}
 	if (is_pipe)
-		execution_with_pipe(commands);
+		ret = execution_with_pipe(commands);
 	else
-		execution_without_pipe(commands);
+		ret = execution_without_pipe(commands);
+	return (ret);
 }
 
 t_env	*create_env_node(const char *name, const char *value)
