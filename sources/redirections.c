@@ -6,12 +6,22 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/03 14:16:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:02:21 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/*	Handles textfile redirections.
+ *
+ *	fn:			filename
+ *	redirect:	">", ">>", "<"
+ *	last:		linked list of commands
+ *	place:		place of 'redirect' in relation to the command
+ *				AFTER / BEFORE
+ *
+ *	Return:		SUCCESS (1) / FAIL (0).
+ */
 int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
 {
 	if (ft_strcmp(redirect, ">") == 0 || ft_strcmp(redirect, ">>") == 0)
@@ -39,6 +49,13 @@ int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
 	return (SUCCESS);
 }
 
+/*	Reads input from user until delimiter is found.
+ *
+ *	delimiter:	string to delimit the input
+ *	input:		string to store the input
+ *
+ *	Return:		new string (input).
+ */
 static char	*read_here_doc(char *delimiter, char *input)
 {
 	char	*buffer;
@@ -68,6 +85,13 @@ static char	*read_here_doc(char *delimiter, char *input)
 	return (input);
 }
 
+/*	Handles here_doc redirection.
+ *
+ *	delimiter:	string to delimit the input
+ *	last:		linked list of commands
+ *
+ *	Return: SUCCESS (1) / FAIL (0).
+ */
 int	here_doc_redirection(char *delimiter, t_command **last)
 {
 	char	*input;
@@ -83,6 +107,14 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	return (SUCCESS);
 }
 
+/*	Concatenates strings and adds a space between them.
+ *
+ *	str:	string to concatenate
+ *	temp:	string to concatenate to
+ *	size:	size of the new string
+ *
+ *	Return:	new string.
+ */
 char	*join_strings(char *str, char *temp, size_t size)
 {
 	ft_strlcat(temp, str, size + 1);

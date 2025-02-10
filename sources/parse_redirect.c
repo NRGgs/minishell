@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
-/*   Updated: 2025/01/28 14:38:31 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:50:23 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	get_redirection_type(char *str)
  *	i:		index of current token
  *	last:	last command in linked list
  *
- *	Return: SUCCESS (1) / FAIL (0).
+ *	Return:	SUCCESS (1) / FAIL (0).
  */
 static int	before_command(char **input, int i, t_command **last)
 {
@@ -112,10 +112,10 @@ static int	after_command(char **input, int *i, t_command **last)
 
 /*	Parses redirections and sets in/out types and filenames.
  *
- *	input: user input split by ' '
- *	cmds: linked list of commands
- *	i: index of current token
- *	command_index: index of command token
+ *	input:			user input split by ' '
+ *	cmds:			linked list of commands
+ *	i:				index of current token
+ *	command_index:	index of command token
  *
  *	Return: SUCCESS (1) / FAIL (0).
  */

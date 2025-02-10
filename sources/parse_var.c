@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/05 16:19:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:58:36 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ int	parse_variable(char *str, t_variable **vars)
 	return (SUCCESS);
 }
 
+/*	Check if the character is valid.
+ *
+ *	c: the character to be checked.
+ *
+ *	Return: true / false.
+ */
 bool	valid_char(char c)
 {
 	if ((c >= 65 && c <= 90)
@@ -67,13 +73,19 @@ bool	valid_char(char c)
 	return (false);
 }
 
+/*	Escape the dollar sign in the string.
+ *
+ *	str: the string to be escaped.
+ *
+ *	Return: the new string.
+ *			NULL if failed.
+ */
 char	*escape_dollar(char *str)
 {
 	char	*to_replace;
 	char	*new_str;
 	size_t	new_str_len;
 
-	printf("str: %s\n", str);
 	to_replace = ft_strchr(str, '$');
 	if (to_replace == NULL)
 		return (str);
@@ -82,11 +94,8 @@ char	*escape_dollar(char *str)
 	if (new_str == NULL)
 		return (NULL);
 	ft_strlcat(new_str, str, to_replace - str + 1);
-	printf("new_str: %s\n", new_str);
 	ft_strlcat(new_str, "\\", new_str_len);
-	printf("new_str: %s\n", new_str);
 	ft_strlcat(new_str, to_replace, new_str_len);
-	printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 
