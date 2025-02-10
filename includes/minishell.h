@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 14:49:33 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:13:39 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void		clean_commands(t_command **cmds);
 /* builtins.c */
 int			is_builtin(char *command);
 int			handle_cd(t_command *command);
-int			execute_builtin(t_command *command);
+int execute_builtin(t_command **cmd_list, t_env **env_list);
 void		free_args(char **args);
 
 /* find_path.c */
@@ -242,7 +242,7 @@ char		**parse_args_for_unset(t_command *command);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int			exit_shell(char *input);
+int	exit_shell(char *pattern, t_command **cmd_list, t_env **env_list);
 
 /* env.c */
 int			env(t_env *env_list);
