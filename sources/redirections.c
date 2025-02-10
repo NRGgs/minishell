@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 12:02:21 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:49:57 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	input = read_here_doc(delimiter, input);
 	if (input == NULL)
 		return (FAIL);
-	(*last)->input = input;
+	(*last)->pattern = input;
 	return (SUCCESS);
 }
 

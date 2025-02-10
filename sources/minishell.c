@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 11:47:15 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:57:33 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,10 @@ void	run_commands(t_env *my_env_list)
 			tmp->env_list = my_env_list;
 			tmp = tmp->next;
 		}
+		printf("commands->command: %s\n", commands->command);
+		printf("pattern: %s\n", commands->pattern);
+		printf("input: %s\n", commands->input);
+		printf("output: %s\n", commands->output);
 		execute_commands(commands);
 		clean_commands(&commands);
 	}
