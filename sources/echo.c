@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/11 13:47:02 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:48:43 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_arg_with_env(t_env *env_list, char *arg)
 
 	if (arg && arg[0] == '$')
 	{
-		if (strcmp("?", arg + 1) == 0)
+		if (ft_strcmp("?", arg + 1) == 0)
 		{
 			ft_putnbr_fd(g_exit_status, STDOUT_FILENO);
 			return ;
