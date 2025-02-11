@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/11 12:57:17 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:00:50 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,8 @@ void	clean_commands(t_command **cmds)
 	t_command	*next;
 
 	current = *cmds;
-	printf("Cleaning commands\n");
-	printf("current.command: %s\n", current->command);
 	while (current != NULL)
 	{
-		printf("Cleaning command: %s\n", current->command);
-		// printf("Cleaning options: %s\n", current->options);
-		// printf("Cleaning input: %s\n", current->input);
 		next = current->next;
 		free_null((void **)&current->command);
 		free_null((void **)&current->options);
@@ -83,5 +78,4 @@ void	clean_commands(t_command **cmds)
 		current = next;
 	}
 	*cmds = NULL;
-	printf("Commands cleaned\n");
 }
