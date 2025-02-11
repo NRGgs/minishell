@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 14:49:30 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:27:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ static void	signal_handler(int signum)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		g_exit_status = 130;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/11 12:59:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:27:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define MINOR 1
 # define MAJOR 2
 # define CMD_NOT_FOUND 127
+# define SIGINT_CANCELLATION 130
 # define ILLEGAL_INSTRUCTION 132
 # define ILLEGAL_DIVISION 133
 # define FAILED_ASSERTION 134
