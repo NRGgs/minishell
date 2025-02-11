@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 18:45:08 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/11 13:33:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	execute_builtin(t_command **cmd_list)
 		return (run_unset_builtin(command));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
 	{
-		return (exit_shell(command->pattern, cmd_list));
+		return (exit_shell(command->pattern));
 	}
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 	return (1);
