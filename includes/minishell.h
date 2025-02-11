@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 18:43:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:59:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ char		**parse_args_for_unset(t_command *command);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int			exit_shell(char *pattern, t_command **cmd_list);
+int			exit_shell(char *pattern);
 
 /* env.c */
 int			env(t_env *env_list);
