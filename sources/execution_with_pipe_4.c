@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 19:23:33 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:40:31 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ static void	process_redir_or_exit(t_command *current)
 
 static void	handle_builtin_pipe(t_command **cmd_ptr, char *path)
 {
-	execute_builtin(cmd_ptr);
+	t_env	*env_copy;
+	int		builtin_ret;
+
+	env_copy = (*cmd_ptr)->env_list;
+	builtin_ret = execute_builtin(cmd_ptr);
 	clean_commands(cmd_ptr);
 	free(path);
-	exit(0);
+	clear_env_list(env_copy);
+	exit(builtin_ret);
 }
 
 static void	handle_external_pipe(t_command **cmd_ptr, char *path)
