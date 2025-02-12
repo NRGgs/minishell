@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 13:21:58 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:02:27 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <sys/stat.h>
 
 # define SHELL_CONTINUE 0
 # define SHELL_EXIT 1
@@ -184,6 +185,7 @@ void		f_error(void);
 /* execution.c */
 int			execute_commands(t_command *commands);
 t_env		*create_env_node(const char *name, const char *value);
+int			is_directory(const char *path);
 
 /* execution_without_pipe */
 void		handle_child_process(t_command *commands, char *path, char *args[]);

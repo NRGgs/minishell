@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 13:14:48 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:03:12 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,21 @@ void	free_2d_array(char **arr)
 
 char	*find_path(char *command, char **env)
 {
+	struct stat	st;
+
 	if (!command)
 		return (NULL);
 	if (command[0] == '/')
 	{
+		if (stat(command, &st) == 0 && S_ISDIR(st.st_mode))
+		{
+			ft_putstr_fd(command, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			g_exit_status = CMD_NOT_FOUND;
+			return (NULL);
+		}
 		if (access(command, X_OK) == 0)
-			return (command);
+			return (ft_strdup(command));
 		else
 			return (NULL);
 	}

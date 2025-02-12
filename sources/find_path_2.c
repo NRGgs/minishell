@@ -6,22 +6,25 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/12 13:08:42 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:02:57 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	f_error(void)
-{
-	ft_putstr_fd("Error: Command not found.\n", 2);
-	g_exit_status = CMD_NOT_FOUND;
-}
-
 char	*check_argv_executable(char *argv)
 {
+	struct stat	st;
+
 	if (ft_strchr(argv, '/') != NULL)
 	{
+		if (stat(argv, &st) == 0 && S_ISDIR(st.st_mode))
+		{
+			ft_putstr_fd(argv, 2);
+			ft_putstr_fd(": Is a directory\n", 2);
+			g_exit_status = CMD_NOT_FOUND;
+			return (NULL);
+		}
 		if (access(argv, X_OK) == 0)
 			return (ft_strdup(argv));
 		else
@@ -29,6 +32,12 @@ char	*check_argv_executable(char *argv)
 		return (NULL);
 	}
 	return (NULL);
+}
+
+void	f_error(void)
+{
+	ft_putstr_fd("Error: Command not found.\n", 2);
+	g_exit_status = CMD_NOT_FOUND;
 }
 
 char	**split_paths(char **env)

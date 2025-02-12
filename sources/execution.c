@@ -6,13 +6,22 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 18:45:33 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:02:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 extern char	**environ;
+
+int	is_directory(const char *path)
+{
+	struct stat	st;
+
+	if (stat(path, &st) != 0)
+		return (0);
+	return (S_ISDIR(st.st_mode));
+}
 
 int	execute_commands(t_command *commands)
 {
