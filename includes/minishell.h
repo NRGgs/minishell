@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 12:03:44 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:11:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,10 @@ int			parse_redirect(char **input, t_command **cmds,
 /* redirections.c */
 int			textfile_redirection(char *fn, char *redirect,
 				t_command **last, int place);
-int			here_doc_redirection(char *delimiter, t_command **last);
 int			string_redirection(char **input, t_command **last, int *i);
+
+/* heredoc.c */
+int			here_doc_redirection(char *delimiter, t_command **last);
 
 /* parse_clean.c */
 void		clean_2d_array(char **array);

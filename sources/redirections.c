@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/12 12:09:36 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:11:06 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,69 +46,6 @@ int	textfile_redirection(char *fn, char *redirect, t_command **last, int place)
 		if ((*last)->input == NULL)
 			return (FAIL);
 	}
-	return (SUCCESS);
-}
-
-/*	Reads input from user until delimiter is found.
- *
- *	delimiter:	string to delimit the input
- *	input:		string to store the input
- *
- *	Return:		new string (input).
- */
-static int	read_here_doc(char *delimiter, char **input)
-{
-	char	*buffer;
-	char	*temp;
-	int		stdin_backup;
-
-	stdin_backup = dup(STDIN_FILENO);
-	signal(SIGINT, signal_heredoc);
-	while (1)
-	{
-		buffer = readline("heredoc> ");
-		if (buffer == NULL || g_exit_status == 130)
-		{
-            dup2(stdin_backup, STDIN_FILENO);
-            close(stdin_backup);
-			return (free_null((void **)input), SUCCESS);
-		}
-		if (ft_strcmp(buffer, delimiter) == 0)
-			return (free(buffer), SUCCESS);
-		*input = add_newline(*input);
-		if (*input == NULL)
-			return (free(buffer), FAIL);
-		temp = ft_strjoin(*input, buffer);
-		free(buffer);
-		if (temp == NULL)
-			return (free_null((void **)input), FAIL);
-		free_null((void **)input);
-		*input = ft_strdup(temp);
-		free(temp);
-		if (*input == NULL)
-			return (FAIL);
-	}
-	return (SUCCESS);
-}
-
-/*	Handles here_doc redirection.
- *
- *	delimiter:	string to delimit the input
- *	last:		linked list of commands
- *
- *	Return: SUCCESS (1) / FAIL (0).
- */
-int	here_doc_redirection(char *delimiter, t_command **last)
-{
-	char	*input;
-
-	(*last)->in_type = HERE_DOC;
-	input = ft_calloc(1, 1);
-	if (input == NULL)
-		return (FAIL);
-	if (read_here_doc(delimiter, &input) == FAIL)
-		return (FAIL);
-	(*last)->pattern = input;
 	return (SUCCESS);
 }
 
