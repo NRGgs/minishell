@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 13:14:42 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:42 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*check_argv_executable(char *argv)
 	if (ft_strchr(argv, '/') != NULL)
 	{
 		if (access(argv, X_OK) == 0)
-			return (argv);
+			return (ft_strdup(argv));
 		else
-			f_error();
+			g_exit_status = CMD_NOT_FOUND;
 		return (NULL);
 	}
 	return (NULL);
