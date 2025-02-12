@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/11 13:27:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:06:05 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,32 @@ void	check_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-/*	Handle incoming signals.
+/*	Handle CTRL-C signal.
  */
 static void	signal_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_exit_status = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+}
+
+/*	Handle CTRL-C for heredoc.
+ *	Redirects input to /dev/null to force an EOF.
+ */
+void	signal_heredoc(int signum)
+{
+	int	dev_null_fd;
+
+	if (signum == SIGINT)
+	{
 		g_exit_status = 130;
+		dev_null_fd = open("/dev/null", O_RDONLY);
+        dup2(dev_null_fd, STDIN_FILENO);
+        close(dev_null_fd);
 	}
 }

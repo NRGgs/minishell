@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/11 13:27:12 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:03:44 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void		free_null(void **ptr);
 
 /* signal.c */
 void		check_signals(void);
+void		signal_heredoc(int signum);
 
 /* parse.c */
 t_command	*parse_user_input(char *input);

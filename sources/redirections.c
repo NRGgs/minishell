@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/11 13:28:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:09:36 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,20 @@ static int	read_here_doc(char *delimiter, char **input)
 {
 	char	*buffer;
 	char	*temp;
+	int		stdin_backup;
 
+	stdin_backup = dup(STDIN_FILENO);
+	signal(SIGINT, signal_heredoc);
 	while (1)
 	{
 		buffer = readline("heredoc> ");
 		if (buffer == NULL || g_exit_status == 130)
+		{
+            dup2(stdin_backup, STDIN_FILENO);
+            close(stdin_backup);
 			return (free_null((void **)input), SUCCESS);
-		if (buffer == NULL || ft_strcmp(buffer, delimiter) == 0)
+		}
+		if (ft_strcmp(buffer, delimiter) == 0)
 			return (free(buffer), SUCCESS);
 		*input = add_newline(*input);
 		if (*input == NULL)
