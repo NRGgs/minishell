@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 19:24:26 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:00:27 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ static int	parse_and_exec(char *input, t_env *env_list)
 		tmp->env_list = env_list;
 		tmp = tmp->next;
 	}
+	printf("commands->command: %s\n", commands->command);
+	printf("pattern: %s\n", commands->pattern);
 	ret = execute_commands(commands);
 	clean_commands(&commands);
 	return (ret);
