@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 11:54:47 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:34:41 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,41 +63,6 @@ int	n_chars_till_quote(char **input, int j, char quote)
 	return (size);
 }
 
-/*	Removes the delimiter from a string.
- *
- *	str:		The string to remove the delimiter from.
- *	delimiter:	The character to remove.
- *
- *	Return:		A new string without the delimiter.
- */
-static char	*remove_delimiter(char *str, char delimiter)
-{
-	char	*new_str;
-	int		i;
-	int		j;
-
-	new_str = malloc(ft_strlen(str));
-	if (new_str == NULL)
-	{
-		free(str);
-		return (NULL);
-	}
-	i = 0;
-	j = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] != delimiter)
-		{
-			new_str[j] = str[i];
-			j++;
-		}
-		i++;
-	}
-	new_str[j] = '\0';
-	free(str);
-	return (new_str);
-}
-
 /*	Attaches a buffer to the end of the string.
  *
  *	pattern:	The string to attach the buffer to.
@@ -141,12 +106,7 @@ char	*read_till_quotes(char delimiter, char **pattern)
 	{
 		buffer = readline("\\ ");
 		if (buffer != NULL && ft_strchr(buffer, delimiter) != NULL)
-		{
-			buffer = remove_delimiter(buffer, delimiter);
-			if (buffer == NULL)
-				return (NULL);
 			reading = false;
-		}
 		*pattern = attach_buffer(*pattern, buffer);
 		if (*pattern == NULL)
 			return (NULL);

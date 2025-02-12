@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 11:58:36 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:23:42 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,32 +73,6 @@ bool	valid_char(char c)
 	return (false);
 }
 
-/*	Escape the dollar sign in the string.
- *
- *	str: the string to be escaped.
- *
- *	Return: the new string.
- *			NULL if failed.
- */
-char	*escape_dollar(char *str)
-{
-	char	*to_replace;
-	char	*new_str;
-	size_t	new_str_len;
-
-	to_replace = ft_strchr(str, '$');
-	if (to_replace == NULL)
-		return (str);
-	new_str_len = ft_strlen(str) + 2;
-	new_str = malloc(new_str_len);
-	if (new_str == NULL)
-		return (NULL);
-	ft_strlcat(new_str, str, to_replace - str + 1);
-	ft_strlcat(new_str, "\\", new_str_len);
-	ft_strlcat(new_str, to_replace, new_str_len);
-	return (new_str);
-}
-
 /*	Replace the variable in the string.
  *
  *	str: the string to be replaced.
@@ -106,15 +80,16 @@ char	*escape_dollar(char *str)
  *	Return: the new string.
  *			NULL if failed.
  */
-char	*replace_variable(char *str, t_variable *vars, char quote)
+char	*replace_variable(char *str, t_variable *vars, \
+		char quote, t_command **commands)
 {
 	t_variable	*variable;
 	char		*new_str;
 	char		*to_replace;
 	int			i;
 
-	if (quote == '\'')
-		return (escape_dollar(str));
+	(void)commands;
+	(void)quote;
 	to_replace = ft_strchr(str, '$');
 	if (to_replace == NULL)
 		return (str);

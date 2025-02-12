@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 12:40:24 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:21:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 /* parse_var.c */
 bool		is_variable(char *str);
 int			parse_variable(char *str, t_variable **vars);
-char		*replace_variable(char *str, t_variable *vars, char quote);
+char		*replace_variable(char *str, t_variable *vars, \
+		char quote, t_command **commands);
 
 /* variables.c */
 t_variable	*var_new(char *name, char *value);

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/05 16:44:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:22:39 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parse_full_command(\
 			&& contains_quote(split_input[*i]) != '0')
 		{
 			temp = replace_variable(cmd_last(*commands)->pattern, *variables, \
-					split_input[*i][ft_strlen(split_input[*i]) - 1]);
+					split_input[*i][ft_strlen(split_input[*i]) - 1], commands);
 			if (temp == NULL)
 			{
 				clean_all(variables, commands, split_input);

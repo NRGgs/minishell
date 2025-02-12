@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:01:21 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/10 11:58:02 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:35:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ static int	parse_string_helper(char *first, char *second, char **pattern)
 {
 	size_t	size;
 
-	size = second - first;
+	size = second - first + 2;
 	*pattern = ft_calloc((size + 1), sizeof(char));
 	if (*pattern == NULL)
 		return (FAIL);
-	ft_strlcpy(*pattern, first + 1, size);
+	ft_strlcpy(*pattern, first, size);
 	return (SUCCESS);
 }
 
@@ -109,12 +109,12 @@ static int	find_quote(char **input, int *i, char **pattern, char quote)
 	size_t	size;
 
 	j = *i;
-	size = ft_strlen(ft_strchr(input[j], quote) + 1);
+	size = ft_strlen(ft_strchr(input[j], quote) + 1) + 2;
 	size += n_chars_till_quote(input, *i + 1, quote);
 	*pattern = malloc((size + 1) * sizeof(char));
 	if (*pattern == NULL)
 		return (FAIL);
-	ft_strlcpy(*pattern, ft_strchr(input[j], quote) + 1, size + 1);
+	ft_strlcpy(*pattern, ft_strchr(input[j], quote), size + 1);
 	(*i)++;
 	while (input[*i] != NULL)
 	{
@@ -156,7 +156,7 @@ static int	receive_input_till_quotes(char **input, int *i, \
 	*pattern = malloc(sizeof(char) * size + 1);
 	if (*pattern == NULL)
 		return (FAIL);
-	ft_strlcpy(*pattern, input[*i] + 1, size + 1);
+	ft_strlcpy(*pattern, input[*i], size + 1);
 	(*i)++;
 	while (input[*i] != NULL)
 		space_strlcat(*pattern, input[(*i)++], size + 1);
