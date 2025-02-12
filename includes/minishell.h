@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 12:11:52 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:40:24 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,6 @@ int			env(t_env *env_list);
 /* redirect.c */
 int			handle_input_redirection(t_command *cmd);
 int			handle_output_redirection(t_command *cmd);
-int			handle_heredoc(t_command *cmd);
 int			process_redirections(t_command *cmd);
 
 /* init_env_list.c */
