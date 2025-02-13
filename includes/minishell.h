@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 13:39:15 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 15:15:53 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@
 
 extern int	g_exit_status;
 
-typedef enum e_quotes
-{
-	SINGLE_QUOTE,
-	DOUBLE_QUOTE,
-	NONE
-}	t_quotes;
-
 /* Singly linked list. Stores all environments. */
 typedef struct s_env
 {
@@ -84,7 +77,6 @@ typedef struct s_command
 	char				*command;
 	char				*options;
 	char				*pattern;
-	t_quotes			quote;
 	int					in_type;
 	int					out_type;
 	char				*input;
