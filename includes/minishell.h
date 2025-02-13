@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 15:15:53 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 16:26:11 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ int			is_command(char *cmd);
 bool		options_possible(char *command);
 int			check_path(char *cmd, char *path);
 
+/* parse_split.c */
+char		**parse_split(char *s);
+
 /* parse_string.c */
 int			parse_string(char **input, int *i, char **pattern, char quote);
 
@@ -135,6 +138,7 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 
 /* parse_var.c */
 bool		is_variable(char *str);
+bool		valid_char(char c);
 int			parse_variable(char *str, t_variable **vars);
 char		*replace_variable(char *str, t_variable *vars, \
 		char quote, t_command **commands);

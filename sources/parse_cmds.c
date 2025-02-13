@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_cmds.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 13:24:55 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_cmds.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/13 15:52:19 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ static int	special_parse_pattern(char **input, int *i, char **pattern)
 		(*i)++;
 		if (parse_string(input, i, pattern, quote) == FAIL)
 			return (FAIL);
+		printf("WE DID IT pattern: %s\n", *pattern);
 		return (SUCCESS);
 	}
 	size = ft_strlen(input[j + 1]);

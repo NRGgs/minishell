@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/13 13:29:49 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/13 15:20:17 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 15:32:38 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	skip_spaces(char **s)
 
 static int	parse_quote(char **s)
 {
-	bool	in_quotes;
 	char	quote;
 	int		length;
 
@@ -211,25 +210,25 @@ char	**parse_split(char *s)
 	return (result);
 }
 
-int	main(void)
-{
-	int i = 0;
-	char *unfinished = ft_strdup("Hello World \"This    is  \' a   test");
-	char **result = parse_split(unfinished);
-	if (result == NULL)
-		printf("result is NULL\n");
-	while (result[i] != NULL)
-	{
-		printf("result[%d]: %s\n", i, result[i]);
-		i++;
-	}
-	i = 0;
-	while (result[i] != NULL)
-	{
-		free(result[i]);
-		i++;
-	}
-	free(result);
+// int	main(void)
+// {
+// 	int i = 0;
+// 	char *unfinished = ft_strdup("Hello World \"This    is  \' a   test");
+// 	char **result = parse_split(unfinished);
+// 	if (result == NULL)
+// 		printf("result is NULL\n");
+// 	while (result[i] != NULL)
+// 	{
+// 		printf("result[%d]: %s\n", i, result[i]);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (result[i] != NULL)
+// 	{
+// 		free(result[i]);
+// 		i++;
+// 	}
+// 	free(result);
 
-	return (0);
-}
+// 	return (0);
+// }
