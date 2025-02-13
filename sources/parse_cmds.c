@@ -6,13 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:46:46 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 15:52:19 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 16:53:03 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	special_parse_pattern(char **input, int *i, char **pattern);
+// static int	special_parse_pattern(char **input, int *i, char **pattern);
 static int	parse_options(char **input, int *i, char **options);
 static char	*get_pattern(char **input, int *i, char *pattern);
 
@@ -37,9 +37,9 @@ int	parse_command(char **input, t_command **cmds, int *i)
 	if (options_possible(command))
 		if (parse_options(input, i, &options) == FAIL)
 			return (FAIL);
-	if (is_special(command))
-		if (special_parse_pattern(input, i, &pattern) == FAIL)
-			return (FAIL);
+	// if (!is_special(command))
+	// 	if (special_parse_pattern(input, i, &pattern) == FAIL)
+	// 		return (FAIL);
 	new_cmd = cmd_new(command, options);
 	if (options != NULL)
 		free(options);
@@ -61,33 +61,33 @@ int	parse_command(char **input, t_command **cmds, int *i)
  *
  *	Return: SUCCESS (1) / FAIL (0).
  */
-static int	special_parse_pattern(char **input, int *i, char **pattern)
-{
-	size_t		size;
-	int			j;
-	char		quote;
+// static int	special_parse_pattern(char **input, int *i, char **pattern)
+// {
+// 	size_t		size;
+// 	int			j;
+// 	char		quote;
 
-	size = 0;
-	j = *i;
-	if (input[j + 1] == NULL || is_redirect(input[j + 1]))
-		return (SUCCESS);
-	quote = contains_quote(input[j + 1]);
-	if (quote != '0')
-	{
-		(*i)++;
-		if (parse_string(input, i, pattern, quote) == FAIL)
-			return (FAIL);
-		printf("WE DID IT pattern: %s\n", *pattern);
-		return (SUCCESS);
-	}
-	size = ft_strlen(input[j + 1]);
-	*pattern = ft_calloc((size + 1), sizeof(char));
-	if (*pattern == NULL)
-		return (FAIL);
-	ft_strlcpy(*pattern, input[j + 1], size + 1);
-	(*i)++;
-	return (SUCCESS);
-}
+// 	size = 0;
+// 	j = *i;
+// 	if (input[j + 1] == NULL || is_redirect(input[j + 1]))
+// 		return (SUCCESS);
+// 	quote = contains_quote(input[j + 1]);
+// 	if (quote != '0')
+// 	{
+// 		(*i)++;
+// 		if (parse_string(input, i, pattern, quote) == FAIL)
+// 			return (FAIL);
+// 		printf("WE DID IT pattern: %s\n", *pattern);
+// 		return (SUCCESS);
+// 	}
+// 	size = ft_strlen(input[j + 1]);
+// 	*pattern = ft_calloc((size + 1), sizeof(char));
+// 	if (*pattern == NULL)
+// 		return (FAIL);
+// 	ft_strlcpy(*pattern, input[j + 1], size + 1);
+// 	(*i)++;
+// 	return (SUCCESS);
+// }
 
 /*	Parse the options of the command.
  *

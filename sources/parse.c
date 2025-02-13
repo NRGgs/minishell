@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 16:42:34 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 16:52:02 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_command	*parse_user_input(char *input)
 	// printf("-----------------------\n");
 	// printf("\ncommands->command: %s\n", commands->command);
 	// printf("options: %s\n", commands->options);
-	// printf("pattern: %s\n\n", commands->pattern);
+	printf("pattern: %s\n\n", commands->pattern);
 	// printf("-----------------------\n");
 	return (commands);
 }
