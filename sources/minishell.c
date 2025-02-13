@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/12 13:00:27 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/02/13 13:28:28 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,12 @@ static int	parse_and_exec(char *input, t_env *env_list)
 		tmp->env_list = env_list;
 		tmp = tmp->next;
 	}
-	printf("commands->command: %s\n", commands->command);
-	printf("pattern: %s\n", commands->pattern);
 	ret = execute_commands(commands);
 	clean_commands(&commands);
 	return (ret);
 }
 
-int	run_commands(t_env *my_env_list)
+void	run_commands(t_env *my_env_list)
 {
 	char	*input;
 	int		ret;
@@ -127,23 +125,21 @@ int	run_commands(t_env *my_env_list)
 	{
 		input = read_input();
 		if (!input)
-			return (SHELL_EXIT);
+			return ;
 		add_history(input);
 		ret = parse_and_exec(input, my_env_list);
 		if (ret == SHELL_EXIT)
-			return (SHELL_EXIT);
+			return ;
 	}
-	return (SHELL_CONTINUE);
 }
 
 int	main(void)
 {
 	t_env		*my_env_list;
-	int			ret;
 
 	my_env_list = init_env_list();
 	check_signals();
-	ret = run_commands(my_env_list);
+	run_commands(my_env_list);
 	clear_history();
 	rl_clear_history();
 	clear_env_list(my_env_list);
