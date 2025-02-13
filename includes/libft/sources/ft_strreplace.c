@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/01 12:48:48 by nmattos       #+#    #+#                 */
-/*   Updated: 2024/12/01 13:11:39 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 16:37:21 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ char	*ft_strreplace(char *str, char *to_replace, char *replacement)
 	new_str = malloc(sizeof(char) * (new_size + 1));
 	if (new_str == NULL)
 		return (NULL);
-	ft_memcpy(new_str, str, start - str);
-	ft_strlcat(new_str, replacement, new_size);
+	ft_strlcpy(new_str, str, start - str + 1);
+	ft_strlcat(new_str, replacement, new_size + 1);
 	ft_strlcat(new_str, start + ft_strlen(to_replace), new_size + 1);
 	return (new_str);
 }
