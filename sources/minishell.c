@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/13 13:28:28 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/13 15:11:22 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ static int	parse_and_exec(char *input, t_env *env_list)
 	int			ret;
 
 	commands = parse_user_input(input);
-	free(input);
 	if (!commands)
 		return (SHELL_CONTINUE);
 	tmp = commands;
