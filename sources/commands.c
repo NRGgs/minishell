@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/01/21 15:22:04 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   commands.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/13 13:39:57 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	initialize_command(t_command **cmd)
 	(*cmd)->input = NULL;
 	(*cmd)->output = NULL;
 	(*cmd)->pattern = NULL;
+	(*cmd)->quote = NONE;
 	(*cmd)->next = NULL;
 	(*cmd)->env_list = NULL;
 }
