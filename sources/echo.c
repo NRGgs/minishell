@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   echo.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/04 13:21:35 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/02/13 16:43:27 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/02/14 12:46:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,37 +77,80 @@ static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 	char	*to_replace;
 	int		i;
 
-	i = 0;
 	to_replace = var_ptr;
 	i = 1;
 	while (valid_char(to_replace[i]))
 		i++;
 	to_replace = ft_strndup(to_replace, i);
 	if (to_replace == NULL)
-		return (NULL);
+		return (free(str), NULL);
 	to_replace[0] = '$';
 	var = find_env_var(env_list, to_replace + 1);
 	if (var && var->value)
-		str = ft_strreplace(str, to_replace, var->value);
+		str = ft_strreplace(str, to_replace, var->value, var_ptr);
 	else
-		str = ft_strreplace(str, to_replace, "");
+		str = ft_strreplace(str, to_replace, "", var_ptr);
 	return (str);
 }
 
-static int	print_arg_with_env_2(t_env *env_list, char *arg)
+static bool	is_escaped(char *str, char *c)
 {
-	// t_env	*var;
+	bool	escaped;
+
+	escaped = false;
+	while (str < c)
+	{
+		if (*str == '\\')
+			escaped = !escaped;
+		else if (*str != '\\')
+			escaped = false;
+		str++;
+	}
+	return (escaped);
+}
+
+static char	*get_nth_var(char *str, int nth_var)
+{
 	char	*var_ptr;
 
-	var_ptr = ft_strchr(arg, '$');
-	// if (var_ptr && is_escaped(&var_ptr) == false)
+	var_ptr = ft_strchr(str, '$');
+	while (var_ptr && nth_var > 0)
+	{
+		var_ptr = ft_strchr(var_ptr + 1, '$');
+		nth_var--;
+	}
+	return (var_ptr);
+}
+
+static int	handle_variables(t_env *env_list, char **arg)
+{
+	char	*var_ptr;
+	int		nth_var;
+
+	var_ptr = ft_strchr(*arg, '$');
+	nth_var = 0;
 	while (var_ptr)
 	{
-		arg = replace_var(arg, var_ptr, env_list);
-		var_ptr = ft_strchr(var_ptr + 1, '$');
+		if (is_escaped(*arg, var_ptr) == false)
+		{
+			*arg = replace_var(*arg, var_ptr, env_list);
+			if (*arg == NULL)
+				return (FAIL);
+		}
+		else
+			nth_var++;
+		var_ptr = get_nth_var(*arg, nth_var);
 	}
+	return (SUCCESS);
+}
+
+static int	print_arg(t_env *env_list, char *arg)
+{
+	if (handle_variables(env_list, &arg) == FAIL)
+		return (FAIL);
 	ft_putstr_fd(arg, STDOUT_FILENO);
-	return (0);
+	free(arg);
+	return (SUCCESS);
 }
 
 int	check_echo_option(char *option)
@@ -120,34 +163,22 @@ int	check_echo_option(char *option)
 int	echo(t_command *command)
 {
 	int		flag;
-	// char	**args;
-	// int		i;
 
 	if (!command)
 		return (1);
 	if (!command->pattern)
 		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
 	flag = check_echo_option(command->options);
-	// args = ft_split(command->pattern, ' ');
-	// if (!args)
-		// return (1);
-	// i = 0;
-	// while (args[i])
-	// {
-	// 	if (print_arg_with_env(command->env_list, args[i], command->pattern[0]) == -1)
-	// 		return (ft_free_split(args), 1);
-	// 	if (args[i + 1])
-	// 		ft_putstr_fd(" ", STDOUT_FILENO);
-	// 	i++;
-	// }
-	printf("IN ECHO: command->pattern: %s\n", command->pattern);
 
-	print_arg_with_env_2(command->env_list, command->pattern);
+
+	printf("IN ECHO: command->pattern: %s\n", command->pattern);
+	if (print_arg(command->env_list, command->pattern) == FAIL)
+		return (1);
+
 
 	// Dont touch this
 	if (!flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	// ft_free_split(args);
 	return (0);
 }
 
