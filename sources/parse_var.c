@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/12 13:23:42 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:32:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*replace_variable(char *str, t_variable *vars, \
 	variable = var_find(vars, to_replace + 1);
 	if (variable == NULL)
 		return (free(to_replace), str);
-	new_str = ft_strreplace(str, to_replace, variable->value);
+	new_str = ft_strreplace(str, to_replace, variable->value, to_replace);
 	free(to_replace);
 	return (new_str);
 }
