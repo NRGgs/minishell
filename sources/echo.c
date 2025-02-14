@@ -6,70 +6,114 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/14 13:40:24 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:10:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Removes the delimiter from a string.
+static size_t	get_size_no_quotes(char *str)
+{
+	size_t	size;
+	int		i;
+	bool	in_single;
+	bool	in_double;
+
+	size = 0;
+	i = 0;
+	in_single = false;
+	in_double = false;
+	while (str[i] != '\0')
+	{
+		if (str[i] != '\'' && str[i] != '\"')
+			size++;
+		else if (str[i] == '\'')
+		{
+			if (!in_double)
+				in_single = !in_single;
+			if (in_double)
+				size++;
+		}
+		else if (str[i] == '\"')
+		{
+			if (!in_single)
+				in_double = !in_double;
+			if (in_single)
+				size++;
+		}
+		i++;
+	}
+	return (size);
+}
+
+/*	Removes the quotes from a string.
  *
- *	str:		The string to remove the delimiter from.
- *	delimiter:	The character to remove.
+ *	str:		The string to remove the quotes from.
  *
- *	Return:		A new string without the delimiter.
+ *	Return:		A new string without quotes.
  */
-// static char	*remove_delimiter(char *str, char delimiter)
-// {
-// 	char	*new_str;
-// 	int		i;
-// 	int		j;
-// 	new_str = malloc(ft_strlen(str));
-// 	if (new_str == NULL)
-// 	{
-// 		free(str);
-// 		return (NULL);
-// 	}
-// 	i = 0;
-// 	j = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] != delimiter)
-// 		{
-// 			new_str[j] = str[i];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	new_str[j] = '\0';
-// 	return (new_str);
-// }
+static int	handle_quotes(char **str)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+	bool	in_single;
+	bool	in_double;
+	bool	escaped;
+	size_t	consecutive_backslashes;
 
-// static int	print_arg_with_env(t_env *env_list, char *arg, char quote)
-// {
-// 	t_env	*var;
-// 	char	*str;
-
-// 	str = remove_delimiter(arg, quote);
-// 	if (str == NULL)
-// 		return (-1);
-// 	if (str[0] == '$' && quote != '\'')
-// 	{
-// 		if (ft_strcmp("?", str + 1) == 0)
-// 		{
-// 			ft_putnbr_fd(g_exit_status, STDOUT_FILENO);
-// 			return (0);
-// 		}
-// 		var = find_env_var(env_list, str + 1);
-// 		if (var && var->value)
-// 			ft_putstr_fd(var->value, STDOUT_FILENO);
-// 		else
-// 			ft_putstr_fd("", STDOUT_FILENO);
-// 	}
-// 	else
-// 		ft_putstr_fd(str, STDOUT_FILENO);
-// 	return (0);
-// }
+	new_str = malloc((get_size_no_quotes(*str) + 1) * sizeof(char));
+	if (new_str == NULL)
+		return (free(str), FAIL);
+	i = 0;
+	j = 0;
+	in_single = false;
+	in_double = false;
+	consecutive_backslashes = 0;
+	while (*(*str + i) != '\0')
+	{
+		escaped = false;
+		if (*(*str + i) == '\'' && escaped == false)
+		{
+			if (!in_double)
+				in_single = !in_single;
+			if (in_double)
+				new_str[j++] = *(*str + i);
+			i++;
+		}
+		else if (*(*str + i) == '\"' && escaped == false)
+		{
+			if (!in_single)
+				in_double = !in_double;
+			if (in_single)
+				new_str[j++] = *(*str + i);
+			i++;
+		}
+		if (*(*str + i) == '\\')
+		{
+			escaped = true;
+			while (*(*str + i) == '\\')
+			{
+				consecutive_backslashes++;
+				i++;
+			}
+			if (consecutive_backslashes % 2 == 0)
+				escaped = false;
+			if (*(*str + i) == '\'' || *(*str + i) == '\"')
+				consecutive_backslashes /= 2;
+			while (consecutive_backslashes-- > 0)
+				new_str[j++] = '\\';
+			consecutive_backslashes = 0;
+		}
+		else
+			escaped = false;
+		new_str[j++] = *(*str + i++);
+	}
+	new_str[j] = '\0';
+	free(*str);
+	*str = new_str;
+	return (SUCCESS);
+}
 
 static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 {
@@ -168,18 +212,122 @@ static int	handle_variables(t_env *env_list, char **arg)
 	return (SUCCESS);
 }
 
-static int	handle_quotes(char **arg)
+static size_t	get_size_no_escapes(char *str)
 {
-	(void)arg;
+	size_t	size;
+	size_t	consecutive_backslashes;
+	bool	in_single;
+	bool	in_double;
+	bool	escaped;
+	int		i;
+
+	size = 0;
+	consecutive_backslashes = 0;
+	in_single = false;
+	in_double = false;
+	escaped = false;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' && !in_double)
+		{
+			if (escaped == false)
+				in_single = !in_single;
+			else if (escaped == true && in_single == true)
+				in_single = !in_single;
+		}
+		else if (str[i] == '\"' && !in_single && escaped == false)
+			in_double = !in_double;
+		if (str[i] == '\\' && !in_single)
+		{
+			while (str[i] == '\\')
+			{
+				consecutive_backslashes++;
+				i++;
+			}
+			size += consecutive_backslashes / 2;
+			if (consecutive_backslashes % 2 == 1)
+				escaped = true;
+		}
+		else
+		{
+			escaped = false;
+			size++;
+			i++;
+		}
+	}
+	return (size);
+}
+
+static int	handle_backslashes(char **arg)
+{
+	char	*new_str;
+	int		i;
+	int		j;
+	bool	in_single;
+	bool	in_double;
+	bool	escaped;
+	size_t	consecutive_backslashes;
+
+	new_str = malloc((get_size_no_escapes(*arg) + 1) * sizeof(char));
+	if (new_str == NULL)
+		return (free(arg), FAIL);
+	i = 0;
+	j = 0;
+	in_single = false;
+	in_double = false;
+	escaped = false;
+	consecutive_backslashes = 0;
+	while ((*arg)[i] != '\0')
+	{
+		if ((*arg)[i] == '\'' && !in_double)
+		{
+			if (escaped == false)
+				in_single = !in_single;
+			else if (escaped == true && in_single == true)
+				in_single = !in_single;
+		}
+		else if ((*arg)[i] == '\"' && !in_single && escaped == false)
+		{
+			in_double = !in_double;
+		}
+		else if ((*arg)[i] == '\\' && !in_single)
+		{
+			while ((*arg)[i] == '\\')
+			{
+				consecutive_backslashes++;
+				i++;
+			}
+			if (consecutive_backslashes % 2 == 1)
+				escaped = true;
+			if ((*arg)[i] != '\'' && (*arg)[i] != '\"')
+				consecutive_backslashes /= 2;
+			while (consecutive_backslashes-- > 0)
+				new_str[j++] = '\\';
+			consecutive_backslashes = 0;
+		}
+		else
+			escaped = false;
+		new_str[j++] = (*arg)[i++];
+	}
+	new_str[j] = '\0';
+	free(*arg);
+	*arg = new_str;
 	return (SUCCESS);
 }
 
 static int	print_arg(t_env *env_list, char **arg)
 {
+	printf("fresh arg: %s\n", *arg);
 	if (handle_variables(env_list, arg) == FAIL)
 		return (FAIL);
+	printf("variables arg: %s\n", *arg);
+	if (handle_backslashes(arg) == FAIL)
+		return (FAIL);
+	printf("backslashes arg: %s\n", *arg);
 	if (handle_quotes(arg) == FAIL)
 		return (FAIL);
+	printf("quotes arg: %s\n", *arg);
 	ft_putstr_fd(*arg, STDOUT_FILENO);
 	return (SUCCESS);
 }
