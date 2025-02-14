@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/14 11:37:37 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:32:54 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	parse_quoted_string(char **s, char *result, int *i)
 		result[(*i)++] = **s;
 		(*s)++;
 	}
+	printf("AFTER quotes: %c\n", **s);
 	return ;
 }
 
@@ -128,12 +129,9 @@ static char	**allocate_words(char *s, char **result)
 			else if (*s == '\\')
 			{
 				backslashes = is_escaped(&s);
-				length += (backslashes / 2);
+				length += (backslashes) - 1;
 				if (backslashes % 2 == 1)
-				{
-					length += 1;
 					escaped = true;
-				}
 				s--;
 			}
 			else
@@ -168,15 +166,17 @@ static char	**split_words(char *s, char **result)
 	{
 		while (*s != '\0' && *s != ' ')
 		{
-			if (*s == '\\')
-				escaped = !escaped;
 			if ((*s == '\'' || *s == '\"') && escaped == false)
 			{
 				parse_quoted_string(&s, result[nth_word], &i);
 				escaped = false;
+				break ;
 			}
-			else
-				result[nth_word][i++] = *(s++);
+			if (*s == '\\')
+				escaped = !escaped;
+			if (*s != '\\')
+				escaped = false;
+			result[nth_word][i++] = *(s++);
 		}
 		result[nth_word++][i] = '\0';
 		i = 0;

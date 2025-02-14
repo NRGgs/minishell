@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/14 12:46:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:40:24 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 		str = ft_strreplace(str, to_replace, var->value, var_ptr);
 	else
 		str = ft_strreplace(str, to_replace, "", var_ptr);
+	free(to_replace);
 	return (str);
 }
 
@@ -122,6 +123,28 @@ static char	*get_nth_var(char *str, int nth_var)
 	return (var_ptr);
 }
 
+static bool	in_single_quotes(char *str, char *c)
+{
+	bool	in_single;
+	bool	in_double;
+	int		i;
+
+	in_single = false;
+	in_double = false;
+	i = 0;
+	while (str + i < c)
+	{
+		if (str[i] == '\'' && !in_double)
+			in_single = !in_single;
+		else if (str[i] == '\"' && !in_single)
+			in_double = !in_double;
+		i++;
+	}
+	if (in_single)
+		return (true);
+	return (false);
+}
+
 static int	handle_variables(t_env *env_list, char **arg)
 {
 	char	*var_ptr;
@@ -131,7 +154,8 @@ static int	handle_variables(t_env *env_list, char **arg)
 	nth_var = 0;
 	while (var_ptr)
 	{
-		if (is_escaped(*arg, var_ptr) == false)
+		if (is_escaped(*arg, var_ptr) == false
+			&& in_single_quotes(*arg, var_ptr) == false)
 		{
 			*arg = replace_var(*arg, var_ptr, env_list);
 			if (*arg == NULL)
@@ -144,12 +168,19 @@ static int	handle_variables(t_env *env_list, char **arg)
 	return (SUCCESS);
 }
 
-static int	print_arg(t_env *env_list, char *arg)
+static int	handle_quotes(char **arg)
 {
-	if (handle_variables(env_list, &arg) == FAIL)
+	(void)arg;
+	return (SUCCESS);
+}
+
+static int	print_arg(t_env *env_list, char **arg)
+{
+	if (handle_variables(env_list, arg) == FAIL)
 		return (FAIL);
-	ft_putstr_fd(arg, STDOUT_FILENO);
-	free(arg);
+	if (handle_quotes(arg) == FAIL)
+		return (FAIL);
+	ft_putstr_fd(*arg, STDOUT_FILENO);
 	return (SUCCESS);
 }
 
@@ -172,7 +203,7 @@ int	echo(t_command *command)
 
 
 	printf("IN ECHO: command->pattern: %s\n", command->pattern);
-	if (print_arg(command->env_list, command->pattern) == FAIL)
+	if (print_arg(command->env_list, &command->pattern) == FAIL)
 		return (1);
 
 

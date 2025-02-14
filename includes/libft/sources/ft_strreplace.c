@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 12:48:48 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/14 12:45:30 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:40:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ char	*ft_strreplace(char *str, char *to_replace, \
 	ft_strlcpy(new_str, str, start - str + 1);
 	ft_strlcat(new_str, replacement, new_size + 1);
 	ft_strlcat(new_str, start + ft_strlen(to_replace), new_size + 1);
+	free(str);
 	return (new_str);
 }
