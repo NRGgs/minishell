@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/14 13:32:54 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:11:45 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static void	parse_quoted_string(char **s, char *result, int *i)
 		result[(*i)++] = **s;
 		(*s)++;
 	}
-	printf("AFTER quotes: %c\n", **s);
 	return ;
 }
 
@@ -170,13 +169,13 @@ static char	**split_words(char *s, char **result)
 			{
 				parse_quoted_string(&s, result[nth_word], &i);
 				escaped = false;
-				break ;
 			}
+			else
+				result[nth_word][i++] = *(s++);
 			if (*s == '\\')
 				escaped = !escaped;
 			if (*s != '\\')
 				escaped = false;
-			result[nth_word][i++] = *(s++);
 		}
 		result[nth_word++][i] = '\0';
 		i = 0;
