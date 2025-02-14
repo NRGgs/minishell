@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:59:28 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/03 14:16:27 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 12:32:03 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-char	*ft_strreplace(char *str, char *to_replace, char *replacement);
+char	*ft_strreplace(char *str, char *to_replace, \
+		char *replacement, char *location);
 char	*add_newline(char *str);
 void	space_strlcat(char *dst, char *src, size_t size);
 
