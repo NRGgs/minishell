@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_split.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/13 13:29:49 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/13 15:32:38 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_split.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
+/*   Updated: 2025/02/14 11:37:37 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,19 @@ static void	skip_spaces(char **s)
 {
 	while (**s == ' ')
 		(*s)++;
+}
+
+static int	is_escaped(char **s)
+{
+	int	escaped;
+
+	escaped = 0;
+	while (**s == '\\')
+	{
+		escaped++;
+		(*s)++;
+	}
+	return (escaped);
 }
 
 static int	parse_quote(char **s)
@@ -57,8 +70,10 @@ static void	parse_quoted_string(char **s, char *result, int *i)
 
 static int	get_word_count(char *s)
 {
-	int	word_count;
+	int		word_count;
+	bool	escaped;
 
+	escaped = false;
 	word_count = 0;
 	if (*s == '\0')
 		return (0);
@@ -69,14 +84,15 @@ static int	get_word_count(char *s)
 		{
 			word_count++;
 			skip_spaces(&s);
+			s--;
 		}
-		else if (*s == '\'' || *s == '\"')
-		{
+		else if ((*s == '\'' || *s == '\"') && escaped == false)
 			parse_quote(&s);
-			s++;
-		}
-		else
-			s++;
+		else if (*s == '\\')
+			escaped = !escaped;
+		else if (*s != '\\')
+			escaped = false;
+		s++;
 	}
 	if (*(s - 1) != ' ')
 		word_count++;
@@ -93,27 +109,44 @@ static void	free_result(char **result, int nth_word)
 
 static char	**allocate_words(char *s, char **result)
 {
-	int	length;
-	int	nth_word;
+	int		length;
+	int		nth_word;
+	int		backslashes;
+	bool	escaped;
 
 	nth_word = 0;
-	length = 1;
+	length = 0;
+	backslashes = 0;
+	escaped = false;
 	skip_spaces(&s);
 	while (*s != '\0')
 	{
 		while (*s != '\0' && *s != ' ')
 		{
-			if (*s == '\'' || *s == '\"')
+			if ((*s == '\'' || *s == '\"') && escaped == false)
 				length += parse_quote(&s);
+			else if (*s == '\\')
+			{
+				backslashes = is_escaped(&s);
+				length += (backslashes / 2);
+				if (backslashes % 2 == 1)
+				{
+					length += 1;
+					escaped = true;
+				}
+				s--;
+			}
+			else
+				escaped = false;
 			length++;
 			s++;
 		}
 		if (length > 0)
 		{
-			result[nth_word] = malloc((length) * sizeof(char));
+			result[nth_word] = malloc((length + 1) * sizeof(char));
 			if (result[nth_word] == NULL)
 				return (free_result(result, nth_word - 1), NULL);
-			length = 1;
+			length = 0;
 			nth_word++;
 		}
 		skip_spaces(&s);
@@ -123,18 +156,25 @@ static char	**allocate_words(char *s, char **result)
 
 static char	**split_words(char *s, char **result)
 {
-	int	nth_word;
-	int	i;
+	int		nth_word;
+	bool	escaped;
+	int		i;
 
 	nth_word = 0;
+	escaped = false;
 	i = 0;
 	skip_spaces(&s);
 	while (*s != '\0')
 	{
 		while (*s != '\0' && *s != ' ')
 		{
-			if (*s == '\'' || *s == '\"')
+			if (*s == '\\')
+				escaped = !escaped;
+			if ((*s == '\'' || *s == '\"') && escaped == false)
+			{
 				parse_quoted_string(&s, result[nth_word], &i);
+				escaped = false;
+			}
 			else
 				result[nth_word][i++] = *(s++);
 		}
@@ -171,17 +211,23 @@ static char	check_open_quotes(char *str)
 {
 	bool	in_single;
 	bool	in_double;
+	bool	escaped;
 	int		i;
 
 	in_single = false;
 	in_double = false;
+	escaped = false;
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '\'' && !in_double)
+		if (str[i] == '\'' && !in_double && escaped == false)
 			in_single = !in_single;
-		if (str[i] == '\"' && !in_single)
+		else if (str[i] == '\"' && !in_single && escaped == false)
 			in_double = !in_double;
+		else if (str[i] == '\\')
+			escaped = !escaped;
+		else
+			escaped = false;
 		i++;
 	}
 	if (in_single)
@@ -213,13 +259,41 @@ char	**parse_split(char *s)
 // int	main(void)
 // {
 // 	int i = 0;
-// 	char *unfinished = ft_strdup("Hello World \"This    is  \' a   test");
+// 	char *unfinished = malloc(100 * sizeof(char));
+// 	ft_strlcat(unfinished, "This is ", 100);
+// 	i = 8;
+// 	while (i < 11)
+// 	{
+// 		unfinished[i] = '\\';
+// 		i++;
+// 	}
+// 	unfinished[i] = '\'';
+// 	i++;
+// 	unfinished[i] = ' ';
+// 	i++;
+// 	unfinished[i] = '\0';
+// 	i = 0;
+// 	ft_strlcat(unfinished, "a test", 100);
+// 	printf("%s\n", unfinished);
+// 	printf("word_count: %d\n", get_word_count(unfinished));
 // 	char **result = parse_split(unfinished);
 // 	if (result == NULL)
 // 		printf("result is NULL\n");
 // 	while (result[i] != NULL)
 // 	{
-// 		printf("result[%d]: %s\n", i, result[i]);
+// 		if (i == 2)
+// 		{
+// 			printf("result[%d]: ", i);
+// 			for (int j = 0; result[i][j] != '\0'; j++)
+// 			{
+// 				printf("%c", result[i][j]);
+// 			}
+// 			printf("\n");
+// 		}
+// 		else
+// 		{
+// 			printf("result[%d]: %s\n", i, result[i]);
+// 		}
 // 		i++;
 // 	}
 // 	i = 0;
