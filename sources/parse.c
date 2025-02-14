@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/14 13:13:42 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:48:17 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,52 @@ static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 		clean_commands(cmds);
 	if (split_input != NULL)
 		clean_2d_array(split_input);
+}
+
+static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
+{
+	t_env	*var;
+	char	*to_replace;
+	int		i;
+
+	to_replace = var_ptr;
+	i = 1;
+	while (valid_char(to_replace[i]))
+		i++;
+	to_replace = ft_strndup(to_replace, i);
+	if (to_replace == NULL)
+		return (free(str), NULL);
+	to_replace[0] = '$';
+	var = find_env_var(env_list, to_replace + 1);
+	if (var && var->value)
+		str = ft_strreplace(str, to_replace, var->value, var_ptr);
+	else
+		str = ft_strreplace(str, to_replace, "", var_ptr);
+	free(to_replace);
+	return (str);
+}
+
+static int	replace_custom_variable(t_variable *vars, char **arg)
+{
+	char	*var_ptr;
+	int		nth_var;
+
+	var_ptr = ft_strchr(*arg, '$');
+	nth_var = 0;
+	while (var_ptr)
+	{
+		if (is_escaped(*arg, var_ptr) == false
+			&& in_single_quotes(*arg, var_ptr) == false)
+		{
+			*arg = replace_var(*arg, var_ptr, vars);
+			if (*arg == NULL)
+				return (FAIL);
+		}
+		else
+			nth_var++;
+		var_ptr = get_nth_var(*arg, nth_var);
+	}
+	return (SUCCESS);
 }
 
 /*	Parse the command given by the user.
@@ -56,11 +102,12 @@ int	parse_full_command(\
 	if (cmd_last(*commands)->in_type == STRING
 		|| cmd_last(*commands)->pattern != NULL)
 	{
-		if (split_input[*i] != NULL
-			&& contains_quote(split_input[*i]) != '0')
+		if (split_input[*i] != NULL)
 		{
-			temp = replace_variable(cmd_last(*commands)->pattern, *variables, \
-					split_input[*i][ft_strlen(split_input[*i]) - 1], commands);
+			// temp = replace_variable(cmd_last(*commands)->pattern, *variables, \
+			// 		split_input[*i][ft_strlen(split_input[*i]) - 1], commands);
+			temp = replace_custom_variable(*variables, \
+					&cmd_last(*commands)->pattern);
 			if (temp == NULL)
 			{
 				clean_all(variables, commands, split_input);
