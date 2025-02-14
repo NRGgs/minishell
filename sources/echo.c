@@ -6,45 +6,45 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/14 17:10:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:34:54 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static size_t	get_size_no_quotes(char *str)
-{
-	size_t	size;
-	int		i;
-	bool	in_single;
-	bool	in_double;
+// static size_t	get_size_no_quotes(char *str)
+// {
+// 	size_t	size;
+// 	int		i;
+// 	bool	in_single;
+// 	bool	in_double;
 
-	size = 0;
-	i = 0;
-	in_single = false;
-	in_double = false;
-	while (str[i] != '\0')
-	{
-		if (str[i] != '\'' && str[i] != '\"')
-			size++;
-		else if (str[i] == '\'')
-		{
-			if (!in_double)
-				in_single = !in_single;
-			if (in_double)
-				size++;
-		}
-		else if (str[i] == '\"')
-		{
-			if (!in_single)
-				in_double = !in_double;
-			if (in_single)
-				size++;
-		}
-		i++;
-	}
-	return (size);
-}
+// 	size = 0;
+// 	i = 0;
+// 	in_single = false;
+// 	in_double = false;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] != '\'' && str[i] != '\"')
+// 			size++;
+// 		else if (str[i] == '\'')
+// 		{
+// 			if (!in_double)
+// 				in_single = !in_single;
+// 			if (in_double)
+// 				size++;
+// 		}
+// 		else if (str[i] == '\"')
+// 		{
+// 			if (!in_single)
+// 				in_double = !in_double;
+// 			if (in_single)
+// 				size++;
+// 		}
+// 		i++;
+// 	}
+// 	return (size);
+// }
 
 /*	Removes the quotes from a string.
  *
@@ -62,7 +62,7 @@ static int	handle_quotes(char **str)
 	bool	escaped;
 	size_t	consecutive_backslashes;
 
-	new_str = malloc((get_size_no_quotes(*str) + 1) * sizeof(char));
+	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
 	if (new_str == NULL)
 		return (free(str), FAIL);
 	i = 0;
@@ -212,52 +212,52 @@ static int	handle_variables(t_env *env_list, char **arg)
 	return (SUCCESS);
 }
 
-static size_t	get_size_no_escapes(char *str)
-{
-	size_t	size;
-	size_t	consecutive_backslashes;
-	bool	in_single;
-	bool	in_double;
-	bool	escaped;
-	int		i;
+// static size_t	get_size_no_escapes(char *str)
+// {
+// 	size_t	size;
+// 	size_t	consecutive_backslashes;
+// 	bool	in_single;
+// 	bool	in_double;
+// 	bool	escaped;
+// 	int		i;
 
-	size = 0;
-	consecutive_backslashes = 0;
-	in_single = false;
-	in_double = false;
-	escaped = false;
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\'' && !in_double)
-		{
-			if (escaped == false)
-				in_single = !in_single;
-			else if (escaped == true && in_single == true)
-				in_single = !in_single;
-		}
-		else if (str[i] == '\"' && !in_single && escaped == false)
-			in_double = !in_double;
-		if (str[i] == '\\' && !in_single)
-		{
-			while (str[i] == '\\')
-			{
-				consecutive_backslashes++;
-				i++;
-			}
-			size += consecutive_backslashes / 2;
-			if (consecutive_backslashes % 2 == 1)
-				escaped = true;
-		}
-		else
-		{
-			escaped = false;
-			size++;
-			i++;
-		}
-	}
-	return (size);
-}
+// 	size = 0;
+// 	consecutive_backslashes = 0;
+// 	in_single = false;
+// 	in_double = false;
+// 	escaped = false;
+// 	i = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '\'' && !in_double)
+// 		{
+// 			if (escaped == false)
+// 				in_single = !in_single;
+// 			else if (escaped == true && in_single == true)
+// 				in_single = !in_single;
+// 		}
+// 		else if (str[i] == '\"' && !in_single && escaped == false)
+// 			in_double = !in_double;
+// 		if (str[i] == '\\' && !in_single)
+// 		{
+// 			while (str[i] == '\\')
+// 			{
+// 				consecutive_backslashes++;
+// 				i++;
+// 			}
+// 			size += consecutive_backslashes / 2;
+// 			if (consecutive_backslashes % 2 == 1)
+// 				escaped = true;
+// 		}
+// 		else
+// 		{
+// 			escaped = false;
+// 			size++;
+// 			i++;
+// 		}
+// 	}
+// 	return (size);
+// }
 
 static int	handle_backslashes(char **arg)
 {
@@ -269,7 +269,7 @@ static int	handle_backslashes(char **arg)
 	bool	escaped;
 	size_t	consecutive_backslashes;
 
-	new_str = malloc((get_size_no_escapes(*arg) + 1) * sizeof(char));
+	new_str = malloc((ft_strlen(*arg) + 1) * sizeof(char));
 	if (new_str == NULL)
 		return (free(arg), FAIL);
 	i = 0;
@@ -316,6 +316,32 @@ static int	handle_backslashes(char **arg)
 	return (SUCCESS);
 }
 
+static char	*ft_realloc(char *str, size_t size)
+{
+	char	*new_str;
+
+	new_str = malloc((size + 1) * sizeof(char));
+	if (new_str == NULL)
+		return (free(str), NULL);
+	ft_strlcpy(new_str, str, size);
+	free(str);
+	return (new_str);
+}
+
+static int	trim_memory(char **str)
+{
+	char	*new_str;
+	size_t	size;
+
+	while ((*str)[size] != '\0')
+		size++;
+	new_str = ft_realloc(*str, size);
+	if (new_str == NULL)
+		return (FAIL);
+	*str = new_str;
+	return (SUCCESS);
+}
+
 static int	print_arg(t_env *env_list, char **arg)
 {
 	printf("fresh arg: %s\n", *arg);
@@ -327,7 +353,7 @@ static int	print_arg(t_env *env_list, char **arg)
 	printf("backslashes arg: %s\n", *arg);
 	if (handle_quotes(arg) == FAIL)
 		return (FAIL);
-	printf("quotes arg: %s\n", *arg);
+	printf("quotes arg: %s\n\n", *arg);
 	ft_putstr_fd(*arg, STDOUT_FILENO);
 	return (SUCCESS);
 }
@@ -359,19 +385,4 @@ int	echo(t_command *command)
 	if (!flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
-}
-
-void	ft_free_split(char **split)
-{
-	int	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
 }
