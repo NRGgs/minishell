@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   variables.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 12:09:56 by nmattos           #+#    #+#             */
-/*   Updated: 2024/12/20 12:55:26 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   variables.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/01 12:09:56 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/02/15 11:29:25 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,6 @@ t_variable	*var_find(t_variable *vars, char *name)
 			return (current);
 		current = current->next;
 	}
+	printf("didnt find var\n");
 	return (NULL);
 }

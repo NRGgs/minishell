@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/14 17:34:54 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   echo.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/04 13:21:35 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/02/15 11:44:17 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 	return (str);
 }
 
-static bool	is_escaped(char *str, char *c)
+bool	char_is_escaped(char *str, char *c)
 {
 	bool	escaped;
 
@@ -154,7 +154,7 @@ static bool	is_escaped(char *str, char *c)
 	return (escaped);
 }
 
-static char	*get_nth_var(char *str, int nth_var)
+char	*get_nth_var(char *str, int nth_var)
 {
 	char	*var_ptr;
 
@@ -167,7 +167,7 @@ static char	*get_nth_var(char *str, int nth_var)
 	return (var_ptr);
 }
 
-static bool	in_single_quotes(char *str, char *c)
+bool	in_single_quotes(char *str, char *c)
 {
 	bool	in_single;
 	bool	in_double;
@@ -178,9 +178,11 @@ static bool	in_single_quotes(char *str, char *c)
 	i = 0;
 	while (str + i < c)
 	{
-		if (str[i] == '\'' && !in_double)
+		if (str[i] == '\'' && !in_double
+			&& char_is_escaped(str, str + i) == false)
 			in_single = !in_single;
-		else if (str[i] == '\"' && !in_single)
+		else if (str[i] == '\"' && !in_single
+			&& char_is_escaped(str, str + i) == false)
 			in_double = !in_double;
 		i++;
 	}
@@ -198,7 +200,7 @@ static int	handle_variables(t_env *env_list, char **arg)
 	nth_var = 0;
 	while (var_ptr)
 	{
-		if (is_escaped(*arg, var_ptr) == false
+		if (char_is_escaped(*arg, var_ptr) == false
 			&& in_single_quotes(*arg, var_ptr) == false)
 		{
 			*arg = replace_var(*arg, var_ptr, env_list);
@@ -333,9 +335,10 @@ static int	trim_memory(char **str)
 	char	*new_str;
 	size_t	size;
 
+	size = 0;
 	while ((*str)[size] != '\0')
 		size++;
-	new_str = ft_realloc(*str, size);
+	new_str = ft_realloc(*str, size + 1);
 	if (new_str == NULL)
 		return (FAIL);
 	*str = new_str;
@@ -354,6 +357,7 @@ static int	print_arg(t_env *env_list, char **arg)
 	if (handle_quotes(arg) == FAIL)
 		return (FAIL);
 	printf("quotes arg: %s\n\n", *arg);
+	trim_memory(arg);
 	ft_putstr_fd(*arg, STDOUT_FILENO);
 	return (SUCCESS);
 }

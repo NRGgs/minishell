@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 16:26:11 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/15 11:43:44 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,15 @@ typedef struct s_variable
 /*****************************************************************************\
 *                             Function Prototypes                             *
 \*****************************************************************************/
+
+bool	char_is_escaped(char *str, char *c);
+bool	in_single_quotes(char *str, char *c);
+char	*get_nth_var(char *str, int nth_var);
+
+
+
+
+
 
 /* minishell.c */
 void		set_error(char *error_msg, int error_code);
