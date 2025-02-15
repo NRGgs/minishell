@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/15 11:43:43 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/15 11:48:39 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,6 @@ t_command	*parse_user_input(char *input)
 	split_input = parse_split(input);
 	if (split_input == NULL)
 		return (NULL);
-	// printf("-----------------------\n");
-	// while (split_input[i] != NULL)
-	// {
-	// 	printf("split_input[%d]: %s\n", i, split_input[i]);
-	// 	i++;
-	// }
-	// printf("-----------------------\n");
 	i = 0;
 	while (split_input[i] != NULL)
 	{
@@ -159,10 +152,5 @@ t_command	*parse_user_input(char *input)
 		i++;
 	}
 	clean_all(&variables, NULL, split_input);
-	// printf("-----------------------\n");
-	// printf("\ncommands->command: %s\n", commands->command);
-	// printf("options: %s\n", commands->options);
-	// printf("pattern: %s\n\n", commands->pattern);
-	// printf("-----------------------\n");
 	return (commands);
 }
