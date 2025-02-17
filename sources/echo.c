@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 10:52:55 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:08:47 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ static int	handle_backslashes(char **arg)
 				in_single = !in_single;
 			else if (escaped == true && in_single == true)
 				in_single = !in_single;
+			escaped = false;
 		}
 		else if ((*arg)[i] == '\"' && !in_single && escaped == false)
 			in_double = !in_double;
