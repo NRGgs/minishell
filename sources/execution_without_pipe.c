@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 18:49:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:26:30 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,22 @@ int	exec_builtin_no_pipe(t_command *commands)
 
 int	exec_external_no_pipe(t_command *commands)
 {
-	char	*args[4];
+	char	**args;
 	char	*path;
-	int		i;
 
-	i = 0;
 	path = true_path(commands->command, environ);
 	if (!path)
 	{
 		return (SHELL_CONTINUE);
 	}
-	args[i++] = commands->command;
-	if (commands->options)
-		args[i++] = commands->options;
-	if (commands->pattern)
-		args[i++] = commands->pattern;
-	args[i] = NULL;
+	args = build_execve_args(commands);
+	if (!args)
+	{
+		free(path);
+		return (SHELL_CONTINUE);
+	}
 	execute_command(commands, path, args);
 	free(path);
+	free_2d_array(args);
 	return (SHELL_CONTINUE);
 }

@@ -39,7 +39,8 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/execution_with_pipe_3.c \
 		$(SRC_DIR)/execution_with_pipe_4.c \
 		$(SRC_DIR)/heredoc.c \
-		$(SRC_DIR)/parse_split.c
+		$(SRC_DIR)/parse_split.c \
+		$(SRC_DIR)/build_execve_args.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

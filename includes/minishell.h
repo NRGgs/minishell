@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/15 11:43:44 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/17 13:26:49 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,5 +280,8 @@ int			parse_env_var(char *env_str, char **name, char **value);
 void		append_env_node(t_env **list, t_env *new_node);
 t_env		*init_env_list(void);
 void		clear_env_list(t_env *env_list);
+
+/* build_execve_args.c */
+char		**build_execve_args(t_command *cmd);
 
 #endif
