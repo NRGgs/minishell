@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 15:06:26 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:12:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ extern char	**environ;
 
 /**
  * @brief Handles execution of a piped child process.
- * Sets up input/output redirections and executes the command in the child process.
+ * Sets up input/output redirections and executes
+ * the command in the child process.
  *
  * @param current The current command structure.
  *

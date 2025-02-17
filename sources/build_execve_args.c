@@ -6,12 +6,20 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:25:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 13:35:33 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:12:51 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Counts the number of tokens in a NULL-terminated array.
+ * Iterates through the array until a NULL pointer is found.
+ *
+ * @param arr The array of strings.
+ *
+ * @return The number of tokens in the array.
+ */
 static int	count_tokens(char **arr)
 {
 	int	count;
@@ -22,6 +30,17 @@ static int	count_tokens(char **arr)
 	return (count);
 }
 
+/**
+ * @brief Appends tokens from the source array into the destination array.
+ * Duplicates each string from src and stores it into dst starting at index *i.
+ * Updates the index *i accordingly.
+ *
+ * @param dst The destination array where tokens will be copied.
+ *
+ * @param src The source array of tokens.
+ *
+ * @param i Pointer to the current index in dst.
+ */
 static void	append_tokens(char **dst, char **src, int *i)
 {
 	int	j;
@@ -35,6 +54,21 @@ static void	append_tokens(char **dst, char **src, int *i)
 	}
 }
 
+/**
+ * @brief Splits the options and pattern strings into tokens
+ * and computes total count.
+ * If options or pattern exist in the command structure, splits them by space,
+ * counts the tokens, and updates the total count.
+ *
+ * @param cmd The command structure.
+ *
+ * @param opt Pointer to store the array of option tokens.
+ *
+ * @param pat Pointer to store the array of pattern tokens.
+ *
+ * @param cnt Pointer to the total count of tokens
+ * (starting at 1 for the command itself).
+ */
 static void	get_opt_and_pat(t_command *cmd, char ***opt, char ***pat, int *cnt)
 {
 	*cnt = 1;
@@ -54,6 +88,18 @@ static void	get_opt_and_pat(t_command *cmd, char ***opt, char ***pat, int *cnt)
 		*pat = NULL;
 }
 
+/**
+ * @brief Builds the argument vector for execve from a command structure.
+ * Splits the options and pattern strings into tokens,
+ * allocates an array of strings,
+ * and concatenates them with the command name as the first argument.
+ * The resulting array is NULL-terminated.
+ *
+ * @param cmd The command structure.
+ *
+ * @return A dynamically allocated NULL-terminated array
+ * of strings (argv) or NULL on failure.
+ */
 char	**build_execve_args(t_command *cmd)
 {
 	char	**opt;

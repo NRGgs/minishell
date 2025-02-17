@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:59:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 15:07:19 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:12:53 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ extern char	**environ;
  *
  * @param current The current command structure.
  *
- * @param pipe_fd An array of two integers to store the new pipe's file descriptors.
+ * @param pipe_fd An array of two integers to store
+ * the new pipe's file descriptors.
  *
  * @return SUCCESS if no next command exists or if the pipe was
  * created successfully, FAIL otherwise.
