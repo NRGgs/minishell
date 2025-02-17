@@ -6,12 +6,20 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:13:07 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 13:31:10 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:57:33 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Implements the pwd built-in command.
+ * Prints the current working directory.
+ *
+ * @param argv The arguments passed to pwd.
+ *
+ * @return 0 on success, non-zero on failure.
+ */
 int	pwd(char **argv)
 {
 	char	*cwd;

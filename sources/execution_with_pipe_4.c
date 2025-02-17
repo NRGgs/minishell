@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 13:30:39 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:30:33 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 extern char	**environ;
 
+/**
+ * @brief Processes redirections for a command or exits on failure.
+ *
+ * @param current The current command structure.
+ */
 static void	process_redir_or_exit(t_command *current)
 {
 	if (process_redirections(current) == ERROR)
@@ -23,6 +28,15 @@ static void	process_redir_or_exit(t_command *current)
 	}
 }
 
+/**
+ * @brief Handles the execution of a built-in command in a pipeline.
+ * Executes the built-in, cleans up the command structure, frees resources,
+ * and exits with the built-in's exit status.
+ *
+ * @param cmd_ptr Pointer to the pointer of the current command.
+ *
+ * @param path The path to the executable (unused for built-ins).
+ */
 static void	handle_builtin_pipe(t_command **cmd_ptr, char *path)
 {
 	t_env	*env_copy;
@@ -36,6 +50,15 @@ static void	handle_builtin_pipe(t_command **cmd_ptr, char *path)
 	exit(builtin_ret);
 }
 
+/**
+ * @brief Handles the execution of an external command in a pipeline.
+ * Builds the argument vector, executes the command via execve,
+ * and frees resources on failure.
+ *
+ * @param cmd_ptr Pointer to the pointer of the current command.
+ *
+ * @param path The path to the executable.
+ */
 static void	handle_external_pipe(t_command **cmd_ptr, char *path)
 {
 	char	**args;
@@ -61,6 +84,15 @@ static void	handle_external_pipe(t_command **cmd_ptr, char *path)
 	}
 }
 
+/**
+ * @brief Executes a command in a pipeline.
+ * Processes redirections and then dispatches to either the built-in
+ * or external pipe handler.
+ *
+ * @param current The current command structure.
+ *
+ * @param path The path to the executable.
+ */
 void	execute_command_pipe(t_command *current, char *path)
 {
 	process_redir_or_exit(current);

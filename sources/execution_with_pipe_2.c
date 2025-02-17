@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/10 18:48:57 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:06:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,49 @@
 
 extern char	**environ;
 
+/**
+ * @brief Handles execution of a piped child process.
+ * Sets up input/output redirections and executes the command in the child process.
+ *
+ * @param current The current command structure.
+ *
+ * @param pipe_in The file descriptor to use for input.
+ *
+ * @param pipe_fd An array of two file descriptors for the current pipe.
+ *
+ * @param path The path to the executable.
+ */
 void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path)
 {
 	setup_input_output(current, pipe_in, pipe_fd);
 	execute_command_pipe(current, path);
 }
 
+/**
+ * @brief Handles the parent branch of a piped command.
+ * Closes the write end of the pipe and updates the input file descriptor for
+ * subsequent commands in the pipeline.
+ *
+ * @param pipe_fd The array of two file descriptors for the pipe.
+ *
+ * @param pipe_in Pointer to the input file descriptor to update.
+ */
 void	handle_parent(int *pipe_fd, int *pipe_in)
 {
 	close(pipe_fd[1]);
 	*pipe_in = pipe_fd[0];
 }
 
+/**
+ * @brief Executes a sequence of piped commands.
+ * Iterates through the linked list of commands, processing each command in the
+ * pipeline. After forking child processes for each command, waits for all
+ * child processes to finish.
+ *
+ * @param commands The linked list of commands to execute.
+ *
+ * @return SHELL_CONTINUE upon successful execution.
+ */
 int	execution_with_pipe(t_command *commands)
 {
 	int			pipe_in;
@@ -43,6 +74,15 @@ int	execution_with_pipe(t_command *commands)
 	return (SHELL_CONTINUE);
 }
 
+/**
+ * @brief Creates a new pipe.
+ * Attempts to create a pipe and prints the file descriptors on success.
+ *
+ * @param pipe_fd Pointer to an array of two integers where the pipe's file
+ * descriptors will be stored.
+ *
+ * @return SUCCESS if the pipe was created successfully, ERROR otherwise.
+ */
 int	setup_pipe(int *pipe_fd)
 {
 	if (pipe(pipe_fd) == -1)

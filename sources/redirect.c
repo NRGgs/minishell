@@ -6,12 +6,20 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/28 12:37:00 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:59:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles input redirection for a command.
+ * Opens the input file and duplicates its file descriptor to stdin.
+ *
+ * @param cmd The command structure.
+ *
+ * @return SUCCESS on success, ERROR on failure.
+ */
 int	handle_input_redirection(t_command *cmd)
 {
 	int	fd;
@@ -32,6 +40,15 @@ int	handle_input_redirection(t_command *cmd)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Handles output redirection for a command.
+ * Opens the output file (in append or truncate mode)
+ * and duplicates its file descriptor to stdout.
+ *
+ * @param cmd The command structure.
+ *
+ * @return SUCCESS on success, ERROR on failure.
+ */
 int	handle_output_redirection(t_command *cmd)
 {
 	int	fd;
@@ -57,6 +74,13 @@ int	handle_output_redirection(t_command *cmd)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Processes all redirections for a command.
+ *
+ * @param cmd The command structure.
+ *
+ * @return SUCCESS on success, ERROR on failure.
+ */
 int	process_redirections(t_command *cmd)
 {
 	if (cmd->in_type == TEXTFILE)
