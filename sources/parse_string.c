@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:01:21 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 13:35:11 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:48:02 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static int	find_quote(char **input, int *i, char **pattern, char quote);
 static int	receive_input_till_quotes(char **input, int *i, \
 		char **pattern, char quote);
 
-/*	Parses the string between the quotes.
+/**
+ * Parses the string between the quotes.
  *
- *	input:		An array of strings.
- *	i:			The index of the first string.
- *	pattern:	The pattern to store the input.
- *	quote:		The quote to look for.
- *
- *	Return:		SUCCESS or FAIL.
+ * @param input An array of strings.
+ * @param i The index of the first string.
+ * @param pattern The pattern to store the input.
+ * @param quote The quote to look for.
+ * @return SUCCESS or FAIL.
  */
 int	parse_string(char **input, int *i, char **pattern, char quote)
 {
@@ -55,13 +55,13 @@ int	parse_string(char **input, int *i, char **pattern, char quote)
 	return (SUCCESS);
 }
 
-/*	Parses the string between the quotes.
+/**
+ * Parses the string between the quotes.
  *
- *	first:		The first quote.
- *	second:		The second quote.
- *	pattern:	The pattern to store the input.
- *
- *	Return:		SUCCESS or FAIL.
+ * @param first The first quote.
+ * @param second The second quote.
+ * @param pattern The pattern to store the input.
+ * @return SUCCESS or FAIL.
  */
 static int	parse_string_helper(char *first, char *second, char **pattern)
 {
@@ -75,13 +75,13 @@ static int	parse_string_helper(char *first, char *second, char **pattern)
 	return (SUCCESS);
 }
 
-/*	Checks if a quote exists in the input.
+/**
+ * Checks if a quote exists in the input.
  *
- *	input:	An array of strings.
- *	j:		The index of where to start in the input array.
- *	quote:	The quote to look for (single or double).
- *
- *	Return:	true if the quote exists, false if it does not.
+ * @param input An array of strings.
+ * @param j The index of where to start in the input array.
+ * @param quote The quote to look for (single or double).
+ * @return true if the quote exists, false if it does not.
  */
 static bool	air_quote_exists(char **input, int j, char quote)
 {
@@ -94,14 +94,14 @@ static bool	air_quote_exists(char **input, int j, char quote)
 	return (false);
 }
 
-/*	Creates a string to store the input until the quote is found.
+/**
+ * Creates a string to store the input until the quote is found.
  *
- *	input:		An array of strings.
- *	i:			The index of the first string.
- *	pattern:	The pattern to store the input.
- *	quote:		The quote to look for.
- *
- *	Return:		SUCCESS or FAIL.
+ * @param input An array of strings.
+ * @param i The index of the first string.
+ * @param pattern The pattern to store the input.
+ * @param quote The quote to look for.
+ * @return SUCCESS or FAIL.
  */
 static int	find_quote(char **input, int *i, char **pattern, char quote)
 {
@@ -129,14 +129,14 @@ static int	find_quote(char **input, int *i, char **pattern, char quote)
 	return (SUCCESS);
 }
 
-/*	Receives input until the closing quote.
+/**
+ * Receives input until the closing quote.
  *
- *	input:		An array of strings.
- *	i:			The index of the first string.
- *	pattern:	The pattern to store the input.
- *	quote:		The quote to look for.
- *
- *	Return:		SUCCESS or FAIL.
+ * @param input An array of strings.
+ * @param i The index of the first string.
+ * @param pattern The pattern to store the input.
+ * @param quote The quote to look for.
+ * @return SUCCESS or FAIL.
  */
 static int	receive_input_till_quotes(char **input, int *i, \
 		char **pattern, char quote)

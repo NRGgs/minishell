@@ -6,17 +6,16 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/11 13:00:50 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:45:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Clean a two dimensional array
+/**
+ * @brief Clean a two dimensional array
  *
- *	array:	the array to clean
- *
- *	Return: none.
+ * @param array The array to clean
  */
 void	clean_2d_array(char **array)
 {
@@ -31,11 +30,10 @@ void	clean_2d_array(char **array)
 	free(array);
 }
 
-/*	Clean the variables linked list
+/**
+ * @brief Clean the variables linked list
  *
- *	vars:	the linked list to clean
- *
- *	Return: none.
+ * @param vars The linked list to clean
  */
 void	clean_variables(t_variable **vars)
 {
@@ -54,11 +52,10 @@ void	clean_variables(t_variable **vars)
 	*vars = NULL;
 }
 
-/*	Clean the commands linked list
+/**
+ * @brief Clean the commands linked list
  *
- *	cmds:	the linked list to clean
- *
- *	Return: none.
+ * @param cmds The linked list to clean
  */
 void	clean_commands(t_command **cmds)
 {

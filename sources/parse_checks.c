@@ -6,17 +6,17 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:04:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/03 14:14:00 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:44:32 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Check if the command is a command with string input
+/**
+ * @brief Check if the command is a command with string input.
  *
- *	command: the command to be checked.
- *
- * 	Return: true (1) / false (0).
+ * @param command The command to be checked.
+ * @return true if the command is a special command, false otherwise.
  */
 bool	is_special(char *command)
 {
@@ -37,11 +37,11 @@ bool	is_special(char *command)
 	return (false);
 }
 
-/*	Check if the string is a redirect.
+/**
+ * @brief Check if the string is a redirect.
  *
- *	str: the string to be checked.
- *
- * 	Return: true (1) / false (0).
+ * @param str The string to be checked.
+ * @return true if the string is a redirect, false otherwise.
  */
 bool	is_redirect(char *str)
 {
@@ -54,11 +54,11 @@ bool	is_redirect(char *str)
 	return (false);
 }
 
-/*	Check if the command is a built-in command.
+/**
+ * @brief Check if the command is a built-in command.
  *
- *	cmd: the command to be checked.
- *
- * 	Return: SUCCESS (1) / FAIL (0) / ERROR (-1).
+ * @param cmd The command to be checked.
+ * @return SUCCESS (1) if the command is found, FAIL (0) if not found, ERROR (-1) on error.
  */
 int	is_command(char *cmd)
 {
@@ -77,11 +77,11 @@ int	is_command(char *cmd)
 	return (found);
 }
 
-/*	Check if the command supports options.
+/**
+ * @brief Check if the command supports options.
  *
- *	command: the command to be checked.
- *
- * 	Return: true (1) / false (0).
+ * @param command The command to be checked.
+ * @return true if the command supports options, false otherwise.
  */
 bool	options_possible(char *command)
 {
@@ -90,12 +90,12 @@ bool	options_possible(char *command)
 	return (true);
 }
 
-/*	Check all paths in the PATH environment variable for the command.
+/**
+ * @brief Check all paths in the PATH environment variable for the command.
  *
- *	cmd:	the command to be checked.
- *	path:	the PATH environment variable.
- *
- * 	Return: SUCCESS (1) / FAIL (0).
+ * @param cmd The command to be checked.
+ * @param path The PATH environment variable.
+ * @return SUCCESS (1) if the command is found, FAIL (0) if not found.
  */
 int	check_path(char *cmd, char *path)
 {

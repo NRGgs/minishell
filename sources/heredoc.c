@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 12:22:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:42:01 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static int	read_here_doc(char *delimiter, char **input);
 static char	*strjoin_free(char **s1, char *s2);
 static int	restore_stdin(int stdin_backup, char **input);
 
-/*	Handles here_doc redirection.
+/**
+ * Handles here_doc redirection.
  *
- *	delimiter:	string to delimit the input
- *	last:		linked list of commands
- *
- *	Return: SUCCESS (1) / FAIL (0).
+ * @param delimiter string to delimit the input
+ * @param last linked list of commands
+ * @return SUCCESS (1) / FAIL (0)
  */
 int	here_doc_redirection(char *delimiter, t_command **last)
 {
@@ -37,12 +37,12 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	return (SUCCESS);
 }
 
-/*	Reads input from user until delimiter is found.
+/**
+ * Reads input from user until delimiter is found.
  *
- *	delimiter:	string to delimit the input
- *	input:		string to store the input
- *
- *	Return:		new string (input).
+ * @param delimiter string to delimit the input
+ * @param input string to store the input
+ * @return SUCCESS (1) / FAIL (0)
  */
 static int	read_here_doc(char *delimiter, char **input)
 {
@@ -73,12 +73,12 @@ static int	read_here_doc(char *delimiter, char **input)
 	return (SUCCESS);
 }
 
-/*	Joins two strings and frees both.
+/**
+ * Joins two strings and frees both.
  *
- *	s1:		string to join
- *	s2:		string to join
- *
- * 	Return:	new string.
+ * @param s1 string to join
+ * @param s2 string to join
+ * @return new string
  */
 static char	*strjoin_free(char **s1, char *s2)
 {
@@ -90,17 +90,17 @@ static char	*strjoin_free(char **s1, char *s2)
 	return (temp);
 }
 
-/*	Restores stdin to its original file descriptor.
+/**
+ * Restores stdin to its original file descriptor.
  *
- *	stdin_backup:	file descriptor to restore
- *	input:			string to free
- *
- * 	Return: SUCCESS (1).
+ * @param stdin_backup file descriptor to restore
+ * @param input string to free
+ * @return SUCCESS (1)
  */
 static int	restore_stdin(int stdin_backup, char **input)
 {
 	dup2(stdin_backup, STDIN_FILENO);
-    close(stdin_backup);
+	close(stdin_backup);
 	free_null((void **)input);
 	return (SUCCESS);
 }

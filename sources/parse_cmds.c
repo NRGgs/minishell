@@ -6,96 +6,23 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/14 13:32:43 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:40:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// static int	special_parse_pattern(char **input, int *i, char **pattern);
 static int	parse_options(char **input, int *i, char **options);
 static char	*get_pattern(char **input, int *i, char *pattern);
 
-/*	Parse the command and its options.
+/**
+ * @brief Parse the command and its options.
  *
- *	input:	the user input.
- *	cmds:	the linked list of commands.
- *	i:		the index of the current token.
+ * @param input The user input.
+ * @param cmds The linked list of commands.
+ * @param i The index of the current token.
  *
- *	Return: SUCCESS (1) / FAIL (0).
- */
-int	parse_command(char **input, t_command **cmds, int *i)
-{
-	t_command	*new_cmd;
-	char		*options;
-	char		*command;
-	char		*pattern;
-
-	command = input[*i];
-	options = NULL;
-	pattern = NULL;
-	if (options_possible(command))
-		if (parse_options(input, i, &options) == FAIL)
-			return (FAIL);
-	// if (!is_special(command))
-	// 	if (special_parse_pattern(input, i, &pattern) == FAIL)
-	// 		return (FAIL);
-	new_cmd = cmd_new(command, options);
-	if (options != NULL)
-		free(options);
-	if (new_cmd == NULL)
-		return (FAIL);
-	if (input[*i + 1] != NULL && !is_command(input[*i + 1])
-		&& !is_redirect(input[*i + 1]))
-		pattern = get_pattern(input, i, pattern);
-	new_cmd->pattern = pattern;
-	cmd_add_back(cmds, new_cmd);
-	return (SUCCESS);
-}
-
-/*	Parse the pattern of the special commands.
- *
- *	input:		the user input.
- *	i:			the index of the current token.
- *	pattern:	the pattern of the command.
- *
- *	Return: SUCCESS (1) / FAIL (0).
- */
-// static int	special_parse_pattern(char **input, int *i, char **pattern)
-// {
-// 	size_t		size;
-// 	int			j;
-// 	char		quote;
-
-// 	size = 0;
-// 	j = *i;
-// 	if (input[j + 1] == NULL || is_redirect(input[j + 1]))
-// 		return (SUCCESS);
-// 	quote = contains_quote(input[j + 1]);
-// 	if (quote != '0')
-// 	{
-// 		(*i)++;
-// 		if (parse_string(input, i, pattern, quote) == FAIL)
-// 			return (FAIL);
-// 		printf("WE DID IT pattern: %s\n", *pattern);
-// 		return (SUCCESS);
-// 	}
-// 	size = ft_strlen(input[j + 1]);
-// 	*pattern = ft_calloc((size + 1), sizeof(char));
-// 	if (*pattern == NULL)
-// 		return (FAIL);
-// 	ft_strlcpy(*pattern, input[j + 1], size + 1);
-// 	(*i)++;
-// 	return (SUCCESS);
-// }
-
-/*	Parse the options of the command.
- *
- *	input:		the user input.
- *	i:			the index of the current token.
- *	options:	the options of the command.
- *
- *	Return: SUCCESS (1) / FAIL (0).
+ * @return SUCCESS (1) / FAIL (0).
  */
 static int	parse_options(char **input, int *i, char **options)
 {
@@ -126,13 +53,14 @@ static int	parse_options(char **input, int *i, char **options)
 	return (SUCCESS);
 }
 
-/*	Get the pattern of the command.
+/**
+ * Get the pattern of the command.
  *
- *	input:		the user input.
- *	i:			the index of the current token.
- *	pattern:	the pattern of the command.
+ * @param input   the user input.
+ * @param i       the index of the current token.
+ * @param pattern the pattern of the command.
  *
- *	Return: the new pattern.
+ * @return the new pattern.
  */
 static char	*get_pattern(char **input, int *i, char *pattern)
 {

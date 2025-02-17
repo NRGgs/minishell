@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/13 15:40:19 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
+/*   Updated: 2025/02/17 10:43:01 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 int	g_exit_status = 0;
 
-/*	Sets the error message and the exit status.
+/**
+ * @param error_msg The error message to be printed.
+ * @param error_code The exit status to be set.
  *
- *	error_msg: the error message to be printed.
- *	error_code: the exit status to be set.
- *
- * 	Returns: none.
+ * @return None.
  */
 void	set_error(char *error_msg, int error_code)
 {
@@ -27,9 +26,11 @@ void	set_error(char *error_msg, int error_code)
 	g_exit_status = error_code;
 }
 
-/*	Reads the user input and returns it as a string.
+/**
+ * Reads the user input and returns it as a string.
  *
- *	Returns: the user input as a string.
+ * @param prompt The prompt message to display to the user.
+ * @return The user input as a string.
  */
 char	*read_input(void)
 {
@@ -59,42 +60,6 @@ char	*read_input(void)
 	return (input);
 }
 
-/*	Parses the user's input, and runs them as commands.
- *
- *	my_env_list: the environment variables list.
- *
- *	Returns: none.
- */
-// void	run_commands(t_env *my_env_list)
-// {
-// 	char		*input;
-// 	t_command	*commands;
-// 	t_command	*tmp;
-
-// 	while (1)
-// 	{
-// 		input = read_input();
-// 		if (input == NULL)
-// 			return ;
-// 		add_history(input);
-// 		commands = parse_user_input(input);
-// 		free(input);
-// 		if (commands == NULL)
-// 			continue ;
-// 		tmp = commands;
-// 		while (tmp)
-// 		{
-// 			tmp->env_list = my_env_list;
-// 			tmp = tmp->next;
-// 		}
-// 		printf("commands->command: %s\n", commands->command);
-// 		printf("pattern: %s\n", commands->pattern);
-// 		printf("input: %s\n", commands->input);
-// 		printf("output: %s\n", commands->output);
-// 		execute_commands(commands);
-// 		clean_commands(&commands);
-// 	}
-// }
 static int	parse_and_exec(char *input, t_env *env_list)
 {
 	t_command	*commands;

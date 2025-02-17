@@ -6,17 +6,17 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/10 11:50:23 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:45:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Returns the type of redirection.
+/**
+ * Returns the type of redirection.
  *
- *	str:	token to check
- *
- *	Return: type of redirection.
+ * @param str token to check
+ * @return type of redirection.
  */
 static int	get_redirection_type(char *str)
 {
@@ -43,13 +43,13 @@ static int	get_redirection_type(char *str)
 	return (STD);
 }
 
-/*	Parses redirections before the command and sets input type and filename.
+/**
+ * Parses redirections before the command and sets input type and filename.
  *
- *	input:	user input split by ' '
- *	i:		index of current token
- *	last:	last command in linked list
- *
- *	Return:	SUCCESS (1) / FAIL (0).
+ * @param input user input split by ' '
+ * @param i index of current token
+ * @param last last command in linked list
+ * @return SUCCESS (1) / FAIL (0).
  */
 static int	before_command(char **input, int i, t_command **last)
 {
@@ -74,13 +74,13 @@ static int	before_command(char **input, int i, t_command **last)
 	return (SUCCESS);
 }
 
-/*	Parses redirections after the command and sets output type and filename.
+/**
+ * Parses redirections after the command and sets output type and filename.
  *
- *	input:	user input split by ' '
- *	i:		index of current token
- *	last:	last command in linked list
- *
- *	Return: SUCCESS (1) / FAIL (0).
+ * @param input user input split by ' '
+ * @param i index of current token
+ * @param last last command in linked list
+ * @return SUCCESS (1) / FAIL (0).
  */
 static int	after_command(char **input, int *i, t_command **last)
 {
@@ -110,14 +110,14 @@ static int	after_command(char **input, int *i, t_command **last)
 	return (SUCCESS);
 }
 
-/*	Parses redirections and sets in/out types and filenames.
+/**
+ * Parses redirections and sets in/out types and filenames.
  *
- *	input:			user input split by ' '
- *	cmds:			linked list of commands
- *	i:				index of current token
- *	command_index:	index of command token
- *
- *	Return: SUCCESS (1) / FAIL (0).
+ * @param input user input split by ' '
+ * @param cmds linked list of commands
+ * @param i index of current token
+ * @param command_index index of command token
+ * @return SUCCESS (1) / FAIL (0).
  */
 int	parse_redirect(char **input, t_command **cmds, int *i, int command_index)
 {

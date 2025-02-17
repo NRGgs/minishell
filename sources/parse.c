@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/15 11:48:39 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/17 10:48:51 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Clean all allocated memory.
+/**
+ * Clean all allocated memory.
  *
- *	vars:			the variables to be cleaned.
- *	cmds:			the commands to be cleaned.
- *	split_input:	the split input to be cleaned.
+ * @param vars the variables to be cleaned.
+ * @param cmds the commands to be cleaned.
+ * @param split_input the split input to be cleaned.
  *
- *	Return: none.
+ * @return none.
  */
 static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 {
@@ -85,15 +86,16 @@ static int	replace_custom_variable(t_variable *vars, char **arg)
 	return (SUCCESS);
 }
 
-/*	Parse the command given by the user.
+/**
+ * Parse the command given by the user.
  *
- *	split_input:	the split user input.
- *	commands:		the linked list of commands.
- *	variables:		the linked list of variables.
- *	i:				the index of the current token.
+ * @param split_input the split user input.
+ * @param commands the linked list of commands.
+ * @param variables the linked list of variables.
+ * @param i the index of the current token.
  *
- *	Return: SUCCESS (1) / FAIL (0).
-*/
+ * @return SUCCESS (1) / FAIL (0).
+ */
 int	parse_full_command(\
 	char **split_input, \
 	t_command **commands, \
@@ -120,11 +122,12 @@ int	parse_full_command(\
 	return (SUCCESS);
 }
 
-/*	Parse the user input.
+/**
+ * Parse the user input.
  *
- *	input:	the user input.
+ * @param input the user input.
  *
- *	Return: the linked list of commands.
+ * @return the linked list of commands.
  */
 t_command	*parse_user_input(char *input)
 {

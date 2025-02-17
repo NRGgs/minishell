@@ -6,17 +6,18 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/14 13:32:46 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:41:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Frees the memory of a pointer and sets it to NULL.
+/**
+ * @brief Frees the memory of a pointer and sets it to NULL.
  *
- *	ptr: the pointer to be freed.
+ * @param ptr The pointer to be freed.
  *
- *	Returns: none.
+ * @return None.
  */
 void	free_null(void **ptr)
 {
