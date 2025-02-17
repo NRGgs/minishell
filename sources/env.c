@@ -6,12 +6,19 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/01/27 14:39:35 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:43:33 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Prints the environment variables.
+ *
+ * @param env_list The environment list.
+ *
+ * @return 0
+ */
 int	env(t_env *env_list)
 {
 	t_env	*tmp;

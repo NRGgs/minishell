@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/12 13:03:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:44:40 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles the exit built-in command.
+ * if a numeric argument is provided, it is used as the exit code;
+ * otherwise, the current g_exit_status is used.
+ *
+ * @param pattern The exit argument.
+ *
+ * @return SHELL_EXIT
+ */
 int	exit_shell(char *pattern)
 {
 	int	exit_code;

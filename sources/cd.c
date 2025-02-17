@@ -6,12 +6,19 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/05 16:45:18 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:42:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Updates the PWD environment variable after a directory change.
+ *
+ * @param env_list The environment list.
+ *
+ * @return 0 on success, non-zero on failure.
+ */
 int	change_pwd(t_env *env_list)
 {
 	char	*tmp;
@@ -39,6 +46,13 @@ int	change_pwd(t_env *env_list)
 	return (0);
 }
 
+/**
+ * @brief Changes the current directory to HOME.
+ *
+ * @param env_list The environment list.
+ *
+ * @return 0 on success, non-zero on failure.
+ */
 int	cd_home(t_env *env_list)
 {
 	char	*home;
@@ -58,6 +72,15 @@ int	cd_home(t_env *env_list)
 	return (change_pwd(env_list));
 }
 
+/**
+ * @brief Changes the current directory to the specified path.
+ *
+ * @param env_list The environment list.
+ *
+ * @param command The cd command structure.
+ *
+ * @return 0 on success, non-zero on failure.
+ */
 int	cd(t_env *env_list, t_command *command)
 {
 	int		exit_code;
@@ -85,6 +108,13 @@ int	cd(t_env *env_list, t_command *command)
 	return (change_pwd(env_list));
 }
 
+/**
+ * @brief Checks if the given argument is an invalid option.
+ *
+ * @param argv The argument string.
+ *
+ * @return 1 if invalid option, 0 otherwise.
+ */
 int	check_option(char *argv)
 {
 	if (*argv == '-')

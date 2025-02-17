@@ -6,12 +6,21 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/05 13:58:54 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:54:28 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Allocates a new environment node.
+ *
+ * @param name The variable name.
+ *
+ * @param value The variable value.
+ *
+ * @return Pointer to the new node, or NULL on failure.
+ */
 t_env	*alloc_env_node(const char *name, const char *value)
 {
 	t_env	*node;
@@ -33,6 +42,13 @@ t_env	*alloc_env_node(const char *name, const char *value)
 	return (node);
 }
 
+/**
+ * @brief Adds a new environment variable node to the end of the list.
+ *
+ * @param env_list Pointer to the environment list.
+ *
+ * @param new_var The new environment node.
+ */
 void	add_env_to_list(t_env **env_list, t_env *new_var)
 {
 	t_env	*tmp;
@@ -48,6 +64,16 @@ void	add_env_to_list(t_env **env_list, t_env *new_var)
 	}
 }
 
+/**
+ * @brief Handles export arguments containing '='.
+ * Updates an existing variable or creates a new one.
+ *
+ * @param env_list Pointer to the environment list.
+ *
+ * @param arg The export argument.
+ *
+ * @param equal_sign Pointer to the '=' character in arg.
+ */
 void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign)
 {
 	size_t	name_len;
@@ -76,6 +102,14 @@ void	handle_export_equal(t_env **env_list, char *arg, char *equal_sign)
 	free(name);
 }
 
+/**
+ * @brief Handles export arguments without '='.
+ * Adds the variable to the environment list if it does not exist.
+ *
+ * @param env_list Pointer to the environment list.
+ *
+ * @param arg The export argument.
+ */
 void	handle_export_no_equal(t_env **env_list, char *arg)
 {
 	t_env	*existing;
@@ -85,6 +119,13 @@ void	handle_export_no_equal(t_env **env_list, char *arg)
 		create_env_var(env_list, arg, NULL);
 }
 
+/**
+ * @brief Processes a single export argument.
+ *
+ * @param env_list Pointer to the environment list.
+ *
+ * @param arg The export argument. 
+ */
 void	process_export_arg(t_env **env_list, char *arg)
 {
 	char	*equal_sign;
