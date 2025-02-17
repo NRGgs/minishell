@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/11 13:33:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:09:41 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
+/**
+ * @brief Checks if the given command is a built-in command.
+ * Compares the command string against a known list of built-ins.
+ *
+ * @param command The command string.
+ *
+ * @return 1 if it is a built-in command, 0 otherwise.
+ */
 int	is_builtin(char *command)
 {
 	if (!command)
@@ -33,6 +40,15 @@ int	is_builtin(char *command)
 	return (0);
 }
 
+/**
+ * @brief Handles the 'cd' built-in command.
+ * Changes the current directory. If no argument is provided,
+ * it changes to HOME.
+ *
+ * @param command The command structure.
+ *
+ * @return 0 on success, non-zero on failure.
+ */
 int	handle_cd(t_command *command)
 {
 	if (command->pattern)
@@ -40,6 +56,14 @@ int	handle_cd(t_command *command)
 	return (cd_home(command->env_list));
 }
 
+/**
+ * @brief Executes a built-in command.
+ * Dispatches the command to the corresponding built-in handler.
+ *
+ * @param cmd_list Pointer to the pointer of the current command.
+ *
+ * @return The exit status of the built-in command.
+ */
 int	execute_builtin(t_command **cmd_list)
 {
 	t_command	*command;
@@ -67,6 +91,12 @@ int	execute_builtin(t_command **cmd_list)
 	return (1);
 }
 
+/**
+ * @brief Frees an array of strings.
+ * Iterates over the array until a NULL pointer is found, freeing each string.
+ *
+ * @param args The NULL-terminated array of strings. 
+ */
 void	free_args(char **args)
 {
 	int	i;

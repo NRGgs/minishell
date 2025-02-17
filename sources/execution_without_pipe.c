@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 13:26:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:16:19 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 
 extern char	**environ;
 
+/**
+ * @brief Handles execution in a child process for an external command.
+ * Sets up redirections (and here-document if necessary), then attempts to
+ * execute the command using execve().
+ *
+ * @param commands The command structure.
+ *
+ * @param path The path to the executable.
+ *
+ * @param args The argument vector for execve.
+ */
 void	handle_child_process(t_command *commands, char *path, char *args[])
 {
 	int	pipefd[2];
@@ -43,6 +54,18 @@ void	handle_child_process(t_command *commands, char *path, char *args[])
 		exit(126);
 }
 
+/**
+ * @brief Executes an external command by forking a child process.
+ * Forks a new process and in the child calls handle_child_process().
+ * The parent waits
+ * for the child to finish and updates g_exit_status.
+ *
+ * @param commands The command structure.
+ *
+ * @param path The path to the executable.
+ *
+ * @param args The argument vector for execve.
+ */
 void	execute_command(t_command *commands, char *path, char *args[])
 {
 	pid_t	pid;
@@ -64,6 +87,13 @@ void	execute_command(t_command *commands, char *path, char *args[])
 	}
 }
 
+/**
+ * @brief Restores the original file descriptors for standard input and output.
+ *
+ * @param in The original stdin file descriptor.
+ *
+ * @param out The original stdout file descriptor.
+ */
 void	restore_fds(int in, int out)
 {
 	dup2(in, STDIN_FILENO);
@@ -72,6 +102,15 @@ void	restore_fds(int in, int out)
 	close(out);
 }
 
+/**
+ * @brief Executes a built-in command without piping.
+ * Sets up redirections, calls execute_builtin(),
+ * and then restores the file descriptors.
+ *
+ * @param commands The command structure.
+ *
+ * @return The exit status of the built-in command.
+ */
 int	exec_builtin_no_pipe(t_command *commands)
 {
 	int	backup_in;
@@ -90,6 +129,16 @@ int	exec_builtin_no_pipe(t_command *commands)
 	return (ret);
 }
 
+/**
+ * @brief Executes an external command without piping.
+ * Constructs the argument vector using build_execve_args(),
+ * forks a child process,
+ * and executes the command using execve().
+ *
+ * @param commands The command structure.
+ *
+ * @return SHELL_CONTINUE on success.
+ */
 int	exec_external_no_pipe(t_command *commands)
 {
 	char	**args;
