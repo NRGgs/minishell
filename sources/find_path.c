@@ -6,12 +6,20 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/12 14:03:12 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:35:07 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Appends a '/' and the command to each directory in the array.
+ * Modifies each element of res_split to include the command.
+ *
+ * @param res_split The array of directory paths.
+ *
+ * @param argv The command name.
+ */
 void	fn_path(char **res_split, char *argv)
 {
 	int		i;
@@ -32,6 +40,14 @@ void	fn_path(char **res_split, char *argv)
 	}
 }
 
+/**
+ * @brief Finds the PATH variable in the environment.
+ * Searches the environment array for the variable starting with "PATH=".
+ *
+ * @param env The environment array.
+ *
+ * @return The PATH string.
+ */
 char	*path_finder(char **env)
 {
 	int		i;
@@ -51,6 +67,11 @@ char	*path_finder(char **env)
 	return (path);
 }
 
+/**
+ * @brief Frees a NULL-terminated array of strings.
+ *
+ * @param arr The array to free.
+ */
 void	free_2d_array(char **arr)
 {
 	int	i;
@@ -66,6 +87,17 @@ void	free_2d_array(char **arr)
 	free(arr);
 }
 
+/**
+ * @brief Determines the full path for a command.
+ * If the command starts with '/', checks if it is executable; otherwise,
+ * searches for the command in the PATH.
+ *
+ * @param command The command string.
+ *
+ * @param env The environment array.
+ *
+ * @return A duplicated string with the full path, or NULL if not found.
+ */
 char	*find_path(char *command, char **env)
 {
 	struct stat	st;
@@ -89,6 +121,15 @@ char	*find_path(char *command, char **env)
 	return (true_path(command, env));
 }
 
+/**
+ * @brief Searches for a command in the PATH directories.
+ *
+ * @param argv The command name.
+ *
+ * @param env The environment array.
+ *
+ * @return A duplicated full path if found, or NULL.
+ */
 char	*true_path(char *argv, char **env)
 {
 	char	*check_exec;

@@ -6,12 +6,20 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/12 14:02:57 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:37:59 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Checks if an absolute command path is executable.
+ * If the path contains a '/', checks if it is a directory or executable.
+ *
+ * @param argv The command path.
+ *
+ * @return A duplicated string if executable, or NULL.
+ */
 char	*check_argv_executable(char *argv)
 {
 	struct stat	st;
@@ -34,12 +42,22 @@ char	*check_argv_executable(char *argv)
 	return (NULL);
 }
 
+/**
+ * @brief Prints an error message for a command not found.
+ */
 void	f_error(void)
 {
 	ft_putstr_fd("Error: Command not found.\n", 2);
 	g_exit_status = CMD_NOT_FOUND;
 }
 
+/**
+ * @brief Splits the PATH variable into an array of directory strings.
+ *
+ * @param env The environment array.
+ *
+ * @return A NULL-terminated array of directory strings.
+ */
 char	**split_paths(char **env)
 {
 	char	*tmp_path;
@@ -48,11 +66,29 @@ char	**split_paths(char **env)
 	return (ft_split(tmp_path, ':'));
 }
 
+/**
+ * @brief Splits a command string into an array of arguments.
+ *
+ * @param argv The command string.
+ *
+ * @return A NULL-terminated array of argument strings.
+ */
 char	**split_args(char *argv)
 {
 	return (ft_split(argv, ' '));
 }
 
+/**
+ * @brief Searches for an executable in the provided directories.
+ * Appends the command to each directory (using fn_path)
+ * and checks for executability.
+ *
+ * @param res_split The array of directory paths.
+ *
+ * @param args An array whose first element is the command.
+ *
+ * @return A duplicated full path if found, or NULL.
+ */
 char	*search_in_paths(char **res_split, char **args)
 {
 	int		i;
