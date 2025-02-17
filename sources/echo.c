@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 10:00:15 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:52:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,16 +261,12 @@ static int	trim_memory(char **str)
 
 static int	print_arg(t_env *env_list, char **arg)
 {
-	printf("fresh arg: %s\n", *arg);
 	if (handle_variables(env_list, arg) == FAIL)
 		return (FAIL);
-	printf("variables arg: %s\n", *arg);
 	if (handle_backslashes(arg) == FAIL)
 		return (FAIL);
-	printf("backslashes arg: %s\n", *arg);
 	if (handle_quotes(arg) == FAIL)
 		return (FAIL);
-	printf("quotes arg: %s\n\n", *arg);
 	trim_memory(arg);
 	ft_putstr_fd(*arg, STDOUT_FILENO);
 	return (SUCCESS);
@@ -292,14 +288,8 @@ int	echo(t_command *command)
 	if (!command->pattern)
 		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
 	flag = check_echo_option(command->options);
-
-
-	printf("IN ECHO: command->pattern: %s\n", command->pattern);
 	if (print_arg(command->env_list, &command->pattern) == FAIL)
 		return (1);
-
-
-	// Dont touch this
 	if (!flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
