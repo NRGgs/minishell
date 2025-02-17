@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/14 15:11:45 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:53:24 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,11 +171,13 @@ static char	**split_words(char *s, char **result)
 				escaped = false;
 			}
 			else
+			{
+				if (*s == '\\')
+					escaped = !escaped;
+				if (*s != '\\')
+					escaped = false;
 				result[nth_word][i++] = *(s++);
-			if (*s == '\\')
-				escaped = !escaped;
-			if (*s != '\\')
-				escaped = false;
+			}
 		}
 		result[nth_word++][i] = '\0';
 		i = 0;
