@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/12 14:02:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:04:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 extern char	**environ;
 
-int	is_directory(const char *path)
-{
-	struct stat	st;
-
-	if (stat(path, &st) != 0)
-		return (0);
-	return (S_ISDIR(st.st_mode));
-}
-
+/**
+ * @brief Executes the list of commands.
+ * Scans the linked list of commands to decide
+ * whether to use pipe execution or not.
+ *
+ * @param commands The linked list of commands.
+ *
+ * @return The shell exit status.
+ */
 int	execute_commands(t_command *commands)
 {
 	t_command	*current;
@@ -52,6 +52,17 @@ int	execute_commands(t_command *commands)
 	return (ret);
 }
 
+/**
+ * @brief Creates a new environment node with the given name and value.
+ * Allocates memory for a new t_env structure, duplicates the name and value,
+ * and initializes the next pointer to NULL.
+ *
+ * @param name The environment variable name.
+ *
+ * @param value The environment variable value.
+ *
+ * @return Pointer to the new node or NULL on failure.
+ */
 t_env	*create_env_node(const char *name, const char *value)
 {
 	t_env	*new_node;

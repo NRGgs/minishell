@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:00:24 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/05 16:05:51 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:56:22 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,20 @@
 
 extern char	**environ;
 
+/**
+ * @brief Parses an environment variable string into its name and value.
+ * This function looks for the first '=' character in the provided
+ * environment string (e.g. "PATH=/usr/bin") and splits it into a name
+ * and value. Memory for the name and value is allocated
+ *
+ * @param env_str The environment string.
+ *
+ * @param name Pointer to where the allocated name will be stored.
+ *
+ * @param value Pointer to where the allocated value will be stored.
+ *
+ * @return SUCCESS if parsing succeeded, otherwise FAIL.
+ */
 int	parse_env_var(char *env_str, char **name, char **value)
 {
 	char	*equal_pos;
@@ -35,6 +49,13 @@ int	parse_env_var(char *env_str, char **name, char **value)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Appends a new environment node to the linked list.
+ *
+ * @param list Pointer to the pointer to the environment list.
+ *
+ * @param  new_node The new environment node to append.
+ */
 void	append_env_node(t_env **list, t_env *new_node)
 {
 	t_env	*tmp;
@@ -50,6 +71,13 @@ void	append_env_node(t_env **list, t_env *new_node)
 	tmp->next = new_node;
 }
 
+/**
+ * @brief Initializes the environment list from the global environ.
+ * Iterates over the global environ array and uses parse_env_var()
+ * and create_env_node() to build a linked list of environment variables.
+ *
+ * @return Pointer to the head of the environment list.
+ */
 t_env	*init_env_list(void)
 {
 	t_env	*env_list;
@@ -75,6 +103,13 @@ t_env	*init_env_list(void)
 	return (env_list);
 }
 
+/**
+ * @brief Frees the entire environment list.
+ * Iterates over the linked list and frees the memory
+ * allocated for each node’s name, value and the node itself.
+ *
+ * @param env_list The head of the environment list.
+ */
 void	clear_env_list(t_env *env_list)
 {
 	t_env	*tmp;
