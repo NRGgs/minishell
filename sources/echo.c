@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 09:56:50 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 10:00:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,6 @@ static int	handle_backslashes(char **arg)
 	bool	in_single;
 	bool	in_double;
 	bool	escaped;
-	size_t	consecutive_backslashes;
 
 	new_str = malloc((ft_strlen(*arg) + 1) * sizeof(char));
 	if (new_str == NULL)
@@ -222,7 +221,6 @@ static int	handle_backslashes(char **arg)
 	in_single = false;
 	in_double = false;
 	escaped = false;
-	consecutive_backslashes = 0;
 	while ((*arg)[i] != '\0')
 	{
 		if ((*arg)[i] == '\'' && !in_double)
