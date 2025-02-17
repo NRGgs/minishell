@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 11:08:47 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:01:29 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,25 @@ static bool	back_backslash_handler(char **str, char **new_str, int *i, int *j)
 	return (escaped);
 }
 
+static bool	check_quotes(char c, bool *in_single, bool *in_double, bool *escaped)
+{
+	if (c == '\'' && !*in_double)
+	{
+		if (*escaped == false)
+			*in_single = !*in_single;
+		else if (*escaped == true && *in_single == true)
+			*in_single = !*in_single;
+		*escaped = false;
+		return (true);
+	}
+	else if (c == '\"' && !*in_single && *escaped == false)
+	{
+		*in_double = !*in_double;
+		return (true);
+	}
+	return (false);
+}
+
 static int	handle_backslashes(char **arg)
 {
 	char	*new_str;
@@ -223,16 +242,8 @@ static int	handle_backslashes(char **arg)
 	escaped = false;
 	while ((*arg)[i] != '\0')
 	{
-		if ((*arg)[i] == '\'' && !in_double)
-		{
-			if (escaped == false)
-				in_single = !in_single;
-			else if (escaped == true && in_single == true)
-				in_single = !in_single;
-			escaped = false;
-		}
-		else if ((*arg)[i] == '\"' && !in_single && escaped == false)
-			in_double = !in_double;
+		if (check_quotes((*arg)[i], &in_single, &in_double, &escaped))
+			;
 		else if ((*arg)[i] == '\\' && !in_single)
 			escaped = back_backslash_handler(arg, &new_str, &i, &j);
 		else
