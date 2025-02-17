@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 13:59:28 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/14 12:32:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:15:57 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
 /* Memory Allocation */
 void	*ft_calloc(size_t nmemb, size_t size);
+char	*ft_realloc(char *str, size_t size);
 
 /* String Manipulation */
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);

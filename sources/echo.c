@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   echo.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/04 13:21:35 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/02/15 11:48:30 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/02/17 09:14:18 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,18 +235,6 @@ static int	handle_backslashes(char **arg)
 	free(*arg);
 	*arg = new_str;
 	return (SUCCESS);
-}
-
-static char	*ft_realloc(char *str, size_t size)
-{
-	char	*new_str;
-
-	new_str = malloc((size + 1) * sizeof(char));
-	if (new_str == NULL)
-		return (free(str), NULL);
-	ft_strlcpy(new_str, str, size);
-	free(str);
-	return (new_str);
 }
 
 static int	trim_memory(char **str)
