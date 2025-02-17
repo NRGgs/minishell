@@ -6,11 +6,33 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 09:14:18 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/17 09:56:50 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static bool	quote_backslash_handler(char **str, char **new_str, int *i, int *j)
+{
+	size_t	consecutive_backslashes;
+	bool	escaped;
+
+	escaped = false;
+	consecutive_backslashes = 0;
+	while ((*str)[*i] == '\\')
+	{
+		consecutive_backslashes++;
+		(*i)++;
+	}
+	if (consecutive_backslashes % 2 == 1)
+		escaped = true;
+	if ((*str)[*i] == '\'' || (*str)[*i] == '\"')
+		consecutive_backslashes /= 2;
+	while (consecutive_backslashes-- > 0)
+		(*new_str)[(*j)++] = '\\';
+	consecutive_backslashes = 0;
+	return (escaped);
+}
 
 /*	Removes the quotes from a string.
  *
@@ -25,8 +47,6 @@ static int	handle_quotes(char **str)
 	int		j;
 	bool	in_single;
 	bool	in_double;
-	bool	escaped;
-	size_t	consecutive_backslashes;
 
 	new_str = malloc((ft_strlen(*str) + 1) * sizeof(char));
 	if (new_str == NULL)
@@ -35,11 +55,9 @@ static int	handle_quotes(char **str)
 	j = 0;
 	in_single = false;
 	in_double = false;
-	consecutive_backslashes = 0;
 	while (*(*str + i) != '\0')
 	{
-		escaped = false;
-		if (*(*str + i) == '\'' && escaped == false)
+		if (*(*str + i) == '\'')
 		{
 			if (!in_double)
 				in_single = !in_single;
@@ -47,7 +65,7 @@ static int	handle_quotes(char **str)
 				new_str[j++] = *(*str + i);
 			i++;
 		}
-		else if (*(*str + i) == '\"' && escaped == false)
+		else if (*(*str + i) == '\"')
 		{
 			if (!in_single)
 				in_double = !in_double;
@@ -56,23 +74,7 @@ static int	handle_quotes(char **str)
 			i++;
 		}
 		if (*(*str + i) == '\\')
-		{
-			escaped = true;
-			while (*(*str + i) == '\\')
-			{
-				consecutive_backslashes++;
-				i++;
-			}
-			if (consecutive_backslashes % 2 == 0)
-				escaped = false;
-			if (*(*str + i) == '\'' || *(*str + i) == '\"')
-				consecutive_backslashes /= 2;
-			while (consecutive_backslashes-- > 0)
-				new_str[j++] = '\\';
-			consecutive_backslashes = 0;
-		}
-		else
-			escaped = false;
+			quote_backslash_handler(str, &new_str, &i, &j);
 		new_str[j++] = *(*str + i++);
 	}
 	new_str[j] = '\0';
@@ -180,6 +182,28 @@ static int	handle_variables(t_env *env_list, char **arg)
 	return (SUCCESS);
 }
 
+static bool	back_backslash_handler(char **str, char **new_str, int *i, int *j)
+{
+	size_t	consecutive_backslashes;
+	bool	escaped;
+
+	escaped = false;
+	consecutive_backslashes = 0;
+	while ((*str)[*i] == '\\')
+	{
+		consecutive_backslashes++;
+		(*i)++;
+	}
+	if (consecutive_backslashes % 2 == 1)
+		escaped = true;
+	if ((*str)[*i] != '\'' && (*str)[*i] != '\"')
+		consecutive_backslashes /= 2;
+	while (consecutive_backslashes-- > 0)
+		(*new_str)[(*j)++] = '\\';
+	consecutive_backslashes = 0;
+	return (escaped);
+}
+
 static int	handle_backslashes(char **arg)
 {
 	char	*new_str;
@@ -209,24 +233,9 @@ static int	handle_backslashes(char **arg)
 				in_single = !in_single;
 		}
 		else if ((*arg)[i] == '\"' && !in_single && escaped == false)
-		{
 			in_double = !in_double;
-		}
 		else if ((*arg)[i] == '\\' && !in_single)
-		{
-			while ((*arg)[i] == '\\')
-			{
-				consecutive_backslashes++;
-				i++;
-			}
-			if (consecutive_backslashes % 2 == 1)
-				escaped = true;
-			if ((*arg)[i] != '\'' && (*arg)[i] != '\"')
-				consecutive_backslashes /= 2;
-			while (consecutive_backslashes-- > 0)
-				new_str[j++] = '\\';
-			consecutive_backslashes = 0;
-		}
+			escaped = back_backslash_handler(arg, &new_str, &i, &j);
 		else
 			escaped = false;
 		new_str[j++] = (*arg)[i++];
