@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/18 12:56:43 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:03:30 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,10 +232,8 @@ static char	check_open_quotes(char *str, int i)
 			in_single = !in_single;
 		else if (str[i] == '\"' && !in_single && escaped == false)
 			in_double = !in_double;
-		else if (str[i] == '\\')
-			escaped = !escaped;
 		else
-			escaped = false;
+			update_escape(&escaped, str[i]);
 		i++;
 	}
 	if (in_single)
