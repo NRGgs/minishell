@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:16:56 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:17:29 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:27:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	skip_spaces(char **s)
 		(*s)++;
 }
 
-int		is_escaped(char **s)
+int	is_escaped(char **s)
 {
 	int	escaped;
 

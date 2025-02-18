@@ -6,13 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:17:35 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:17:50 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:27:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		parse_quote(char **s)
+int	parse_quote(char **s)
 {
 	char	quote;
 	int		length;
@@ -49,7 +49,7 @@ void	parse_quoted_string(char **s, char *result, int *i)
 	return ;
 }
 
-int		allocate_next_word(int *nth_word, int *length, char **result)
+int	allocate_next_word(int *nth_word, int *length, char **result)
 {
 	result[*nth_word] = malloc((*length + 1) * sizeof(char));
 	if (result[*nth_word] == NULL)

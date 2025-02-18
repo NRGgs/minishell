@@ -6,13 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:15:16 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:16:23 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:26:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int		get_word_count(char *s)
+int	get_word_count(char *s)
 {
 	int		word_count;
 	bool	escaped;
