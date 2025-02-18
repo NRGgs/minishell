@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:54:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:18:54 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	handle_export_no_equal(t_env **env_list, char *arg)
  *
  * @param env_list Pointer to the environment list.
  *
- * @param arg The export argument. 
+ * @param arg The export argument.
  */
 void	process_export_arg(t_env **env_list, char *arg)
 {
@@ -132,7 +132,12 @@ void	process_export_arg(t_env **env_list, char *arg)
 
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign)
+	{
+		if (prepare_arg(*env_list, &arg) == FAIL)
+			return ;
+		equal_sign = ft_strchr(arg, '=');
 		handle_export_equal(env_list, arg, equal_sign);
+	}
 	else
 		handle_export_no_equal(env_list, arg);
 }

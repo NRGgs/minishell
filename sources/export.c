@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:47:31 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:20:41 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,9 @@ int	run_export_builtin(t_command *command)
 	int		ret;
 
 	args = ft_split(command->pattern, ' ');
+	int i = 0;
+	while (args[i])
+		i++;
 	ret = my_export(&(command->env_list), args);
-	free_args(args);
 	return (ret);
 }
