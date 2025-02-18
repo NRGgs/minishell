@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 12:01:29 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:45:31 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,19 @@ static int	handle_quotes(char **str)
 	return (SUCCESS);
 }
 
+static char	*var_exit_status(char *str, char *var_ptr)
+{
+	char	*exit_status;
+	char	*new_str;
+
+	exit_status = ft_itoa(g_exit_status);
+	if (exit_status == NULL)
+		return (free(str), NULL);
+	new_str = ft_strreplace(str, "$?", exit_status, var_ptr);
+	free(exit_status);
+	return (new_str);
+}
+
 static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 {
 	t_env	*var;
@@ -90,6 +103,8 @@ static char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 	int		i;
 
 	to_replace = var_ptr;
+	if (ft_strncmp(to_replace, "$?", 2) == 0)
+		return (var_exit_status(str, var_ptr));
 	i = 1;
 	while (valid_char(to_replace[i]))
 		i++;
