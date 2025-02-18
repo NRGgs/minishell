@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 10:55:44 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:26:58 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,9 @@ static int	handle_quotes(char **str)
 	in_quotes = FALSE;
 	while ((*str)[i] != '\0')
 	{
-		if (update_quotes(*(*str + i), &new_str, &j, &in_quotes))
+		while (update_quotes(*(*str + i), &new_str, &j, &in_quotes))
 			i++;
-		if (*(*str + i) == '\\')
+		if ((*str)[i] == '\\')
 			quote_backslash_handler(str, &new_str, &i, &j);
 		if ((*str)[i] == '\0')
 			break ;
