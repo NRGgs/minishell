@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:24:26 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:41:13 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 # define MINISHELL_H
 
 # include "libft/libft.h"
-# include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 
 # define SHELL_CONTINUE 0
 # define SHELL_EXIT 1
@@ -66,15 +66,15 @@
 # define UNALIGNED_MEM_ACCESS 138
 # define SEG_FAULT 139
 
-extern int	g_exit_status;
+extern int				g_exit_status;
 
 /* Singly linked list. Stores all environments. */
 typedef struct s_env
 {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+	char				*name;
+	char				*value;
+	struct s_env		*next;
+}						t_env;
 
 /* Singly linked list. Stores all commands. */
 typedef struct s_command
@@ -88,7 +88,7 @@ typedef struct s_command
 	char				*output;
 	struct s_command	*next;
 	struct s_env		*env_list;
-}	t_command;
+}						t_command;
 
 /*	Singly linked list. Stores all variables. */
 typedef struct s_variable
@@ -96,7 +96,7 @@ typedef struct s_variable
 	char				*name;
 	char				*value;
 	struct s_variable	*next;
-}	t_variable;
+}						t_variable;
 
 /*****************************************************************************\
 *                             Function Prototypes                             *
@@ -114,33 +114,35 @@ char		*get_nth_var(char *str, int nth_var);
 
 /* backslashes */
 bool		check_quotes(char c, int *in_quotes, bool *escaped);
-bool		back_backslash_handler(char **str, char **new_str, int *i, int *j);
+bool		back_backslash_handler(char **str, char **new_str,
+				int *i, int *j);
 
 /* quotes */
-int			update_quotes(char c, char **new_str, int *j, int *in_quotes);
-bool		quote_backslash_handler(char **str, char **new_str, int *i, int *j);
+int			update_quotes(char c, char **new_str, int *j,
+				int *in_quotes);
+bool		quote_backslash_handler(char **str, char **new_str,
+				int *i, int *j);
 
 /* --------------- tokenize -------------------------------------------------*/
 /* split */
-char	**parse_split(char *s);
+char		**parse_split(char *s);
 
 /* split_2 */
-int		get_word_count(char *s);
-char	**allocate_words(char *s, char **result);
-char	**split_words(char *s, char **result);
+int			get_word_count(char *s);
+char		**allocate_words(char *s, char **result);
+char		**split_words(char *s, char **result);
 
 /* split_utils */
-int		parse_quote(char **s);
-void	parse_quoted_string(char **s, char *result, int *i);
-int		allocate_next_word(int *nth_word, int *length, char **result);
+int			parse_quote(char **s);
+void		parse_quoted_string(char **s, char *result, int *i);
+int			allocate_next_word(int *nth_word, int *length,
+				char **result);
 
 /* split_utils_2 */
-void	skip_spaces(char **s);
-int		is_escaped(char **s);
-void	update_escape(bool *escaped, char c);
-void	check_escapes(bool *escaped, char **s, int *length);
-
-
+void		skip_spaces(char **s);
+int			is_escaped(char **s);
+void		update_escape(bool *escaped, char c);
+void		check_escapes(bool *escaped, char **s, int *length);
 
 /* minishell.c */
 void		set_error(char *error_msg, int error_code);
@@ -166,7 +168,8 @@ int			check_path(char *cmd, char *path);
 char		**parse_split(char *s);
 
 /* parse_string.c */
-int			parse_string(char **input, int *i, char **pattern, char quote);
+int			parse_string(char **input, int *i, char **pattern,
+				char quote);
 
 /* parse_string_utils.c */
 char		contains_quote(char *str);
@@ -185,8 +188,8 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 bool		is_variable(char *str);
 bool		valid_char(char c);
 int			parse_variable(char *str, t_variable **vars);
-char		*replace_variable(char *str, t_variable *vars, \
-		char quote, t_command **commands);
+char		*replace_variable(char *str, t_variable *vars,
+				char quote, t_command **commands);
 
 /* variables.c */
 t_variable	*var_new(char *name, char *value);
@@ -195,13 +198,14 @@ void		var_add_back(t_variable **vars, t_variable *new_var);
 t_variable	*var_find(t_variable *vars, char *name);
 
 /* parse_redirect.c */
-int			parse_redirect(char **input, t_command **cmds,
-				int *i, int command_index);
+int			parse_redirect(char **input, t_command **cmds, int *i,
+				int command_index);
 
 /* redirections.c */
 int			textfile_redirection(char *fn, char *redirect,
 				t_command **last, int place);
-int			string_redirection(char **input, t_command **last, int *i);
+int			string_redirection(char **input, t_command **last,
+				int *i);
 
 /* heredoc.c */
 int			here_doc_redirection(char *delimiter, t_command **last);
@@ -237,8 +241,10 @@ t_env		*create_env_node(const char *name, const char *value);
 int			is_directory(const char *path);
 
 /* execution_without_pipe */
-void		handle_child_process(t_command *commands, char *path, char *args[]);
-void		execute_command(t_command *commands, char *path, char *args[]);
+void		handle_child_process(t_command *commands, char *path,
+				char *args[]);
+void		execute_command(t_command *commands, char *path,
+				char *args[]);
 int			exec_external_no_pipe(t_command *commands);
 int			exec_builtin_no_pipe(t_command *commands);
 void		restore_fds(int in, int out);
@@ -248,7 +254,8 @@ int			execution_without_pipe(t_command *commands);
 
 /* execution_with_pipe_1.c */
 char		**get_command_args(t_command *current);
-void		setup_input_output(t_command *current, int pipe_in, int *pipe_fd);
+void		setup_input_output(t_command *current, int pipe_in,
+				int *pipe_fd);
 void		execute_command_pipe(t_command *current, char *path);
 int			create_child_process(t_command *current, int pipe_in,
 				int *pipe_fd, char *path);
@@ -262,7 +269,8 @@ int			execution_with_pipe(t_command *commands);
 int			setup_pipe(int *pipe_fd);
 
 /* execution_with_pipe_3.c */
-int			process_single_command(t_command *current, int *pipe_in);
+int			process_single_command(t_command *current,
+				int *pipe_in);
 
 /* cd.c */
 int			change_pwd(t_env *env_list);
@@ -288,7 +296,8 @@ int			run_export_builtin(t_command *command);
 /* export_2.c */
 void		add_env_to_list(t_env **env_list, t_env *new_var);
 t_env		*alloc_env_node(const char *name, const char *value);
-void		handle_export_equal(t_env **env_list, char *arg, char *equal_sign);
+void		handle_export_equal(t_env **env_list, char *arg,
+				char *equal_sign);
 void		handle_export_no_equal(t_env **env_list, char *arg);
 void		process_export_arg(t_env **env_list, char *arg);
 
