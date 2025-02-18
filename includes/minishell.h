@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 13:26:49 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:03:30 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@
 
 # define AFTER 0
 # define BEFORE 1
+
+/* In Quotes */
+# define FALSE 0
+# define SINGLE 1
+# define DOUBLE 2
 
 /* Return Values */
 # define ERROR -1
@@ -240,8 +245,6 @@ int			pwd(char **argv);
 
 /* echo.c */
 int			echo(t_command *command);
-int			check_echo_option(char *option);
-void		ft_free_split(char **split);
 
 /* export.c */
 t_env		*find_env_var(t_env *env_list, const char *name);
