@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:04:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 09:29:34 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:05:23 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ bool	is_redirect(char *str)
  * @brief Check if the command is a built-in command.
  *
  * @param cmd The command to be checked.
- * @return SUCCESS (1) if the command is found, FAIL (0) if not found, ERROR (-1) on error.
+ * @return SUCCESS (1) if the command is found, FAIL (0) if not found,
+ * ERROR (-1) on error.
  */
 int	is_command(char *cmd)
 {

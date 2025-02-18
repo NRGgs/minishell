@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 10:03:30 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:11:54 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,22 @@ typedef struct s_variable
 *                             Function Prototypes                             *
 \*****************************************************************************/
 
-bool	char_is_escaped(char *str, char *c);
-bool	in_single_quotes(char *str, char *c);
-char	*get_nth_var(char *str, int nth_var);
+/* Prepare arg */
+int			prepare_arg(t_env *env_list, char **arg);
 
+/* variables */
+char		*replace_var(char *str, char *var_ptr, t_env *env_list);
+bool		in_single_quotes(char *str, char *c);
+bool		char_is_escaped(char *str, char *c);
+char		*get_nth_var(char *str, int nth_var);
 
+/* backslashes */
+bool		check_quotes(char c, int *in_quotes, bool *escaped);
+bool		back_backslash_handler(char **str, char **new_str, int *i, int *j);
 
-
-
+/* quotes */
+int			update_quotes(char c, char **new_str, int *j, int *in_quotes);
+bool		quote_backslash_handler(char **str, char **new_str, int *i, int *j);
 
 /* minishell.c */
 void		set_error(char *error_msg, int error_code);

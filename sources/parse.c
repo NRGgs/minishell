@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:48:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:19:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	clean_all(t_variable **vars, t_command **cmds, char **split_input)
 		clean_2d_array(split_input);
 }
 
-static bool	replace_var(char **str, char *var_ptr, t_variable *vars)
+static bool	replace_custom_var(char **str, char *var_ptr, t_variable *vars)
 {
 	t_variable	*var;
 	char		*to_replace;
@@ -73,7 +73,7 @@ static int	replace_custom_variable(t_variable *vars, char **arg)
 		if (char_is_escaped(*arg, var_ptr) == false
 			&& in_single_quotes(*arg, var_ptr) == false)
 		{
-			is_replaced = replace_var(arg, var_ptr, vars);
+			is_replaced = replace_custom_var(arg, var_ptr, vars);
 			if (*arg == NULL)
 				return (FAIL);
 			if (is_replaced == false)

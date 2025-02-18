@@ -9,10 +9,16 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # Source files and object files
 SRC_DIR = sources
-SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
-		$(SRC_DIR)/parse_cmds.c $(SRC_DIR)/parse_var.c $(SRC_DIR)/parse.c \
-		$(SRC_DIR)/parse_clean.c $(SRC_DIR)/parse_redirect.c \
-		$(SRC_DIR)/redirections.c $(SRC_DIR)/minishell.c \
+PREP_DIR = prepare_arg
+SRCS =	$(SRC_DIR)/commands.c \
+		$(SRC_DIR)/custom_variables.c \
+		$(SRC_DIR)/parse_cmds.c \
+		$(SRC_DIR)/parse_var.c \
+		$(SRC_DIR)/parse.c \
+		$(SRC_DIR)/parse_clean.c \
+		$(SRC_DIR)/parse_redirect.c \
+		$(SRC_DIR)/redirections.c \
+		$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/signal.c \
 		$(SRC_DIR)/builtins.c \
 		$(SRC_DIR)/cd.c \
@@ -40,10 +46,15 @@ SRCS =	$(SRC_DIR)/commands.c $(SRC_DIR)/variables.c \
 		$(SRC_DIR)/execution_with_pipe_4.c \
 		$(SRC_DIR)/heredoc.c \
 		$(SRC_DIR)/parse_split.c \
-		$(SRC_DIR)/build_execve_args.c
+		$(SRC_DIR)/build_execve_args.c \
+		$(SRC_DIR)/$(PREP_DIR)/backslashes.c \
+		$(SRC_DIR)/$(PREP_DIR)/prepare.c \
+		$(SRC_DIR)/$(PREP_DIR)/quotes.c \
+		$(SRC_DIR)/$(PREP_DIR)/variables.c
 
 OBJ_DIR = objects
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+# OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))
 
 # Output executable
 NAME = minishell
@@ -61,6 +72,10 @@ $(LIBFT):
 
 # Rule to compile .c files into .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(PREP_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 

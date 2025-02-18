@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/12 13:03:09 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:05:50 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	signal_heredoc(int signum)
 	{
 		g_exit_status = SIGINT_CANCELLATION;
 		dev_null_fd = open("/dev/null", O_RDONLY);
-        dup2(dev_null_fd, STDIN_FILENO);
-        close(dev_null_fd);
+		dup2(dev_null_fd, STDIN_FILENO);
+		close(dev_null_fd);
 	}
 }
