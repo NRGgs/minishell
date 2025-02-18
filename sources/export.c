@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/18 12:20:41 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:57:09 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,6 @@ int	run_export_builtin(t_command *command)
 	int		ret;
 
 	args = ft_split(command->pattern, ' ');
-	int i = 0;
-	while (args[i])
-		i++;
 	ret = my_export(&(command->env_list), args);
 	return (ret);
 }
