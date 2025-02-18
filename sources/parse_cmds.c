@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 12:00:06 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:29:53 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	parse_command(char **input, t_command **cmds, int *i)
 	char		*options;
 	char		*command;
 	char		*pattern;
+
 	command = input[*i];
 	options = NULL;
 	pattern = NULL;
