@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 13:29:49 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/17 09:53:24 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:56:43 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,14 @@ static void	parse_quoted_string(char **s, char *result, int *i)
 	return ;
 }
 
+static void	update_escape(bool *escaped, char c)
+{
+	if (c == '\\')
+		*escaped = !*escaped;
+	if (c != '\\')
+		*escaped = false;
+}
+
 static int	get_word_count(char *s)
 {
 	int		word_count;
@@ -88,10 +96,8 @@ static int	get_word_count(char *s)
 		}
 		else if ((*s == '\'' || *s == '\"') && escaped == false)
 			parse_quote(&s);
-		else if (*s == '\\')
-			escaped = !escaped;
-		else if (*s != '\\')
-			escaped = false;
+		else
+			update_escape(&escaped, *s);
 		s++;
 	}
 	if (*(s - 1) != ' ')
@@ -104,19 +110,42 @@ static void	free_result(char **result, int nth_word)
 	while (nth_word >= 0)
 		free(result[nth_word++]);
 	free(result);
-	return ;
+}
+
+static void	check_escapes(bool *escaped, char **s, int *length)
+{
+	int	backslashes;
+
+	if (**s == '\\')
+	{
+		backslashes = is_escaped(s);
+		length += (backslashes) - 1;
+		if (backslashes % 2 == 1)
+			*escaped = true;
+		(*s)--;
+	}
+	else
+		*escaped = false;
+}
+
+static int	allocate_next_word(int *nth_word, int *length, char **result)
+{
+	result[*nth_word] = malloc((*length + 1) * sizeof(char));
+	if (result[*nth_word] == NULL)
+		return (free_result(result, *nth_word - 1), FAIL);
+	*length = 0;
+	(*nth_word)++;
+	return (SUCCESS);
 }
 
 static char	**allocate_words(char *s, char **result)
 {
 	int		length;
 	int		nth_word;
-	int		backslashes;
 	bool	escaped;
 
 	nth_word = 0;
 	length = 0;
-	backslashes = 0;
 	escaped = false;
 	skip_spaces(&s);
 	while (*s != '\0')
@@ -125,27 +154,14 @@ static char	**allocate_words(char *s, char **result)
 		{
 			if ((*s == '\'' || *s == '\"') && escaped == false)
 				length += parse_quote(&s);
-			else if (*s == '\\')
-			{
-				backslashes = is_escaped(&s);
-				length += (backslashes) - 1;
-				if (backslashes % 2 == 1)
-					escaped = true;
-				s--;
-			}
 			else
-				escaped = false;
+				check_escapes(&escaped, &s, &length);
 			length++;
 			s++;
 		}
 		if (length > 0)
-		{
-			result[nth_word] = malloc((length + 1) * sizeof(char));
-			if (result[nth_word] == NULL)
-				return (free_result(result, nth_word - 1), NULL);
-			length = 0;
-			nth_word++;
-		}
+			if (allocate_next_word(&nth_word, &length, result) == FAIL)
+				return (NULL);
 		skip_spaces(&s);
 	}
 	return (result);
@@ -159,28 +175,21 @@ static char	**split_words(char *s, char **result)
 
 	nth_word = 0;
 	escaped = false;
-	i = 0;
 	skip_spaces(&s);
 	while (*s != '\0')
 	{
+		i = 0;
 		while (*s != '\0' && *s != ' ')
 		{
 			if ((*s == '\'' || *s == '\"') && escaped == false)
-			{
 				parse_quoted_string(&s, result[nth_word], &i);
-				escaped = false;
-			}
 			else
 			{
-				if (*s == '\\')
-					escaped = !escaped;
-				if (*s != '\\')
-					escaped = false;
+				update_escape(&escaped, *s);
 				result[nth_word][i++] = *(s++);
 			}
 		}
 		result[nth_word++][i] = '\0';
-		i = 0;
 		skip_spaces(&s);
 	}
 	result[nth_word] = NULL;
@@ -208,17 +217,15 @@ static char	**shell_ft_split(char const *s)
 	return (result);
 }
 
-static char	check_open_quotes(char *str)
+static char	check_open_quotes(char *str, int i)
 {
 	bool	in_single;
 	bool	in_double;
 	bool	escaped;
-	int		i;
 
 	in_single = false;
 	in_double = false;
 	escaped = false;
-	i = 0;
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\'' && !in_double && escaped == false)
@@ -245,7 +252,7 @@ char	**parse_split(char *s)
 
 	if (s == NULL)
 		return (NULL);
-	quote = check_open_quotes(s);
+	quote = check_open_quotes(s, 0);
 	if (quote != '0')
 	{
 		s = read_till_quotes(quote, &s);
@@ -256,54 +263,3 @@ char	**parse_split(char *s)
 	free(s);
 	return (result);
 }
-
-// int	main(void)
-// {
-// 	int i = 0;
-// 	char *unfinished = malloc(100 * sizeof(char));
-// 	ft_strlcat(unfinished, "This is ", 100);
-// 	i = 8;
-// 	while (i < 11)
-// 	{
-// 		unfinished[i] = '\\';
-// 		i++;
-// 	}
-// 	unfinished[i] = '\'';
-// 	i++;
-// 	unfinished[i] = ' ';
-// 	i++;
-// 	unfinished[i] = '\0';
-// 	i = 0;
-// 	ft_strlcat(unfinished, "a test", 100);
-// 	printf("%s\n", unfinished);
-// 	printf("word_count: %d\n", get_word_count(unfinished));
-// 	char **result = parse_split(unfinished);
-// 	if (result == NULL)
-// 		printf("result is NULL\n");
-// 	while (result[i] != NULL)
-// 	{
-// 		if (i == 2)
-// 		{
-// 			printf("result[%d]: ", i);
-// 			for (int j = 0; result[i][j] != '\0'; j++)
-// 			{
-// 				printf("%c", result[i][j]);
-// 			}
-// 			printf("\n");
-// 		}
-// 		else
-// 		{
-// 			printf("result[%d]: %s\n", i, result[i]);
-// 		}
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (result[i] != NULL)
-// 	{
-// 		free(result[i]);
-// 		i++;
-// 	}
-// 	free(result);
-
-// 	return (0);
-// }
