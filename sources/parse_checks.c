@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:04:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:44:32 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:29:34 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	is_command(char *cmd)
 	char	*path;
 	int		found;
 
+	if (ft_strncmp(cmd, ".", 2) == 0 || ft_strncmp(cmd, "..", 3) == 0)
+		return (FAIL);
 	path_env = getenv("PATH");
 	if (path_env == NULL)
 		return (ERROR);
