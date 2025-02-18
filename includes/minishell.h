@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 11:11:54 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:24:26 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ typedef struct s_variable
 *                             Function Prototypes                             *
 \*****************************************************************************/
 
-/* Prepare arg */
+/* --------------- Prepare_arg ----------------------------------------------*/
+/* prepare */
 int			prepare_arg(t_env *env_list, char **arg);
 
 /* variables */
@@ -118,6 +119,28 @@ bool		back_backslash_handler(char **str, char **new_str, int *i, int *j);
 /* quotes */
 int			update_quotes(char c, char **new_str, int *j, int *in_quotes);
 bool		quote_backslash_handler(char **str, char **new_str, int *i, int *j);
+
+/* --------------- tokenize -------------------------------------------------*/
+/* split */
+char	**parse_split(char *s);
+
+/* split_2 */
+int		get_word_count(char *s);
+char	**allocate_words(char *s, char **result);
+char	**split_words(char *s, char **result);
+
+/* split_utils */
+int		parse_quote(char **s);
+void	parse_quoted_string(char **s, char *result, int *i);
+int		allocate_next_word(int *nth_word, int *length, char **result);
+
+/* split_utils_2 */
+void	skip_spaces(char **s);
+int		is_escaped(char **s);
+void	update_escape(bool *escaped, char c);
+void	check_escapes(bool *escaped, char **s, int *length);
+
+
 
 /* minishell.c */
 void		set_error(char *error_msg, int error_code);
