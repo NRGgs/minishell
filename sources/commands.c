@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/13 15:34:06 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/19 21:25:18 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ t_command	*cmd_new(char *command, char *options)
 	new_cmd = malloc(sizeof(t_command));
 	if (new_cmd == NULL)
 		return (NULL);
-	new_cmd->command = ft_strdup(command);
-	if (new_cmd->command == NULL)
-		return (free(new_cmd), NULL);
+	if (command == NULL)
+		new_cmd->command = NULL;
+	else
+	{
+		new_cmd->command = ft_strdup(command);
+		if (new_cmd->command == NULL)
+			return (free(new_cmd), NULL);
+	}
 	if (options == NULL)
 		new_cmd->options = NULL;
 	else
