@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 11:19:19 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:55:22 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/19 20:45:17 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	parse_full_command(\
 	int		command_index;
 
 	command_index = *i;
+	if (is_redirect(split_input[*i]))
+		(*i)++;
 	if (parse_command(split_input, commands, i) == FAIL)
 		return (clean_all(variables, commands, split_input), FAIL);
 	if (parse_redirect(split_input, commands, i, command_index) == FAIL)
