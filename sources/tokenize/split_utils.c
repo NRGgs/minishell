@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 15:17:35 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:27:07 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   split_utils.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/18 15:17:35 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/19 20:34:24 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	allocate_next_word(int *nth_word, int *length, char **result)
 	result[*nth_word] = malloc((*length + 1) * sizeof(char));
 	if (result[*nth_word] == NULL)
 	{
-		while (nth_word >= 0)
+		while (*nth_word >= 0)
 			free(result[(*nth_word)--]);
 		free(result);
 		return (FAIL);
