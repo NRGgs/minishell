@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:55:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:10:45 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,6 @@ int	cd_home(t_env *env_list)
 	return (change_pwd(env_list));
 }
 
-static char	*trim_quotes(const char *str)
-{
-	size_t	len;
-	char	*res;
-
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str);
-	if (len >= 2)
-	{
-		if ((str[0] == '"' && str[len - 1] == '"')
-			|| (str[0] == '\'' && str[len - 1] == '\''))
-		{
-			res = ft_strndup(str + 1, len - 2);
-			return (res);
-		}
-	}
-	return (ft_strdup(str));
-}
-
 /**
  * @brief Changes the current directory to the specified path.
  *
@@ -107,22 +87,20 @@ int	cd(t_env *env_list, t_command *command)
 	char	*path;
 	char	*trimmed_path;
 
-	(void)env_list;
 	path = command->pattern;
 	if (!path)
-	{
-		ft_putstr_fd("DEBUG: No path provided, going to HOME\n", 2);
 		return (cd_home(env_list));
-	}
-	if (check_option(path) == 1)
-	{
-		fprintf(stderr, "cd: invalid option -- '%s'\n", path);
-	}
-	trimmed_path = trim_quotes(path);
+	trimmed_path = ft_strdup(path);
+	if (!trimmed_path)
+		return (FAIL);
+	if (prepare_arg(env_list, &trimmed_path) == FAIL)
+		return (free(trimmed_path), FAIL);
+	if (check_option(trimmed_path) == 1)
+		return (free(trimmed_path), FAIL);
 	exit_code = chdir(trimmed_path);
 	if (exit_code < 0)
 	{
-		fprintf(stderr, "cd: %s: No such file or directory\n", path);
+		fprintf(stderr, "cd: %s: No such file or directory\n", trimmed_path);
 		g_exit_status = 1;
 	}
 	free(trimmed_path);
