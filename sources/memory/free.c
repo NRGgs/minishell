@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:41:15 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:14:28 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Frees the memory of a pointer and sets it to NULL.

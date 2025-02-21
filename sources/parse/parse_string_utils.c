@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:46:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:08 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Checks whether a string contains single or double air quotes.

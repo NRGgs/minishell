@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_with_pipe_4.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:30:33 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:13:44 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 extern char	**environ;
 

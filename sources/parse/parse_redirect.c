@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 14:25:28 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/17 10:45:55 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:06 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * Returns the type of redirection.

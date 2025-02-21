@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:04:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 11:05:23 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:11:41 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Check if the command is a command with string input.

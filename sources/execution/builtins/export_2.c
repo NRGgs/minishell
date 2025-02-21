@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/18 12:18:54 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:14:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 /**
  * @brief Allocates a new environment node.

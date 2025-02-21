@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/12 12:11:06 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /*	Handles textfile redirections.
  *

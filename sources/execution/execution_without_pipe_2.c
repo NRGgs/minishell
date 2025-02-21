@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:15:14 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:13:46 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
+#include "../../includes/minishell.h"
 /**
  * @brief Executes commands when there is no pipe.
  * Chooses between built-in and external command execution.

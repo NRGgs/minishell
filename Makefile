@@ -11,41 +11,16 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 SRC_DIR = sources
 PREP_DIR = prepare_arg
 TKN_DIR = tokenize
-SRCS =	$(SRC_DIR)/commands.c \
-		$(SRC_DIR)/custom_variables.c \
-		$(SRC_DIR)/parse_cmds.c \
-		$(SRC_DIR)/parse_var.c \
-		$(SRC_DIR)/parse.c \
-		$(SRC_DIR)/parse_clean.c \
-		$(SRC_DIR)/parse_redirect.c \
-		$(SRC_DIR)/redirections.c \
-		$(SRC_DIR)/minishell.c \
+PARSE_DIR = parse
+EXE_DIR = execution
+BLT_DIR = execution/builtins
+MEM_DIR = memory
+SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/signal.c \
-		$(SRC_DIR)/builtins.c \
-		$(SRC_DIR)/cd.c \
-		$(SRC_DIR)/echo.c \
-		$(SRC_DIR)/env.c \
-		$(SRC_DIR)/exit.c \
-		$(SRC_DIR)/export.c \
-		$(SRC_DIR)/pwd.c \
-		$(SRC_DIR)/unset.c \
-		$(SRC_DIR)/execution.c \
 		$(SRC_DIR)/find_path.c \
 		$(SRC_DIR)/redirect.c \
-		$(SRC_DIR)/execution_without_pipe.c \
-		$(SRC_DIR)/execution_with_pipe_1.c \
-		$(SRC_DIR)/execution_with_pipe_2.c \
-		$(SRC_DIR)/export_2.c \
-		$(SRC_DIR)/execution_without_pipe_2.c \
 		$(SRC_DIR)/find_path_2.c \
 		$(SRC_DIR)/init_env_list.c \
-		$(SRC_DIR)/parse_checks.c \
-		$(SRC_DIR)/parse_string_utils.c \
-		$(SRC_DIR)/parse_string.c \
-		$(SRC_DIR)/free.c \
-		$(SRC_DIR)/execution_with_pipe_3.c \
-		$(SRC_DIR)/execution_with_pipe_4.c \
-		$(SRC_DIR)/heredoc.c \
 		$(SRC_DIR)/build_execve_args.c \
 		$(SRC_DIR)/$(PREP_DIR)/backslashes.c \
 		$(SRC_DIR)/$(PREP_DIR)/prepare.c \
@@ -54,7 +29,36 @@ SRCS =	$(SRC_DIR)/commands.c \
 		$(SRC_DIR)/$(TKN_DIR)/split.c \
 		$(SRC_DIR)/$(TKN_DIR)/split_2.c \
 		$(SRC_DIR)/$(TKN_DIR)/split_utils.c \
-		$(SRC_DIR)/$(TKN_DIR)/split_utils_2.c
+		$(SRC_DIR)/$(TKN_DIR)/split_utils_2.c \
+		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_checks.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_clean.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_cmds.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_redirect.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_var.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_string.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_string_utils.c \
+		$(SRC_DIR)/$(PARSE_DIR)/redirections.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_1.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_2.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_3.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_4.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_without_pipe.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_without_pipe_2.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution.c \
+		$(SRC_DIR)/$(BLT_DIR)/builtins.c \
+		$(SRC_DIR)/$(BLT_DIR)/cd.c \
+		$(SRC_DIR)/$(BLT_DIR)/echo.c \
+		$(SRC_DIR)/$(BLT_DIR)/env.c \
+		$(SRC_DIR)/$(BLT_DIR)/exit.c \
+		$(SRC_DIR)/$(BLT_DIR)/export.c \
+		$(SRC_DIR)/$(BLT_DIR)/export_2.c \
+		$(SRC_DIR)/$(BLT_DIR)/pwd.c \
+		$(SRC_DIR)/$(BLT_DIR)/unset.c \
+		$(SRC_DIR)/$(MEM_DIR)/free.c \
+		$(SRC_DIR)/$(MEM_DIR)/custom_variables.c \
+		$(SRC_DIR)/$(MEM_DIR)/commands.c
 
 OBJ_DIR = objects
 # OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -84,6 +88,22 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/$(PREP_DIR)/%.c
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(TKN_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(PARSE_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(EXE_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(BLT_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(MEM_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 

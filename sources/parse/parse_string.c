@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:01:21 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:48:02 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:13 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	parse_string_helper(char *first, char *second, char **pattern);
 static bool	air_quote_exists(char **input, int j, char quote);

@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 09:29:53 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:03 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	parse_options(char **input, int *i, char **options);
 static char	*get_pattern(char **input, int *i, char *pattern);

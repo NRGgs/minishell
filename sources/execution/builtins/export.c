@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/18 12:57:09 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:14:14 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 /**
  * @brief Finds an environment variable in the list by name.

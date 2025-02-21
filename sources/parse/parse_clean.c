@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:45:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/17 10:45:00 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:11:50 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Clean a two dimensional array

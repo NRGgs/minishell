@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 10:50:12 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:12:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Check if the string is a variable.

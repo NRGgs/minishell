@@ -6,11 +6,11 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/17 10:42:01 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:13:10 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	read_here_doc(char *delimiter, char **input);
 static char	*strjoin_free(char **s1, char *s2);
