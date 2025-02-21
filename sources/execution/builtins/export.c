@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 12:19:54 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:52:37 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,15 @@ int	my_export(t_env **env_list, char **args)
  */
 int	run_export_builtin(t_command *command)
 {
-	char	**args;
+	char	*pattern_dup;
+	char	*args[2];
 	int		ret;
 
-	args = ft_split(command->pattern, ' ');
+	pattern_dup = ft_strdup(command->pattern);
+	if (!pattern_dup)
+		return (FAIL);
+	args[0] = pattern_dup;
+	args[1] = NULL;
 	ret = my_export(&(command->env_list), args);
-	free_args(args);
 	return (ret);
 }

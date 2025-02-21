@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 12:28:14 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:43:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static int	handle_backslashes(char **arg)
 		new_str[j++] = (*arg)[i++];
 	}
 	new_str[j] = '\0';
-	// free(*arg);
+	free(*arg);
 	*arg = new_str;
 	return (SUCCESS);
 }
