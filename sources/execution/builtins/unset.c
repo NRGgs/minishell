@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:24:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 14:04:02 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:12:24 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,6 @@ int	my_unset(t_env **env_list, char **args)
 		i++;
 	}
 	return (0);
-}
-
-/**
- * @brief Parses arguments for the unset built-in command.
- *
- * @param command The unset command structure.
- *
- * @return A NULL-terminated array of arguments, or NULL if none.
- */
-char	**parse_args_for_unset(t_command *command)
-{
-	if (!command->pattern)
-		return (NULL);
-	return (ft_split(command->pattern, ' '));
 }
 
 /**
