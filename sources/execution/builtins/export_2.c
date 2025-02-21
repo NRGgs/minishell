@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:11 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:27:45 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,11 @@ void	process_export_arg(t_env **env_list, char *arg)
 			return ;
 		equal_sign = ft_strchr(arg, '=');
 		handle_export_equal(env_list, arg, equal_sign);
+		free(arg);
 	}
 	else
+	{
 		handle_export_no_equal(env_list, arg);
+		free(arg);
+	}
 }

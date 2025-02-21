@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:14 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:19:54 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env	*find_env_var(t_env *env_list, const char *name)
 {
 	while (env_list)
 	{
-		if (strcmp(env_list->name, name) == 0)
+		if (ft_strcmp(env_list->name, name) == 0)
 			return (env_list);
 		env_list = env_list->next;
 	}
@@ -115,5 +115,6 @@ int	run_export_builtin(t_command *command)
 
 	args = ft_split(command->pattern, ' ');
 	ret = my_export(&(command->env_list), args);
+	free_args(args);
 	return (ret);
 }
