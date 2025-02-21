@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/14 12:32:52 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:43:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,39 +71,4 @@ bool	valid_char(char c)
 		|| (c >= 48 && c <= 57))
 		return (true);
 	return (false);
-}
-
-/*	Replace the variable in the string.
- *
- *	str: the string to be replaced.
- *
- *	Return: the new string.
- *			NULL if failed.
- */
-char	*replace_variable(char *str, t_variable *vars, \
-		char quote, t_command **commands)
-{
-	t_variable	*variable;
-	char		*new_str;
-	char		*to_replace;
-	int			i;
-
-	(void)commands;
-	(void)quote;
-	to_replace = ft_strchr(str, '$');
-	if (to_replace == NULL)
-		return (str);
-	i = 1;
-	while (valid_char(to_replace[i]))
-		i++;
-	to_replace = ft_strndup(to_replace, i);
-	if (to_replace == NULL)
-		return (NULL);
-	to_replace[0] = '$';
-	variable = var_find(vars, to_replace + 1);
-	if (variable == NULL)
-		return (free(to_replace), str);
-	new_str = ft_strreplace(str, to_replace, variable->value, to_replace);
-	free(to_replace);
-	return (new_str);
 }
