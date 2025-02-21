@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:03:25 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 11:12:08 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:33:02 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,19 @@ char	*read_till_quotes(char delimiter, char **pattern)
 {
 	char	*buffer;
 	bool	reading;
+	int		stdin_backup;
 
+	stdin_backup = dup(STDIN_FILENO);
+	signal(SIGINT, signal_heredoc);
 	reading = true;
 	while (reading)
 	{
 		buffer = readline("\\ ");
+		if (buffer == NULL)
+		{
+			restore_stdin(stdin_backup, pattern);
+			return (NULL);
+		}
 		if (buffer != NULL && ft_strchr(buffer, delimiter) != NULL)
 			reading = false;
 		*pattern = attach_buffer(*pattern, buffer);

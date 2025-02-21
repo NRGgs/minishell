@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:10 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:33:48 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	read_here_doc(char *delimiter, char **input);
 static char	*strjoin_free(char **s1, char *s2);
-static int	restore_stdin(int stdin_backup, char **input);
 
 /**
  * Handles here_doc redirection.
@@ -97,7 +96,7 @@ static char	*strjoin_free(char **s1, char *s2)
  * @param input string to free
  * @return SUCCESS (1)
  */
-static int	restore_stdin(int stdin_backup, char **input)
+int	restore_stdin(int stdin_backup, char **input)
 {
 	dup2(stdin_backup, STDIN_FILENO);
 	close(stdin_backup);

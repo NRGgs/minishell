@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:41:13 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:33:42 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ int			string_redirection(char **input, t_command **last,
 
 /* heredoc.c */
 int			here_doc_redirection(char *delimiter, t_command **last);
+int			restore_stdin(int stdin_backup, char **input);
 
 /* parse_clean.c */
 void		clean_2d_array(char **array);
