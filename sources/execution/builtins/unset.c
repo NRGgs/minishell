@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:24:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:17 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:04:02 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	remove_env_var(t_env **env_list, const char *var_name)
 	prev = NULL;
 	while (current)
 	{
-		if (strcmp(current->name, var_name) == 0)
+		if (ft_strcmp(current->name, var_name) == 0)
 		{
 			if (!prev)
 				*env_list = current->next;
@@ -97,13 +97,24 @@ char	**parse_args_for_unset(t_command *command)
  */
 int	run_unset_builtin(t_command *command)
 {
-	char	**args;
+	char	*argument;
+	char	*args[2];
 	int		ret;
 
-	args = parse_args_for_unset(command);
-	if (!args)
-		return (1);
+	if (!command->pattern)
+	{
+		return (FAIL);
+	}
+	argument = ft_strdup(command->pattern);
+	if (!argument)
+		return (FAIL);
+	if (prepare_arg(command->env_list, &argument) == FAIL)
+	{
+		free(argument);
+		return (FAIL);
+	}
+	args[0] = argument;
+	args[1] = NULL;
 	ret = my_unset(&(command->env_list), args);
-	free_args(args);
 	return (ret);
 }
