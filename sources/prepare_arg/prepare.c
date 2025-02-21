@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 12:43:38 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:20:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,16 @@ static int	trim_memory(char **str);
  */
 int	prepare_arg(t_env *env_list, char **arg)
 {
+	printf("arg: %s\n", *arg);
 	if (handle_variables(env_list, arg) == FAIL)
 		return (FAIL);
+	printf("arg: %s\n", *arg);
 	if (handle_backslashes(arg) == FAIL)
 		return (FAIL);
+	printf("arg: %s\n", *arg);
 	if (handle_quotes(arg) == FAIL)
 		return (FAIL);
+	printf("arg: %s\n", *arg);
 	trim_memory(arg);
 	return (SUCCESS);
 }
@@ -126,7 +130,7 @@ static int	handle_quotes(char **str)
 	{
 		while (update_quotes(*(*str + i), &new_str, &j, &in_quotes))
 			i++;
-		if ((*str)[i] == '\\')
+		if ((*str)[i] == '\\' && in_quotes != SINGLE)
 			quote_backslash_handler(str, &new_str, &i, &j);
 		if ((*str)[i] == '\0')
 			break ;
