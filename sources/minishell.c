@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/19 13:42:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:38:49 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,17 @@ char	*read_input(void)
 		set_error("getenv() error", MINOR);
 		return (NULL);
 	}
-	if (getcwd(dir, sizeof(dir)) != NULL)
-	{
-		ft_strlcat(dir, " $ ", 1024);
-		prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
-	}
-	else
+	if (getcwd(dir, sizeof(dir)) == NULL)
 	{
 		set_error("getenv() error", MINOR);
 		return (NULL);
 	}
+	ft_strlcat(dir, " $ ", 1024);
+	prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
 	input = readline(prompt);
 	free(prompt);
+	if (input == NULL)
+		printf("exit\n");
 	return (input);
 }
 
