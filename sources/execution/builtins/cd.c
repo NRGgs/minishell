@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:55:36 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,26 @@ int	cd_home(t_env *env_list)
 	return (change_pwd(env_list));
 }
 
+static char	*trim_quotes(const char *str)
+{
+	size_t	len;
+	char	*res;
+
+	if (!str)
+		return (NULL);
+	len = ft_strlen(str);
+	if (len >= 2)
+	{
+		if ((str[0] == '"' && str[len - 1] == '"')
+			|| (str[0] == '\'' && str[len - 1] == '\''))
+		{
+			res = ft_strndup(str + 1, len - 2);
+			return (res);
+		}
+	}
+	return (ft_strdup(str));
+}
+
 /**
  * @brief Changes the current directory to the specified path.
  *
@@ -85,6 +105,7 @@ int	cd(t_env *env_list, t_command *command)
 {
 	int		exit_code;
 	char	*path;
+	char	*trimmed_path;
 
 	(void)env_list;
 	path = command->pattern;
@@ -96,15 +117,15 @@ int	cd(t_env *env_list, t_command *command)
 	if (check_option(path) == 1)
 	{
 		fprintf(stderr, "cd: invalid option -- '%s'\n", path);
-		return (1);
 	}
-	exit_code = chdir(path);
+	trimmed_path = trim_quotes(path);
+	exit_code = chdir(trimmed_path);
 	if (exit_code < 0)
 	{
 		fprintf(stderr, "cd: %s: No such file or directory\n", path);
 		g_exit_status = 1;
-		return (1);
 	}
+	free(trimmed_path);
 	return (change_pwd(env_list));
 }
 
