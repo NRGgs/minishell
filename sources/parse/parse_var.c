@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 11:12:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:45:36 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  */
 bool	is_variable(char *str)
 {
-	if (ft_strstr(str, "=\"") == NULL)
+	if (ft_strstr(str, "=") == NULL)
 		return (false);
 	return (true);
 }
