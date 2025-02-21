@@ -6,17 +6,17 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 10:44:05 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 10:43:35 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 10:50:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*	Check if the string is a variable.
+/**
+ * @brief Check if the string is a variable.
  *
- *	str: the string to be checked.
- *
- *	Return: true / false.
+ * @param str The string to be checked.
+ * @return true if the string is a variable, false otherwise.
  */
 bool	is_variable(char *str)
 {
@@ -25,11 +25,12 @@ bool	is_variable(char *str)
 	return (true);
 }
 
-/*	Parse the variable from the string, and insert into linked list.
+/**
+ * @brief Parse the variable from the string, and insert into linked list.
  *
- *	str: the string to be parsed.
- *
- * 	Return: SUCCESS (1) / FAIL (0).
+ * @param str The string to be parsed.
+ * @param vars The linked list to insert the parsed variable into.
+ * @return int SUCCESS (1) / FAIL (0).
  */
 int	parse_variable(char *str, t_variable **vars)
 {
@@ -58,11 +59,11 @@ int	parse_variable(char *str, t_variable **vars)
 	return (SUCCESS);
 }
 
-/*	Check if the character is valid.
+/**
+ * @brief Check if the character is valid.
  *
- *	c: the character to be checked.
- *
- *	Return: true / false.
+ * @param c The character to be checked.
+ * @return true if the character is valid, false otherwise.
  */
 bool	valid_char(char c)
 {
