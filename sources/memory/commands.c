@@ -6,17 +6,18 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:34 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:44:10 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*	Initialize the command's variables.
+/**
+ * Initialize the command's variables.
  *
- *	cmd:	the command to initialize.
+ * @param cmd The command to initialize.
  *
- *	Return: void.
+ * @return void.
  */
 static void	initialize_command(t_command **cmd)
 {
@@ -29,12 +30,13 @@ static void	initialize_command(t_command **cmd)
 	(*cmd)->env_list = NULL;
 }
 
-/*	Create a new command.
+/**
+ * Create a new command.
  *
- *	command:	the name of the command.
- *	options:	the options of the command.
+ * @param command The name of the command.
+ * @param options The options of the command.
  *
- *	Return: the new command.
+ * @return The new command.
  */
 t_command	*cmd_new(char *command, char *options)
 {
@@ -63,11 +65,11 @@ t_command	*cmd_new(char *command, char *options)
 	return (new_cmd);
 }
 
-/*	Return the last command in the linked list.
+/**
+ * Return the last command in the linked list.
  *
- *	cmds:	the linked list of commands.
- *
- *	Return: the last command.
+ * @param cmds the linked list of commands.
+ * @return the last command.
  */
 t_command	*cmd_last(t_command *cmds)
 {
@@ -81,12 +83,13 @@ t_command	*cmd_last(t_command *cmds)
 	return (last);
 }
 
-/*	Add a new command to the end of the linked list.
+/**
+ * Add a new command to the end of the linked list.
  *
- *	cmds:		the start of the linked list.
- *	new_cmd:	the new command.
+ * @param cmds     The start of the linked list.
+ * @param new_cmd  The new command.
  *
- * 	Return: void.
+ * @return void
  */
 void	cmd_add_back(t_command **cmds, t_command *new_cmd)
 {

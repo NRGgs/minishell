@@ -6,18 +6,19 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 12:09:56 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:32 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:44:51 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/*	Create a new variable.
+/**
+ * Create a new variable.
  *
- *	name:	the name of the variable.
- *	value:	the value of the variable.
+ * @param name  The name of the variable.
+ * @param value The value of the variable.
  *
- *	Return: the new variable.
+ * @return The new variable.
  */
 t_variable	*var_new(char *name, char *value)
 {
@@ -43,11 +44,12 @@ t_variable	*var_new(char *name, char *value)
 	return (new_var);
 }
 
-/*	Return the last variable in the linked list.
+/**
+ * Return the last variable in the linked list.
  *
- *	vars:	the linked list of variables.
+ * @param vars The linked list of variables.
  *
- *	Return: the last variable.
+ * @return The last variable.
  */
 t_variable	*var_last(t_variable *vars)
 {
@@ -61,12 +63,13 @@ t_variable	*var_last(t_variable *vars)
 	return (last);
 }
 
-/*	Add a new variable to the end of the linked list.
+/**
+ * @brief Add a new variable to the end of the linked list.
  *
- *	vars		the start of the linked list.
- *	new_var:	the new variable to be added.
+ * @param vars The start of the linked list.
+ * @param new_var The new variable to be added.
  *
- * 	Return: void.
+ * @return void
  */
 void	var_add_back(t_variable **vars, t_variable *new_var)
 {
@@ -81,13 +84,13 @@ void	var_add_back(t_variable **vars, t_variable *new_var)
 	}
 }
 
-/*	Find a variable in the linked list.
+/**
+ * Find a variable in the linked list.
  *
- *	vars:	the linked list of variables.
- *	name:	the name of the variable to be found.
+ * @param vars The linked list of variables.
+ * @param name The name of the variable to be found.
  *
- *	Return: the variable.
- *			NULL if not found.
+ * @return The variable, or NULL if not found.
  */
 t_variable	*var_find(t_variable *vars, char *name)
 {
