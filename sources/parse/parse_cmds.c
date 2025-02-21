@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 11:12:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:54:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int	parse_command(char **input, t_command **cmds, int *i)
 		free(options);
 	if (new_cmd == NULL)
 		return (FAIL);
-	if (input[*i + 1] != NULL && !is_command(input[*i + 1])
-		&& !is_redirect(input[*i + 1]))
+	if (input[*i + 1] != NULL && !is_redirect(input[*i + 1]))
 		pattern = get_pattern(input, i, pattern);
 	new_cmd->pattern = pattern;
 	cmd_add_back(cmds, new_cmd);
@@ -106,8 +105,7 @@ static char	*get_pattern(char **input, int *i, char *pattern)
 	new_pattern = NULL;
 	len_pattern = 0;
 	len_string = 0;
-	while (input[*i + 1] != NULL && !is_command(input[*i + 1])
-		&& !is_redirect(input[*i + 1]))
+	while (input[*i + 1] != NULL && !is_redirect(input[*i + 1]))
 	{
 		len_string = ft_strlen(input[*i + 1]);
 		if (pattern == NULL)
