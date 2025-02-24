@@ -3,42 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:09 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:16:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-/**
- * @brief Handles the exit built-in command.
- * if a numeric argument is provided, it is used as the exit code;
- * otherwise, the current g_exit_status is used.
- *
- * @param pattern The exit argument.
- *
- * @return SHELL_EXIT
- */
-int	exit_shell(char *pattern)
+static int	exit_numeric_error(char **tokens, int *exit_code)
 {
-	int	exit_code;
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("exit: ", STDERR_FILENO);
+	ft_putstr_fd(tokens[0], STDERR_FILENO);
+	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+	free_2d_array(tokens);
+	*exit_code = 2;
+	return (SHELL_EXIT);
+}
+
+static int	exit_too_many_args(char **tokens)
+{
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
+	free_2d_array(tokens);
+	return (SHELL_CONTINUE);
+}
+
+static int	check_exit_tokens(char **tokens, int *exit_code)
+{
 	int	error;
 
-	if (!pattern)
-		exit_code = g_exit_status;
+	*exit_code = ft_atoi(tokens[0], &error);
+	if (error)
+		return (exit_numeric_error(tokens, exit_code));
+	if (count_tokens(tokens) > 1)
+		return (exit_too_many_args(tokens));
+	free_2d_array(tokens);
+	return (-1);
+}
+
+static int	handle_exit_arg(char *pattern, t_env *env, int *exit_code)
+{
+	char	*proc;
+	char	**tokens;
+
+	proc = ft_strdup(pattern);
+	if (!proc)
+	{
+		*exit_code = 2;
+		return (SHELL_EXIT);
+	}
+	if (prepare_arg(env, &proc) == FAIL)
+	{
+		free(proc);
+		*exit_code = 2;
+		return (SHELL_EXIT);
+	}
+	tokens = ft_split(proc, ' ');
+	free(proc);
+	return (check_exit_tokens(tokens, exit_code));
+}
+
+int	exit_shell(char *pattern, t_command *command)
+{
+	int	exit_code;
+	int	ret;
+
+	(void)command;
+	if (pattern)
+	{
+		ret = handle_exit_arg(pattern, command->env_list, &exit_code);
+		if (ret != -1)
+		{
+			g_exit_status = exit_code;
+			return (ret);
+		}
+	}
 	else
 	{
-		exit_code = ft_atoi(pattern, &error);
-		if (error)
-		{
-			ft_putstr_fd("exit: ", STDERR_FILENO);
-			ft_putstr_fd(pattern, STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			g_exit_status = MAJOR;
-			return (SHELL_EXIT);
-		}
+		exit_code = g_exit_status;
 	}
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	g_exit_status = exit_code;

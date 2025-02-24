@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:14:01 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:05:13 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ int	execute_builtin(t_command **cmd_list)
 
 	command = *cmd_list;
 	if (!command || !command->command)
-		return (ft_putstr_fd("Error: Invalid command structure.\n", 2), 1);
+	{
+		ft_putstr_fd("Error: Invalid command structure.\n", 2);
+		return (1);
+	}
 	if (ft_strncmp(command->command, "cd", 3) == 0)
 		return (handle_cd(command));
 	else if (ft_strncmp(command->command, "echo", 5) == 0)
@@ -85,9 +88,7 @@ int	execute_builtin(t_command **cmd_list)
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
 		return (run_unset_builtin(command));
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
-	{
-		return (exit_shell(command->pattern));
-	}
+		return (exit_shell(command->pattern, command));
 	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 	return (1);
 }

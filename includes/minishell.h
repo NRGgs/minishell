@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 18:40:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:05:10 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,7 @@ int			remove_env_var(t_env **env_list, const char *var_name);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int			exit_shell(char *pattern);
+int			exit_shell(char *pattern, t_command *command);
 
 /* env.c */
 int			env(t_env *env_list);
