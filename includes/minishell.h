@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 12:31:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:40:19 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,6 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 bool		is_variable(char *str);
 bool		valid_char(char c);
 int			parse_variable(char *str, t_variable **vars);
-char		*replace_variable(char *str, t_variable *vars,
-				char quote, t_command **commands);
 
 /* variables.c */
 t_variable	*var_new(char *name, char *value);
@@ -237,7 +235,6 @@ void		f_error(void);
 /* execution.c */
 int			execute_commands(t_command *commands);
 t_env		*create_env_node(const char *name, const char *value);
-int			is_directory(const char *path);
 
 /* execution_without_pipe */
 void		handle_child_process(t_command *commands, char *path,
@@ -275,7 +272,6 @@ int			process_single_command(t_command *current,
 int			change_pwd(t_env *env_list);
 int			cd_home(t_env *env_list);
 int			cd(t_env *env_list, t_command *command);
-t_env		*get_env(t_env *env_list, char *identifier);
 int			check_option(char *argv);
 
 /* pwd.c */
@@ -303,7 +299,6 @@ void		process_export_arg(t_env **env_list, char *arg);
 /* unset.c */
 int			my_unset(t_env **env_list, char **args);
 int			remove_env_var(t_env **env_list, const char *var_name);
-char		**parse_args_for_unset(t_command *command);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
