@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:55:22 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 16:12:21 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:27:44 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,10 @@ int	parse_full_command(\
 	int		command_index;
 
 	command_index = *i;
-	// if (is_redirect(split_input[*i]))
-	// 	(*i)++;
 	if (parse_command(split_input, commands, i) == FAIL)
-		return (clean_all(variables, commands, split_input), FAIL);
+		return (FAIL);
 	if (parse_redirect(split_input, commands, i, command_index) == FAIL)
-		return (clean_all(variables, commands, split_input), FAIL);
+		return (FAIL);
 	if (cmd_last(*commands)->in_type == STRING
 		|| cmd_last(*commands)->pattern != NULL)
 	{
@@ -118,7 +116,7 @@ int	parse_full_command(\
 		{
 			if (replace_custom_variable(*variables, \
 					&cmd_last(*commands)->pattern) == FAIL)
-				return (clean_all(variables, commands, split_input), FAIL);
+				return (FAIL);
 		}
 	}
 	return (SUCCESS);
