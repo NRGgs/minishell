@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 19:05:13 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:26:53 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,40 +57,48 @@ int	handle_cd(t_command *command)
 	return (cd_home(command->env_list));
 }
 
-/**
- * @brief Executes a built-in command.
- * Dispatches the command to the corresponding built-in handler.
- *
- * @param cmd_list Pointer to the pointer of the current command.
- *
- * @return The exit status of the built-in command.
- */
+static int	select_builtin(t_command *command)
+{
+	int	ret;
+
+	if (ft_strncmp(command->command, "cd", 3) == 0)
+		ret = handle_cd(command);
+	else if (ft_strncmp(command->command, "echo", 5) == 0)
+		ret = echo(command);
+	else if (ft_strncmp(command->command, "pwd", 4) == 0)
+		ret = pwd(&command->input);
+	else if (ft_strncmp(command->command, "env", 4) == 0)
+		ret = env(command->env_list);
+	else if (ft_strncmp(command->command, "export", 7) == 0)
+		ret = run_export_builtin(command);
+	else if (ft_strncmp(command->command, "unset", 6) == 0)
+		ret = run_unset_builtin(command);
+	else if (ft_strncmp(command->command, "exit", 5) == 0)
+		ret = exit_shell(command->pattern, command);
+	else
+	{
+		ft_putstr_fd("Error: Unknown built-in command.\n", 2);
+		ret = 1;
+	}
+	return (ret);
+}
+
 int	execute_builtin(t_command **cmd_list)
 {
 	t_command	*command;
+	int			ret;
 
 	command = *cmd_list;
 	if (!command || !command->command)
 	{
 		ft_putstr_fd("Error: Invalid command structure.\n", 2);
+		g_exit_status = 1;
 		return (1);
 	}
-	if (ft_strncmp(command->command, "cd", 3) == 0)
-		return (handle_cd(command));
-	else if (ft_strncmp(command->command, "echo", 5) == 0)
-		return (echo(command));
-	else if (ft_strncmp(command->command, "pwd", 4) == 0)
-		return (pwd(&command->input));
-	else if (ft_strncmp(command->command, "env", 4) == 0)
-		return (env(command->env_list));
-	else if (ft_strncmp(command->command, "export", 7) == 0)
-		return (run_export_builtin(command));
-	else if (ft_strncmp(command->command, "unset", 6) == 0)
-		return (run_unset_builtin(command));
-	else if (ft_strncmp(command->command, "exit", 5) == 0)
-		return (exit_shell(command->pattern, command));
-	ft_putstr_fd("Error: Unknown built-in command.\n", 2);
-	return (1);
+	ret = select_builtin(command);
+	if (ret == 0)
+		g_exit_status = 0;
+	return (ret);
 }
 
 /**
