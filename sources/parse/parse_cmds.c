@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 10:46:46 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 11:29:26 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:34:27 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_command(char **input, t_command **cmds, int *i)
 	options = NULL;
 	pattern = NULL;
 	if (is_redirect(command))
-		return (set_error("syntax error", 258), FAIL);
+		return (set_error("syntax error", MAJOR), FAIL);
 	if (options_possible(command))
 		if (parse_options(input, i, &options) == FAIL)
 			return (FAIL);
