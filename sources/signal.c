@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 11:05:25 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:20:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,25 @@ void	signal_heredoc(int signum)
  */
 void	set_error(char *error_msg, int error_code)
 {
-	perror(error_msg);
+	errno = error_code;
+	if (error_code == CMD_NOT_FOUND)
+            errno = ENOENT;
+	else if (error_code == SIGINT_CANCELLATION)
+		errno = EINTR;
+	else if (error_code == ILLEGAL_INSTRUCTION
+		|| error_code == FAILED_ASSERTION)
+		errno = EINVAL;
+	else if (error_code == ILLEGAL_DIVISION)
+		errno = EDOM;
+	else if (error_code == INT_OVERFLOW)
+		errno = ERANGE;
+	else if (error_code == MEMORY_OVERFLOW)
+		errno = ENOMEM;
+	else if (error_code == UNALIGNED_MEM_ACCESS
+		|| error_code == SEG_FAULT)
+		errno = EFAULT;
+	else
+		errno = EIO;
 	g_exit_status = error_code;
+	perror(error_msg);
 }
