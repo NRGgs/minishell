@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:24:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 14:12:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:39:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int	run_unset_builtin(t_command *command)
 	args[0] = argument;
 	args[1] = NULL;
 	ret = my_unset(&(command->env_list), args);
+	free(argument);
 	return (ret);
 }
