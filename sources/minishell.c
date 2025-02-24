@@ -6,25 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 10:38:49 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:06:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_exit_status = 0;
-
-/**
- * @param error_msg The error message to be printed.
- * @param error_code The exit status to be set.
- *
- * @return None.
- */
-void	set_error(char *error_msg, int error_code)
-{
-	perror(error_msg);
-	g_exit_status = error_code;
-}
 
 /**
  * Reads the user input and returns it as a string.
@@ -100,7 +88,7 @@ static int	parse_and_exec(char *input, t_env *env_list)
 	return (ret);
 }
 
-void	run_commands(t_env *my_env_list)
+static void	run_commands(t_env *my_env_list)
 {
 	char	*input;
 	int		ret;
@@ -117,11 +105,39 @@ void	run_commands(t_env *my_env_list)
 	}
 }
 
-int	main(void)
+static void	noninteractive_mode(t_env *my_env_list, int argc, char *argv[])
+{
+	char	*input;
+
+	if (argc == 1)
+		return ;
+	if (argc > 2)
+	{
+		if (ft_strcmp(argv[1], "-c") != 0)
+		{
+			clear_env_list(my_env_list);
+			set_error("Invalid option", MAJOR);
+			exit(g_exit_status);
+		}
+	}
+	input = ft_strdup(argv[2]);
+	if (!input)
+	{
+		clear_env_list(my_env_list);
+		set_error("memory allocation error", MAJOR);
+		exit(g_exit_status);
+	}
+	parse_and_exec(input, my_env_list);
+	clear_env_list(my_env_list);
+	exit(g_exit_status);
+}
+
+int	main(int argc, char *argv[])
 {
 	t_env		*my_env_list;
 
 	my_env_list = init_env_list();
+	noninteractive_mode(my_env_list, argc, argv);
 	check_signals();
 	run_commands(my_env_list);
 	clear_history();
