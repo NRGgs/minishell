@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_with_pipe_3.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:59:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:42 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:41:24 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	process_single_command(t_command *current, int *pipe_in)
 	int		pipe_fd[2];
 	pid_t	pid;
 
-	path = true_path(current->command, environ);
+	path = true_path(current->command, current->env_list);
 	if (current->next && setup_pipe_if_needed(current, pipe_fd) == FAIL)
 		return (free(path), FAIL);
 	pid = fork();

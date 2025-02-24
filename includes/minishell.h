@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 12:40:19 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:40:56 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,22 +219,23 @@ int			execute_builtin(t_command **cmd_list);
 void		free_args(char **args);
 
 /* find_path.c */
-char		*true_path(char *argv, char **env);
+char		*true_path(char *argv, t_env *env_list);
 char		*path_finder(char **env);
-char		*find_path(char *command, char **env);
+char		*find_path(char *command, t_env *env_list);
 void		fn_path(char **res_split, char *argv);
 void		free_2d_array(char **arr);
 
 /* find_path_2.c */
 char		*search_in_paths(char **res_split, char **args);
-char		**split_args(char *argv);
-char		**split_paths(char **env);
+char		**split_paths_env(t_env *env_list);
+char		**split_args_with_prepare(char *argv, t_env *env_list);
 char		*check_argv_executable(char *argv);
 void		f_error(void);
 
 /* execution.c */
 int			execute_commands(t_command *commands);
 t_env		*create_env_node(const char *name, const char *value);
+int			count_tokens(char **arr);
 
 /* execution_without_pipe */
 void		handle_child_process(t_command *commands, char *path,

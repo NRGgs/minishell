@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:37:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:18:16 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,34 @@ void	f_error(void)
 	g_exit_status = CMD_NOT_FOUND;
 }
 
-/**
- * @brief Splits the PATH variable into an array of directory strings.
- *
- * @param env The environment array.
- *
- * @return A NULL-terminated array of directory strings.
- */
-char	**split_paths(char **env)
+char	**split_args_with_prepare(char *argv, t_env *env_list)
 {
-	char	*tmp_path;
+	char	*dup;
+	char	**result;
 
-	tmp_path = path_finder(env);
-	return (ft_split(tmp_path, ':'));
+	dup = ft_strdup(argv);
+	if (!dup)
+		return (NULL);
+	if (prepare_arg(env_list, &dup) == FAIL)
+	{
+		free(dup);
+		return (NULL);
+	}
+	result = ft_split(dup, ' ');
+	free(dup);
+	return (result);
 }
 
-/**
- * @brief Splits a command string into an array of arguments.
- *
- * @param argv The command string.
- *
- * @return A NULL-terminated array of argument strings.
- */
-char	**split_args(char *argv)
+char	**split_paths_env(t_env *env_list)
 {
-	return (ft_split(argv, ' '));
+	t_env	*var;
+	char	**paths;
+
+	var = find_env_var(env_list, "PATH");
+	if (!var || !var->value)
+		return (NULL);
+	paths = ft_split(var->value, ':');
+	return (paths);
 }
 
 /**

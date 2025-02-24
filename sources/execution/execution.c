@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:50 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:40:59 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,14 @@ t_env	*create_env_node(const char *name, const char *value)
 		new_node->value = NULL;
 	new_node->next = NULL;
 	return (new_node);
+}
+
+int	count_tokens(char **arr)
+{
+	int	cnt;
+
+	cnt = 0;
+	while (arr && arr[cnt])
+		cnt++;
+	return (cnt);
 }

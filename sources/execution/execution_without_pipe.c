@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:48 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:41:41 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,11 +144,9 @@ int	exec_external_no_pipe(t_command *commands)
 	char	**args;
 	char	*path;
 
-	path = true_path(commands->command, environ);
+	path = true_path(commands->command, commands->env_list);
 	if (!path)
-	{
 		return (SHELL_CONTINUE);
-	}
 	args = build_execve_args(commands);
 	if (!args)
 	{

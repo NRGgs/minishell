@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 14:35:07 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:41:14 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	free_2d_array(char **arr)
  *
  * @return A duplicated string with the full path, or NULL if not found.
  */
-char	*find_path(char *command, char **env)
+char	*find_path(char *command, t_env *env_list)
 {
 	struct stat	st;
 
@@ -118,19 +118,19 @@ char	*find_path(char *command, char **env)
 		else
 			return (NULL);
 	}
-	return (true_path(command, env));
+	return (true_path(command, env_list));
 }
 
-/**
- * @brief Searches for a command in the PATH directories.
- *
- * @param argv The command name.
- *
- * @param env The environment array.
- *
- * @return A duplicated full path if found, or NULL.
- */
-char	*true_path(char *argv, char **env)
+// /**
+//  * @brief Searches for a command in the PATH directories.
+//  *
+//  * @param argv The command name.
+//  *
+//  * @param env The environment array.
+//  *
+//  * @return A duplicated full path if found, or NULL.
+//  */
+char	*true_path(char *argv, t_env *env_list)
 {
 	char	*check_exec;
 	char	**res_split;
@@ -139,7 +139,14 @@ char	*true_path(char *argv, char **env)
 	check_exec = check_argv_executable(argv);
 	if (check_exec)
 		return (check_exec);
-	res_split = split_paths(env);
-	args = split_args(argv);
+	res_split = split_paths_env(env_list);
+	if (!res_split)
+		return (NULL);
+	args = split_args_with_prepare(argv, env_list);
+	if (!args)
+	{
+		free_2d_array(res_split);
+		return (NULL);
+	}
 	return (search_in_paths(res_split, args));
 }
