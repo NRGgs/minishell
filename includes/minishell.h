@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 11:06:26 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:31:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct s_variable
 *                             Function Prototypes                             *
 \*****************************************************************************/
 
-/* --------------- Prepare_arg ----------------------------------------------*/
 /* prepare */
 int			prepare_arg(t_env *env_list, char **arg);
 
@@ -123,7 +122,6 @@ int			update_quotes(char c, char **new_str, int *j,
 bool		quote_backslash_handler(char **str, char **new_str,
 				int *i, int *j);
 
-/* --------------- tokenize -------------------------------------------------*/
 /* split */
 char		**parse_split(char *s);
 

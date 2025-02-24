@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:01:53 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/21 13:44:02 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:32:36 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param fn        Filename.
  * @param redirect  Redirection type (">", ">>", "<").
  * @param last      Linked list of commands.
- * @param place     Place of 'redirect' in relation to the command (AFTER / BEFORE).
+ * @param place     Place of 'redirect' in relation to the command.
  *
  *	@return	SUCCESS (1) / FAIL (0).
  */
@@ -74,7 +74,7 @@ char	*join_strings(char *str, char *temp, size_t size)
  * @param fn        Filename.
  * @param redirect  Redirection type (">", ">>", "<").
  * @param last      Linked list of commands.
- * @param place     Place of 'redirect' in relation to the command (AFTER / BEFORE).
+ * @param place     Place of 'redirect' in relation to the command.
  *
  * @return SUCCESS (1) / FAIL (0).
  */

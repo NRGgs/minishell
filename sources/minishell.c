@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/24 11:21:41 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:33:59 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,6 @@ char	*read_input(void)
 	return (input);
 }
 
-static void	print_command(t_command *cmd)
-{
-	printf("Command: %s\n", (cmd->command) ? cmd->command : "NULL");
-	printf("Options: %s\n", (cmd->options) ? cmd->options : "NULL");
-	printf("Pattern: %s\n", (cmd->pattern) ? cmd->pattern : "NULL");
-	printf("Input Type: %d\n", cmd->in_type);
-	printf("Output Type: %d\n", cmd->out_type);
-	printf("Input: %s\n", (cmd->input) ? cmd->input : "NULL");
-	printf("Output: %s\n", (cmd->output) ? cmd->output : "NULL");
-	printf("Environment List:\n");
-	printf("-----\n");
-}
-static void	print_commands(t_command *commands)
-{
-	while (commands)
-	{
-		print_command(commands);
-		commands = commands->next;
-	}
-}
 static int	parse_and_exec(char *input, t_env *env_list)
 {
 	t_command	*commands;
