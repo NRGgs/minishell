@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/24 11:20:52 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:21:41 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,14 @@ static void	noninteractive_mode(t_env *my_env_list, int argc, char *argv[])
 
 	if (argc == 1)
 		return ;
-	if (argc > 1)
+	if (ft_strcmp(argv[1], "-c") != 0 || argc == 2)
 	{
-		if (ft_strcmp(argv[1], "-c") != 0 || argc == 2)
-		{
-			if (ft_strcmp(argv[1], "-c") != 0)
-				set_error("Invalid option", MAJOR);
-			else
-				set_error("-c: option requires an argument", MAJOR);
-			clear_env_list(my_env_list);
-			exit(g_exit_status);
-		}
+		if (ft_strcmp(argv[1], "-c") != 0)
+			set_error("Invalid option", MAJOR);
+		else
+			set_error("-c: option requires an argument", MAJOR);
+		clear_env_list(my_env_list);
+		exit(g_exit_status);
 	}
 	input = ft_strdup(argv[2]);
 	if (!input)
