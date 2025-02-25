@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:41:14 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:22:18 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,15 +121,15 @@ char	*find_path(char *command, t_env *env_list)
 	return (true_path(command, env_list));
 }
 
-// /**
-//  * @brief Searches for a command in the PATH directories.
-//  *
-//  * @param argv The command name.
-//  *
-//  * @param env The environment array.
-//  *
-//  * @return A duplicated full path if found, or NULL.
-//  */
+/**
+ * @brief Searches for a command in the PATH directories.
+ *
+ * @param argv The command name.
+ *
+ * @param env The environment array.
+ *
+ * @return A duplicated full path if found, or NULL.
+ */
 char	*true_path(char *argv, t_env *env_list)
 {
 	char	*check_exec;
@@ -141,7 +141,10 @@ char	*true_path(char *argv, t_env *env_list)
 		return (check_exec);
 	res_split = split_paths_env(env_list);
 	if (!res_split)
+	{
+		f_error();
 		return (NULL);
+	}
 	args = split_args_with_prepare(argv, env_list);
 	if (!args)
 	{
