@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 19:05:10 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/25 12:31:24 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,40 @@ typedef struct s_variable
 	struct s_variable	*next;
 }						t_variable;
 
+/* Enum for token types */
+typedef enum e_token_type
+{
+	E_NONE,
+	E_COMMAND,
+	E_OPTION,
+	E_ARGUMENT,
+	E_REDIRECTION,
+	E_PIPE,
+	E_FILENAME
+}	t_token_type;
+
+/* Singly linked list. Stores all tokens */
+typedef struct s_token
+{
+	char			*token;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
+
 /*****************************************************************************\
 *                             Function Prototypes                             *
 \*****************************************************************************/
+t_command	*parse_input(char *input);
+
+
+t_token	*token_new(char *word, t_token_type type);
+void	token_add_back(t_token **tokens, t_token *new);
+t_token	*previous_token(t_token *tokens, t_token *current);
+void	clean_tokens(t_token **tokens);
+
+
+
+
 
 /* prepare */
 int			prepare_arg(t_env *env_list, char **arg);

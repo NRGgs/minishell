@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_utils_2.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 15:16:56 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 15:27:15 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   split_utils_2.c                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/18 15:16:56 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/25 12:19:31 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	skip_spaces(char **s)
-{
-	while (**s == ' ')
-		(*s)++;
-}
+// void	skip_spaces(char **s)
+// {
+// 	while (**s == ' ')
+// 		(*s)++;
+// }
 
 int	is_escaped(char **s)
 {

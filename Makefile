@@ -30,16 +30,7 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(TKN_DIR)/split_2.c \
 		$(SRC_DIR)/$(TKN_DIR)/split_utils.c \
 		$(SRC_DIR)/$(TKN_DIR)/split_utils_2.c \
-		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_checks.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_clean.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_cmds.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_redirect.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_var.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_string.c \
-		$(SRC_DIR)/$(PARSE_DIR)/parse_string_utils.c \
-		$(SRC_DIR)/$(PARSE_DIR)/redirections.c \
+		$(SRC_DIR)/$(TKN_DIR)/tokenize.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_1.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_2.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_3.c \
@@ -58,7 +49,9 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(BLT_DIR)/unset.c \
 		$(SRC_DIR)/$(MEM_DIR)/free.c \
 		$(SRC_DIR)/$(MEM_DIR)/custom_variables.c \
-		$(SRC_DIR)/$(MEM_DIR)/commands.c
+		$(SRC_DIR)/$(MEM_DIR)/commands.c \
+		$(SRC_DIR)/$(MEM_DIR)/tokens.c \
+		$(SRC_DIR)/$(PARSE_DIR)/necessary.c
 
 OBJ_DIR = objects
 # OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -104,6 +97,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/$(BLT_DIR)/%.c
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(MEM_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+
+$(OBJ_DIR)/%.o: nrgtokenizing/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
