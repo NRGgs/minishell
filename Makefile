@@ -47,7 +47,8 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(MEM_DIR)/custom_variables.c \
 		$(SRC_DIR)/$(MEM_DIR)/commands.c \
 		$(SRC_DIR)/$(MEM_DIR)/tokens.c \
-		$(SRC_DIR)/$(PARSE_DIR)/necessary.c
+		$(SRC_DIR)/$(PARSE_DIR)/necessary.c \
+		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c
 
 OBJ_DIR = objects
 # OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

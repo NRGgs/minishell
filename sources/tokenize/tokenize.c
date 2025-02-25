@@ -213,6 +213,12 @@ int	set_filename(t_command **cmd, char *filename)
 		(*cmd)->input = word;
 	else if ((*cmd)->out_type == TEXTFILE)
 		(*cmd)->output = word;
+	else if ((*cmd)->in_type == HERE_DOC)
+	{
+		(*cmd)->input = word;
+		if (here_doc_redirection(word, cmd) == FAIL)
+			return (FAIL);
+	}
 	return (SUCCESS);
 }
 
@@ -336,7 +342,6 @@ t_command	*get_commands(t_token *tokens)
 	}
 	return (commands);
 }
-
 
 
 

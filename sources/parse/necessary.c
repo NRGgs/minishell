@@ -6,7 +6,7 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/02/25 12:36:05 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 14:50:39 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/25 15:00:58 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,6 @@ bool	valid_char(char c)
 		|| (c >= 48 && c <= 57))
 		return (true);
 	return (false);
-}
-
-/**
- * Restores stdin to its original file descriptor.
- *
- * @param stdin_backup file descriptor to restore
- * @param input string to free
- * @return SUCCESS (1)
- */
-int	restore_stdin(int stdin_backup, char **input)
-{
-	dup2(stdin_backup, STDIN_FILENO);
-	close(stdin_backup);
-	free_null((void **)input);
-	return (SUCCESS);
 }
 
 /**
