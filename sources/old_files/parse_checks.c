@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_checks.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 14:04:52 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 11:11:41 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_checks.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/03 14:04:52 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/25 12:30:14 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,6 @@ bool	is_special(char *command)
 		|| ft_strncmp(command, "env", 4) == 0
 		|| ft_strncmp(command, "exit", 5) == 0)
 		return (true);
-	return (false);
-}
-
-/**
- * @brief Check if the string is a redirect.
- *
- * @param str The string to be checked.
- * @return true if the string is a redirect, false otherwise.
- */
-bool	is_redirect(char *str)
-{
-	if (ft_strcmp(str, ">") == 0 || ft_strcmp(str, ">>") == 0
-		|| ft_strcmp(str, "<") == 0 || ft_strcmp(str, "<<") == 0
-		|| ft_strcmp(str, "|") == 0)
-	{
-		return (true);
-	}
 	return (false);
 }
 
