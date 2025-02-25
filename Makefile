@@ -26,10 +26,6 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(PREP_DIR)/prepare.c \
 		$(SRC_DIR)/$(PREP_DIR)/quotes.c \
 		$(SRC_DIR)/$(PREP_DIR)/variables.c \
-		$(SRC_DIR)/$(TKN_DIR)/split.c \
-		$(SRC_DIR)/$(TKN_DIR)/split_2.c \
-		$(SRC_DIR)/$(TKN_DIR)/split_utils.c \
-		$(SRC_DIR)/$(TKN_DIR)/split_utils_2.c \
 		$(SRC_DIR)/$(TKN_DIR)/tokenize.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_1.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_2.c \
