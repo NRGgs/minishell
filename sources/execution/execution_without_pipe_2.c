@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:46 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:26:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,27 @@
  */
 int	execution_without_pipe(t_command *commands)
 {
-	if (!commands || !commands->command)
+	int	backup_in;
+	int	backup_out;
+
+	if (!commands)
 	{
 		ft_putstr_fd("Error: Invalid command structure.\n", 2);
+		return (SHELL_CONTINUE);
+	}
+	if (!commands->command)
+	{
+		if (commands->input || commands->output)
+		{
+			backup_in = dup(STDIN_FILENO);
+			backup_out = dup(STDOUT_FILENO);
+			if (process_redirections(commands) == ERROR)
+			{
+				restore_fds(backup_in, backup_out);
+				return (SHELL_CONTINUE);
+			}
+			restore_fds(backup_in, backup_out);
+		}
 		return (SHELL_CONTINUE);
 	}
 	if (is_builtin(commands->command))
