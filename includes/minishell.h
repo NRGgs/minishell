@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/25 12:31:24 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/02/25 16:04:04 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,17 +121,47 @@ typedef struct s_token
 /*****************************************************************************\
 *                             Function Prototypes                             *
 \*****************************************************************************/
+
+// TEMP ------------------------------------
+bool		valid_char(char c);
+char		*read_till_quotes(char delimiter, char **pattern);
+
+/* signal.c */
+void		check_signals(void);
+void		signal_heredoc(int signum);
+void		set_error(char *error_msg, int error_code);
+
+/* --------------- Parse --------------------------------------------------- */
+
+/* parse.c */
 t_command	*parse_input(char *input);
 
+/* assign.c */
+int			assign_token(t_command **cmd, t_token **tokens);
 
-t_token	*token_new(char *word, t_token_type type);
-void	token_add_back(t_token **tokens, t_token *new);
-t_token	*previous_token(t_token *tokens, t_token *current);
-void	clean_tokens(t_token **tokens);
+/* get_commands.c */
+t_command	*get_commands(t_token *tokens);
 
+/* heredoc.c */
+int			here_doc_redirection(char *delimiter, t_command **last);
+int			restore_stdin(int stdin_backup, char **input);
 
+/* --------------- Tokenize ------------------------------------------------ */
 
+/* tokenize */
+t_token		*tokenize(char *str);
 
+/* word_length.c */
+size_t		next_word_length(char *str);
+
+/* utils.c */
+void		skip_spaces(char **s);
+bool		skip_escapes(char *s, size_t *len, bool escaped);
+bool		is_delimiter(char *s, bool escaped);
+bool		is_redirect(char *s);
+bool		is_option(char *s);
+
+/* --------------- Expand -------------------------------------------------- */
 
 /* prepare */
 int			prepare_arg(t_env *env_list, char **arg);
@@ -153,95 +183,26 @@ int			update_quotes(char c, char **new_str, int *j,
 bool		quote_backslash_handler(char **str, char **new_str,
 				int *i, int *j);
 
-/* split */
-char		**parse_split(char *s);
-
-/* split_2 */
-int			get_word_count(char *s);
-char		**allocate_words(char *s, char **result);
-char		**split_words(char *s, char **result);
-
-/* split_utils */
-int			parse_quote(char **s);
-void		parse_quoted_string(char **s, char *result, int *i);
-int			allocate_next_word(int *nth_word, int *length,
-				char **result);
-
-/* split_utils_2 */
-void		skip_spaces(char **s);
-int			is_escaped(char **s);
-void		update_escape(bool *escaped, char c);
-void		check_escapes(bool *escaped, char **s, int *length);
-
-/* minishell.c */
-void		set_error(char *error_msg, int error_code);
-
-/* free.c */
-void		free_null(void **ptr);
-
-/* signal.c */
-void		check_signals(void);
-void		signal_heredoc(int signum);
-
-/* parse.c */
-t_command	*parse_user_input(char *input);
-
-/* parse_checks.c */
-bool		is_special(char *command);
-bool		is_redirect(char *str);
-int			is_command(char *cmd);
-bool		options_possible(char *command);
-int			check_path(char *cmd, char *path);
-
-/* parse_split.c */
-char		**parse_split(char *s);
-
-/* parse_string.c */
-int			parse_string(char **input, int *i, char **pattern,
-				char quote);
-
-/* parse_string_utils.c */
-char		contains_quote(char *str);
-int			n_chars_till_quote(char **input, int j, char quote);
-char		*read_till_quotes(char delimiter, char **pattern);
-
-/* parse_cmds.c */
-int			parse_command(char **input, t_command **cmds, int *i);
+/* --------------- Memory -------------------------------------------------- */
 
 /* commands.c */
 t_command	*cmd_new(char *command, char *options);
 t_command	*cmd_last(t_command *cmds);
 void		cmd_add_back(t_command **cmds, t_command *new_cmd);
+void		clean_commands(t_command **cmds);
 
-/* parse_var.c */
-bool		is_variable(char *str);
-bool		valid_char(char c);
-int			parse_variable(char *str, t_variable **vars);
+/* tokens.c */
+t_token		*token_new(char *word, t_token_type type);
+void		token_add_back(t_token **tokens, t_token *new);
+t_token		*previous_token(t_token *tokens, t_token *current);
+void		clean_tokens(t_token **tokens);
 
-/* variables.c */
-t_variable	*var_new(char *name, char *value);
-t_variable	*var_last(t_variable *vars);
-void		var_add_back(t_variable **vars, t_variable *new_var);
-t_variable	*var_find(t_variable *vars, char *name);
-
-/* parse_redirect.c */
-int			parse_redirect(char **input, t_command **cmds, int *i,
-				int command_index);
-
-/* redirections.c */
-int			textfile_redirection(char *fn, char *redirect,
-				t_command **last, int place);
-int			string_redirection(char **input, t_command **last,
-				int *i);
-
-/* heredoc.c */
-int			here_doc_redirection(char *delimiter, t_command **last);
-int			restore_stdin(int stdin_backup, char **input);
-
-/* parse_clean.c */
+/* free.c */
+void		free_null(void **ptr);
 void		clean_2d_array(char **array);
 void		clean_variables(t_variable **vars);
-void		clean_commands(t_command **cmds);
+
+/* --------------- Execute ------------------------------------------------- */
 
 /* builtins.c */
 int			is_builtin(char *command);

@@ -9,24 +9,23 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # Source files and object files
 SRC_DIR = sources
-PREP_DIR = prepare_arg
+EXP_DIR = expand
 TKN_DIR = tokenize
 PARSE_DIR = parse
-EXE_DIR = execution
-BLT_DIR = execution/builtins
+EXE_DIR = execute
+BLT_DIR = execute/builtins
 MEM_DIR = memory
 SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/signal.c \
-		$(SRC_DIR)/find_path.c \
-		$(SRC_DIR)/redirect.c \
-		$(SRC_DIR)/find_path_2.c \
-		$(SRC_DIR)/init_env_list.c \
-		$(SRC_DIR)/build_execve_args.c \
-		$(SRC_DIR)/$(PREP_DIR)/backslashes.c \
-		$(SRC_DIR)/$(PREP_DIR)/prepare.c \
-		$(SRC_DIR)/$(PREP_DIR)/quotes.c \
-		$(SRC_DIR)/$(PREP_DIR)/variables.c \
-		$(SRC_DIR)/$(TKN_DIR)/tokenize.c \
+		$(SRC_DIR)/$(EXP_DIR)/backslashes.c \
+		$(SRC_DIR)/$(EXP_DIR)/prepare.c \
+		$(SRC_DIR)/$(EXP_DIR)/quotes.c \
+		$(SRC_DIR)/$(EXP_DIR)/variables.c \
+		$(SRC_DIR)/$(EXE_DIR)/find_path.c \
+		$(SRC_DIR)/$(EXE_DIR)/redirect.c \
+		$(SRC_DIR)/$(EXE_DIR)/find_path_2.c \
+		$(SRC_DIR)/$(EXE_DIR)/init_env_list.c \
+		$(SRC_DIR)/$(EXE_DIR)/build_execve_args.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_1.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_2.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_3.c \
@@ -48,7 +47,13 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(MEM_DIR)/commands.c \
 		$(SRC_DIR)/$(MEM_DIR)/tokens.c \
 		$(SRC_DIR)/$(PARSE_DIR)/necessary.c \
-		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c
+		$(SRC_DIR)/$(PARSE_DIR)/assign.c \
+		$(SRC_DIR)/$(PARSE_DIR)/get_commands.c \
+		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse.c \
+		$(SRC_DIR)/$(TKN_DIR)/tokenize.c \
+		$(SRC_DIR)/$(TKN_DIR)/utils.c \
+		$(SRC_DIR)/$(TKN_DIR)/word_length.c
 
 OBJ_DIR = objects
 # OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
