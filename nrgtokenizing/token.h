@@ -1,33 +1,30 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-
 #define FAIL 0
 #define SUCCESS 1
 
-// typedef struct s_command
-// {
-// 	char				*command;
-// 	char				*options;
-// 	char				*pattern;
-// 	int					in_type;
-// 	int					out_type;
-// 	char				*input;
-// 	char				*output;
-// 	struct s_command	*next;
-// 	struct s_env		*env_list;
-// }						t_command;
-
 typedef enum e_token_type
 {
+	NONE,
 	TOKEN_ERROR,
 	COMMAND,
 	OPTION,
-	PATTERN,
+	ARGUMENT,
 	REDIRECTION,
 }	t_token_type;
 
+typedef struct s_token
+{
+	char			*token;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
 
-char	**tokenize(char *str);
+t_token	*tokenize(char *str);
+
+t_token	*token_new(char *word, t_token_type type);
+void	token_add_back(t_token **tokens, t_token *new);
+void	clean_tokens(t_token **tokens);
 
 #endif

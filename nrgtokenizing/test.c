@@ -7,7 +7,10 @@ int main()
 {
 	test_stuff("echo Hello World");
 	test_stuff("echo abc | piped");
+	test_stuff("echo abc |piped");
+	test_stuff("echo abc| piped");
 	test_stuff("echo abc \\|piped | piped");
+	test_stuff("echo abc \\\\|piped | piped");
 	test_stuff("echo <<HEREDOCTEST");
 	test_stuff("echo <<HEREDOCTEST | piped");
 	test_stuff("echo $VAR");
@@ -16,6 +19,8 @@ int main()
 	test_stuff("echo hello >> test.txt");
 	test_stuff("echo hello >>test.txt");
 	test_stuff("echo hello>test.txt");
+
+
 	// test_stuff("echo \"Hello World\"");
 	// test_stuff("ls -l");
 	// test_stuff("cat -e -t -v file");
@@ -29,19 +34,13 @@ int main()
 void	test_stuff(char *cmd)
 {
 	char *str = ft_strdup(cmd);
-	char **tokens = tokenize(str);
-	int i = 0;
-	while (tokens[i])
+	t_token *tokens = tokenize(str);
+	t_token *current = tokens;
+	while (current != NULL)
 	{
-		printf("[%s]\n", tokens[i]);
-		i++;
+		printf("[%s] ", current->token);
+		current = current->next;
 	}
-	i = 0;
-	while (tokens[i])
-	{
-		free(tokens[i]);
-		i++;
-	}
-	free(tokens);
-	free(str);
+	printf("\n");
+	clean_tokens(&tokens);
 }
