@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/21 12:44:10 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   commands.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/02/25 14:50:42 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,29 @@ void	cmd_add_back(t_command **cmds, t_command *new_cmd)
 		last = cmd_last(*cmds);
 		last->next = new_cmd;
 	}
+}
+
+/**
+ * @brief Clean the commands linked list
+ *
+ * @param cmds The linked list to clean
+ */
+void	clean_commands(t_command **cmds)
+{
+	t_command	*current;
+	t_command	*next;
+
+	current = *cmds;
+	while (current != NULL)
+	{
+		next = current->next;
+		free_null((void **)&current->command);
+		free_null((void **)&current->options);
+		free_null((void **)&current->input);
+		free_null((void **)&current->output);
+		free_null((void **)&current->pattern);
+		free(current);
+		current = next;
+	}
+	*cmds = NULL;
 }
