@@ -219,24 +219,24 @@ int	set_filename(t_command **cmd, char *filename)
 	return (SUCCESS);
 }
 
-int	set_options(t_command **cmd, char *word)
+int	set_argument(char **arg, char *word)
 {
 	char	*temp;
 
-	if ((*cmd)->options == NULL)
+	if (*arg == NULL)
 	{
-		(*cmd)->options = word;
+		*arg = word;
 		return (SUCCESS);
 	}
-	temp = ft_strjoin((*cmd)->options, " ");
+	temp = ft_strjoin(*arg, " ");
 	if (temp == NULL)
 		return (FAIL);
-	free((*cmd)->options);
-	(*cmd)->options = temp;
-	temp = ft_strjoin((*cmd)->options, word);
+	free(*arg);
+	*arg = temp;
+	temp = ft_strjoin(*arg, word);
 	if (temp == NULL)
 		return (FAIL);
-	(*cmd)->options = temp;
+	*arg = temp;
 	return (SUCCESS);
 }
 
@@ -251,11 +251,12 @@ int	allocate_and_assign(t_command **cmd, t_token **tokens)
 		(*cmd)->command = word;
 	else if ((*tokens)->type == E_OPTION)
 	{
-		if (set_options(cmd, word) == FAIL)
+		if (set_argument(&(*cmd)->options, word) == FAIL)
 			return (free(word), FAIL);
 	}
 	else if ((*tokens)->type == E_ARGUMENT)
-		(*cmd)->pattern = word;
+		if (set_argument(&(*cmd)->pattern, word) == FAIL)
+			return (free(word), FAIL);
 	return (SUCCESS);
 }
 
@@ -336,5 +337,33 @@ t_command	*get_commands(t_token *tokens)
 			return (NULL);
 		}
 	}
+	return (commands);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+t_command	*parse_input(char *input)
+{
+	t_token	*tokens;
+	t_command	*commands;
+
+	tokens = tokenize(input);
+	if (tokens == NULL)
+		return (NULL);
+	commands = get_commands(tokens);
+	clean_tokens(&tokens);
 	return (commands);
 }
