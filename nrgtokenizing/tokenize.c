@@ -193,39 +193,148 @@ t_token	*tokenize(char *str)
 
 
 
+void	set_redirection(t_command **cmd, char *redirection)
+{
+	if (ft_strncmp(redirection, ">>", 2) == 0)
+		(*cmd)->out_type = APPEND;
+	else if (ft_strncmp(redirection, "<<", 2) == 0)
+		(*cmd)->in_type = HERE_DOC;
+	else if (redirection[0] == '>')
+		(*cmd)->out_type = TEXTFILE;
+	else if (redirection[0] == '<')
+		(*cmd)->in_type = TEXTFILE;
+}
 
+int	set_filename(t_command **cmd, char *filename)
+{
+	char	*word;
 
-// int	get_command(t_command **cmd, char **str)
-// {
-// 	char	*token;
-// 	int		token_type;
+	word = ft_strndup(filename, ft_strlen(filename));
+	if (word == NULL)
+		return (FAIL);
+	if ((*cmd)->in_type == TEXTFILE)
+		(*cmd)->input = word;
+	else if ((*cmd)->out_type == TEXTFILE)
+		(*cmd)->output = word;
+	return (SUCCESS);
+}
 
-// 	token_type = get_token(str, &token);
-// 	if (token_type == TOKEN_ERROR)
-// 		return (FAIL);
-// 	if (token_type == COMMAND)
-// 		(*cmd)->command = token;
-// 	if (token_type == OPTION)
-// 		(*cmd)->options = token;
-// 	if (token_type == PATTERN)
-// 		(*cmd)->pattern = token;
-// 	if (token_type == REDIRECTION)
-// 		set_redirection(cmd, token);
-// 	return (SUCCESS);
-// }
+int	set_options(t_command **cmd, char *word)
+{
+	char	*temp;
 
-// int	create_command(char **str, t_command **commands)
-// {
-// 	t_command	*cmd;
+	if ((*cmd)->options == NULL)
+	{
+		(*cmd)->options = word;
+		return (SUCCESS);
+	}
+	temp = ft_strjoin((*cmd)->options, " ");
+	if (temp == NULL)
+		return (FAIL);
+	free((*cmd)->options);
+	(*cmd)->options = temp;
+	temp = ft_strjoin((*cmd)->options, word);
+	if (temp == NULL)
+		return (FAIL);
+	(*cmd)->options = temp;
+	return (SUCCESS);
+}
 
-// 	cmd = cmd_new(NULL, NULL);
-// 	if (cmd == NULL)
-// 		return (FAIL);
-// 	if (get_command(&cmd, str) == FAIL)
-// 	{
-// 		clean_commands(&cmd);
-// 		return (FAIL);
-// 	}
-// 	cmd_add_back(commands, cmd);
-// 	return (SUCCESS);
-// }
+int	allocate_and_assign(t_command **cmd, t_token **tokens)
+{
+	char	*word;
+
+	word = ft_strndup((*tokens)->token, ft_strlen((*tokens)->token));
+	if (word == NULL)
+		return (FAIL);
+	if ((*tokens)->type == E_COMMAND)
+		(*cmd)->command = word;
+	else if ((*tokens)->type == E_OPTION)
+	{
+		if (set_options(cmd, word) == FAIL)
+			return (free(word), FAIL);
+	}
+	else if ((*tokens)->type == E_ARGUMENT)
+		(*cmd)->pattern = word;
+	return (SUCCESS);
+}
+
+int	assign_token(t_command **cmd, t_token **tokens)
+{
+	if ((*tokens)->type == E_COMMAND
+		|| (*tokens)->type == E_OPTION
+		|| (*tokens)->type == E_ARGUMENT)
+	{
+		if (allocate_and_assign(cmd, tokens) == FAIL)
+			return (FAIL);
+	}
+	else if ((*tokens)->type == E_REDIRECTION)
+		set_redirection(cmd, (*tokens)->token);
+	else if ((*tokens)->type == E_FILENAME)
+	{
+		if (set_filename(cmd, (*tokens)->token) == FAIL)
+			return (FAIL);
+	}
+	return (SUCCESS);
+}
+
+int	fill_command(t_command **cmd, t_token **tokens)
+{
+	size_t	assignments;
+
+	assignments = 0;
+	while ((*tokens) != NULL)
+	{
+		if ((*tokens)->type == E_PIPE)
+		{
+			if (assignments > 0)
+			{
+				(*cmd)->out_type = PIPE;
+				return (SUCCESS);
+			}
+			(*cmd)->in_type = PIPE;
+		}
+		else
+		{
+			if (assign_token(cmd, tokens) == FAIL)
+				return (FAIL);
+		}
+		*tokens = (*tokens)->next;
+		assignments++;
+	}
+	return (SUCCESS);
+}
+
+int	create_command(t_command **commands, t_token **tokens)
+{
+	t_command	*cmd;
+
+	cmd = cmd_new(NULL, NULL);
+	if (cmd == NULL)
+		return (FAIL);
+	if (fill_command(&cmd, tokens) == FAIL)
+	{
+		clean_commands(commands);
+		return (FAIL);
+	}
+	cmd_add_back(commands, cmd);
+	return (SUCCESS);
+}
+
+t_command	*get_commands(t_token *tokens)
+{
+	t_command	*commands;
+	t_token		*current;
+
+	commands = NULL;
+	current = tokens;
+	while (current != NULL)
+	{
+		if (create_command(&commands, &current) == FAIL)
+		{
+			clean_commands(&commands);
+			return (NULL);
+		}
+	}
+	return (commands);
+}

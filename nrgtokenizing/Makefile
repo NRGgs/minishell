@@ -9,7 +9,9 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # Source files and object files
 SRCS =	$(wildcard *.c) \
-		../sources/memory/commands.c
+		../sources/memory/commands.c \
+		../sources/parse/parse_clean.c \
+		../sources/memory/free.c
 
 OBJ_DIR = objects
 OBJS = $(SRCS:%.c=%.o)
