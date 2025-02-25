@@ -53,9 +53,7 @@ size_t	quote_length(char *str, size_t len)
 	quote = str[len++];
 	while (str[len] != '\0' && str[len] != quote)
 		len++;
-	if (str[len] == '\0')
-		return (len);
-	return (len + 1);
+	return (len);
 }
 
 size_t	length_redirect(char *str)
@@ -82,7 +80,7 @@ size_t	next_word_length(char *str)
 				return (length_redirect(str));
 			return (len);
 		}
-		if (str[len] == '\'' || str[len] == '\"')
+		if ((str[len] == '\'' || str[len] == '\"') && !escaped)
 			len = quote_length(str, len);
 		len++;
 	}
