@@ -87,7 +87,7 @@ size_t	next_word_length(char *str)
 	return (len);
 }
 
-int	get_word(char **str, char **word, t_token_type *token_type)
+int	get_word(char **str, char **word)
 {
 	size_t	len;
 
@@ -98,7 +98,6 @@ int	get_word(char **str, char **word, t_token_type *token_type)
 		return (FAIL);
 	ft_strlcpy(*word, *str, len + 1);
 	*str += len;
-	*token_type = NONE;
 	return (SUCCESS);
 }
 
@@ -106,15 +105,59 @@ int	create_token(char **str, t_token **tokens)
 {
 	t_token			*token;
 	char			*word;
-	t_token_type	token_type;
 
-	if (get_word(str, &word, &token_type) == FAIL)
+	if (get_word(str, &word) == FAIL)
 		return (FAIL);
-	token = token_new(word, token_type);
+	token = token_new(word, E_NONE);
 	if (token == NULL)
 		return (FAIL);
 	token_add_back(tokens, token);
 	return (SUCCESS);
+}
+
+bool	is_redirect(char *s)
+{
+	if (ft_strncmp(s, "<<", 2) == 0
+		|| ft_strncmp(s, ">>", 2) == 0
+		|| *s == '<'
+		|| *s == '>')
+		return (true);
+	return (false);
+}
+
+bool	is_option(char *s)
+{
+	if (*s == '-')
+		return (true);
+	return (false);
+}
+
+void	give_token_types(t_token **tokens)
+{
+	t_token	*current;
+
+	current = *tokens;
+	while (current != NULL)
+	{
+		if (current->type == E_NONE)
+		{
+			if (current == *tokens && !is_redirect(current->token))
+				current->type = E_COMMAND;
+			else if (is_redirect(current->token))
+				current->type = E_REDIRECTION;
+			else if (ft_strcmp(current->token, "|") == 0)
+				current->type = E_PIPE;
+			else if (previous_token(*tokens, current)->type == E_REDIRECTION)
+				current->type = E_FILENAME;
+			else if (previous_token(*tokens, current)->type == E_PIPE)
+				current->type = E_COMMAND;
+			else if (is_option(current->token))
+				current->type = E_OPTION;
+			else
+				current->type = E_ARGUMENT;
+		}
+		current = current->next;
+	}
 }
 
 t_token	*tokenize(char *str)
@@ -133,6 +176,7 @@ t_token	*tokenize(char *str)
 			return (NULL);
 		}
 	}
+	give_token_types(&tokens);
 	free(start);
 	return (tokens);
 }

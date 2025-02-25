@@ -9,10 +9,13 @@ int main()
 	test_stuff("echo abc | piped");
 	test_stuff("echo abc |piped");
 	test_stuff("echo abc| piped");
-	test_stuff("echo abc \\|piped | piped");
+	test_stuff("echo abc\\| not_piped");
+	test_stuff("echo abc\\\\| piped");
+	test_stuff("echo abc \\|not_piped | piped");
+	test_stuff("echo abc \\| piped | piped");
 	test_stuff("echo abc \\\\|piped | piped");
 	test_stuff("echo <<HEREDOCTEST");
-	test_stuff("echo <<HEREDOCTEST | piped");
+	test_stuff("echo<<HEREDOCTEST | piped");
 	test_stuff("echo $VAR");
 	test_stuff("echo \\$VAR");
 	test_stuff("echo hello > test.txt");
@@ -30,6 +33,27 @@ int main()
 	test_stuff("echo Hello World \'Testing   \"   quotes\'");
 
 	test_stuff("echo Hello World \\'Testing    \'my    quotes\'");
+	test_stuff("< file");
+}
+
+void	print_tokentype(t_token_type type)
+{
+	if (type == E_NONE)
+		printf("NONE\t\t");
+	else if (type == E_TOKEN_ERROR)
+		printf("TOKEN_ERROR\t\t");
+	else if (type == E_COMMAND)
+		printf("COMMAND\t\t");
+	else if (type == E_OPTION)
+		printf("OPTION\t");
+	else if (type == E_ARGUMENT)
+		printf("ARGUMENT\t");
+	else if (type == E_REDIRECTION)
+		printf("REDIRECTION\t");
+	else if (type == E_FILENAME)
+		printf("FILENAME\t");
+	else if (type == E_PIPE)
+		printf("PIPE\t\t");
 }
 
 void	test_stuff(char *cmd)
@@ -39,7 +63,8 @@ void	test_stuff(char *cmd)
 	t_token *current = tokens;
 	while (current != NULL)
 	{
-		printf("[%s] ", current->token);
+		print_tokentype(current->type);
+		printf("[%s]\n", current->token);
 		current = current->next;
 	}
 	printf("\n");

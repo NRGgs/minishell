@@ -30,6 +30,18 @@ void	token_add_back(t_token **tokens, t_token *new)
 	current->next = new;
 }
 
+t_token	*previous_token(t_token *tokens, t_token *current)
+{
+	t_token	*previous;
+
+	previous = tokens;
+	while (previous->next != current)
+		previous = previous->next;
+	if (previous == current)
+		return (NULL);
+	return (previous);
+}
+
 void	clean_tokens(t_token **tokens)
 {
 	t_token	*current;
@@ -37,7 +49,6 @@ void	clean_tokens(t_token **tokens)
 
 	if (tokens == NULL || *tokens == NULL)
 		return;
-
 	current = *tokens;
 	while (current != NULL)
 	{
@@ -45,7 +56,7 @@ void	clean_tokens(t_token **tokens)
 		if (current->token != NULL)
 			free(current->token);
 		current->token = NULL;
-		current->type = NONE;
+		current->type = E_NONE;
 		free(current);
 		current = next;
 	}
