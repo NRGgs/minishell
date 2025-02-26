@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 10:57:28 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/26 10:57:57 by nmattos-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 t_token	*token_new(char *word, t_token_type type)
@@ -46,7 +58,7 @@ void	clean_tokens(t_token **tokens)
 	t_token	*next;
 
 	if (tokens == NULL || *tokens == NULL)
-		return;
+		return ;
 	current = *tokens;
 	while (current != NULL)
 	{
