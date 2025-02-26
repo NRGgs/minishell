@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   cmd_parsing.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/25 15:40:45 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 15:50:30 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   get_commands.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:40:45 by nmattos           #+#    #+#             */
+/*   Updated: 2025/02/26 13:08:28 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	create_command(t_command **commands, t_token **tokens);
-static int	fill_command(t_command **cmd, t_token **tokens);
+static int	create_command(t_command **commands, \
+		t_token **tokens, t_token **current);
+static int	fill_command(t_command **cmd, t_token **tokens, t_token **current);
 
 t_command	*get_commands(t_token *tokens)
 {
@@ -24,7 +25,7 @@ t_command	*get_commands(t_token *tokens)
 	current = tokens;
 	while (current != NULL)
 	{
-		if (create_command(&commands, &current) == FAIL)
+		if (create_command(&commands, &tokens, &current) == FAIL)
 		{
 			clean_commands(&commands);
 			return (NULL);
@@ -33,15 +34,16 @@ t_command	*get_commands(t_token *tokens)
 	return (commands);
 }
 
-static int	create_command(t_command **commands, t_token **tokens)
+static int	create_command(t_command **commands, t_token **tokens, t_token **current)
 {
 	t_command	*cmd;
 
 	cmd = cmd_new(NULL, NULL);
 	if (cmd == NULL)
 		return (FAIL);
-	if (fill_command(&cmd, tokens) == FAIL)
+	if (fill_command(&cmd, tokens, current) == FAIL)
 	{
+		cmd_clear(&cmd);
 		clean_commands(commands);
 		return (FAIL);
 	}
@@ -49,14 +51,14 @@ static int	create_command(t_command **commands, t_token **tokens)
 	return (SUCCESS);
 }
 
-static int	fill_command(t_command **cmd, t_token **tokens)
+static int	fill_command(t_command **cmd, t_token **tokens, t_token **current)
 {
 	size_t	assignments;
 
 	assignments = 0;
-	while ((*tokens) != NULL)
+	while ((*current) != NULL)
 	{
-		if ((*tokens)->type == E_PIPE)
+		if ((*current)->type == E_PIPE)
 		{
 			if (assignments > 0)
 			{
@@ -67,10 +69,10 @@ static int	fill_command(t_command **cmd, t_token **tokens)
 		}
 		else
 		{
-			if (assign_token(cmd, tokens) == FAIL)
+			if (assign_token(cmd, tokens, current) == FAIL)
 				return (FAIL);
 		}
-		*tokens = (*tokens)->next;
+		*current = (*current)->next;
 		assignments++;
 	}
 	return (SUCCESS);

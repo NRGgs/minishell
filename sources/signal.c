@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 12:33:27 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:35:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	signal_handler(int signum)
 	if (signum == SIGINT)
 	{
 		g_exit_status = SIGINT_CANCELLATION;
-		printf("\n");
+		printf("m\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -55,6 +55,9 @@ void	signal_heredoc(int signum)
 		dev_null_fd = open("/dev/null", O_RDONLY);
 		dup2(dev_null_fd, STDIN_FILENO);
 		close(dev_null_fd);
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
 	}
 }
 

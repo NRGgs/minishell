@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   assign.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/25 15:48:25 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 16:17:38 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   assign.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:48:25 by nmattos           #+#    #+#             */
+/*   Updated: 2025/02/26 13:12:43 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 static int	allocate_and_assign(t_command **cmd, t_token **tokens);
 static void	set_redirection(t_command **cmd, char *redirection);
-static int	set_filename(t_command **cmd, t_token *tokens);
+static int	set_filename(t_command **cmd, t_token *tokens, t_token **current);
 static int	set_argument(char **arg, char *word);
 
-int	assign_token(t_command **cmd, t_token **tokens)
+int	assign_token(t_command **cmd, t_token **tokens, t_token **current)
 {
-	if ((*tokens)->type == E_COMMAND
-		|| (*tokens)->type == E_OPTION
-		|| (*tokens)->type == E_ARGUMENT)
+	if ((*current)->type == E_COMMAND
+		|| (*current)->type == E_OPTION
+		|| (*current)->type == E_ARGUMENT)
 	{
-		if (allocate_and_assign(cmd, tokens) == FAIL)
+		if (allocate_and_assign(cmd, current) == FAIL)
 			return (FAIL);
 	}
-	else if ((*tokens)->type == E_REDIRECTION)
-		set_redirection(cmd, (*tokens)->token);
-	else if ((*tokens)->type == E_FILENAME)
+	else if ((*current)->type == E_REDIRECTION)
+		set_redirection(cmd, (*current)->token);
+	else if ((*current)->type == E_FILENAME)
 	{
-		if (set_filename(cmd, *tokens) == FAIL)
+		if (set_filename(cmd, *tokens, current) == FAIL)
 			return (FAIL);
 	}
 	return (SUCCESS);
@@ -68,23 +68,30 @@ static void	set_redirection(t_command **cmd, char *redirection)
 		(*cmd)->in_type = TEXTFILE;
 }
 
-static int	set_filename(t_command **cmd, t_token *tokens)
+static int	set_filename(t_command **cmd, t_token *tokens, t_token **current)
 {
 	char	*word;
 
-	word = ft_strndup(tokens->token, ft_strlen(tokens->token));
-	if (word == NULL)
-		return (FAIL);
 	if ((*cmd)->in_type == TEXTFILE
-		&& previous_token(tokens, tokens)->type == E_REDIRECTION)
+		&& previous_token(tokens, *current)->type == E_REDIRECTION)
+	{
+		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
+		if (word == NULL)
+			return (FAIL);
 		(*cmd)->input = word;
+	}
 	else if ((*cmd)->in_type == HERE_DOC)
 	{
-		if (here_doc_redirection(word, cmd) == FAIL)
+		if (here_doc_redirection((*current)->token, cmd) == FAIL)
 			return (FAIL);
 	}
 	else if ((*cmd)->out_type == TEXTFILE)
+	{
+		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
+		if (word == NULL)
+			return (FAIL);
 		(*cmd)->output = word;
+	}
 	return (SUCCESS);
 }
 

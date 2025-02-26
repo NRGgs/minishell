@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/25 16:04:04 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/26 13:14:43 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,6 @@ typedef struct s_command
 	struct s_env		*env_list;
 }						t_command;
 
-/*	Singly linked list. Stores all variables. */
-typedef struct s_variable
-{
-	char				*name;
-	char				*value;
-	struct s_variable	*next;
-}						t_variable;
-
 /* Enum for token types */
 typedef enum e_token_type
 {
@@ -137,7 +129,7 @@ void		set_error(char *error_msg, int error_code);
 t_command	*parse_input(char *input);
 
 /* assign.c */
-int			assign_token(t_command **cmd, t_token **tokens);
+int			assign_token(t_command **cmd, t_token **tokens, t_token **current);
 
 /* get_commands.c */
 t_command	*get_commands(t_token *tokens);
@@ -189,7 +181,6 @@ bool		quote_backslash_handler(char **str, char **new_str,
 t_command	*cmd_new(char *command, char *options);
 t_command	*cmd_last(t_command *cmds);
 void		cmd_add_back(t_command **cmds, t_command *new_cmd);
-void		clean_commands(t_command **cmds);
 
 /* tokens.c */
 t_token		*token_new(char *word, t_token_type type);
@@ -200,7 +191,8 @@ void		clean_tokens(t_token **tokens);
 /* free.c */
 void		free_null(void **ptr);
 void		clean_2d_array(char **array);
-void		clean_variables(t_variable **vars);
+void		cmd_clear(t_command **cmd);
+void		clean_commands(t_command **cmds);
 
 /* --------------- Execute ------------------------------------------------- */
 

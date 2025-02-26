@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   free.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/05 15:40:40 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/25 15:55:28 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/26 13:08:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,36 @@ void	clean_2d_array(char **array)
 }
 
 /**
- * @brief Clean the variables linked list
+ * @brief Clean the commands linked list
  *
- * @param vars The linked list to clean
+ * @param cmds The linked list to clean
  */
-void	clean_variables(t_variable **vars)
+void	clean_commands(t_command **cmds)
 {
-	t_variable	*current;
-	t_variable	*next;
+	t_command	*current;
+	t_command	*next;
 
-	current = *vars;
+	current = *cmds;
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->name);
-		free(current->value);
-		free(current);
+		cmd_clear(&current);
 		current = next;
 	}
-	*vars = NULL;
+	*cmds = NULL;
+}
+
+/**
+ * @brief Clean a single command
+ *
+ * @param cmd The command to clean
+ */
+void	cmd_clear(t_command **cmd)
+{
+	free_null((void **)&(*cmd)->command);
+	free_null((void **)&(*cmd)->options);
+	free_null((void **)&(*cmd)->input);
+	free_null((void **)&(*cmd)->output);
+	free_null((void **)&(*cmd)->pattern);
+	free_null((void **)cmd);
 }

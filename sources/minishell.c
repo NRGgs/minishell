@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 12:29:43 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
+/*   Updated: 2025/02/26 13:03:01 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*read_input(void)
 	}
 	ft_strlcat(dir, " $ ", 1024);
 	prompt = ft_strjoin(username, ft_strrchr(dir, '/'));
+	check_signals();
 	input = readline(prompt);
 	free(prompt);
 	if (input == NULL)
@@ -117,7 +118,6 @@ int	main(int argc, char *argv[])
 
 	my_env_list = init_env_list();
 	noninteractive_mode(my_env_list, argc, argv);
-	check_signals();
 	run_commands(my_env_list);
 	clear_history();
 	rl_clear_history();

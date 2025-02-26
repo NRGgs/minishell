@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/12 12:10:41 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/02/25 16:10:35 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/02/26 13:13:03 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	read_here_doc(char *delimiter, char **input)
 	signal(SIGINT, signal_heredoc);
 	while (1)
 	{
-		buffer = readline("heredoc> ");
+		buffer = readline("> ");
 		if (buffer == NULL)
 			return (restore_stdin(stdin_backup, input));
 		if (ft_strcmp(buffer, delimiter) == 0)
@@ -101,5 +101,5 @@ int	restore_stdin(int stdin_backup, char **input)
 	dup2(stdin_backup, STDIN_FILENO);
 	close(stdin_backup);
 	free_null((void **)input);
-	return (SUCCESS);
+	return (FAIL);
 }
