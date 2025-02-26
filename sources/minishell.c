@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/26 13:03:01 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:15:47 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static void	run_commands(t_env *my_env_list)
 		input = read_input();
 		if (!input)
 			return ;
-		add_history(input);
+		if (ft_strlen(input) > 0)
+			add_history(input);
 		ret = parse_and_exec(input, my_env_list);
 		if (ret == SHELL_EXIT)
 			return ;

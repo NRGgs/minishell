@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 13:13:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:12:26 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	(*last)->pattern = input;
 	return (SUCCESS);
 }
+
+// int	custom_getc(FILE *stream)
+// {
+// 	int	c;
+
+// 	c = getc(stream);
+// 	if (c == EOF)
+// 	{
+// 		rl_done = 1;
+// 	}
+// }
 
 /**
  * Reads input from user until delimiter is found.
