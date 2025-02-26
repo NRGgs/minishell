@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_path_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:18:16 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:44:11 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Checks if an absolute command path is executable.

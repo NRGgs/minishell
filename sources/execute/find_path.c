@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/25 12:22:18 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:43:57 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /**
  * @brief Appends a '/' and the command to each directory in the array.

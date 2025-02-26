@@ -78,7 +78,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/$(PREP_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$(EXP_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
@@ -99,10 +99,6 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/$(BLT_DIR)/%.c
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(MEM_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
-
-$(OBJ_DIR)/%.o: nrgtokenizing/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
 

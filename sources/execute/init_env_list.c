@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:00:24 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/17 13:56:22 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:44:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 extern char	**environ;
 

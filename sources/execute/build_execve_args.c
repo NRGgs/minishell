@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   build_execve_args.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:25:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:40:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/26 10:44:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	copy_tokens(char **src, char **dest, int *j)
 {
