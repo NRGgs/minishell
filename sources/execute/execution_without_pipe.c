@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:41:52 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:35:58 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	handle_child_process(t_command *commands, char *path, char *args[])
  *
  * @param args The argument vector for execve.
  */
-void	execute_command(t_command *commands, char *path, char *args[], t_shell *shell)
+void	execute_command(t_command *commands, char *path,
+			char *args[], t_shell *shell)
 {
 	pid_t	pid;
 	int		status;

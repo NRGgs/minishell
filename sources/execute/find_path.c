@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:15:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:34:52 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	calc_length(char const *s)
 		len++;
 	return (len);
 }
-
 
 char	*ft_strjoin_my(char const *s1, char const *s2)
 {

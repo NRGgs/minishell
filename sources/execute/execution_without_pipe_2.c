@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:01:15 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:35:36 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 			backup_in = dup(STDIN_FILENO);
 			backup_out = dup(STDOUT_FILENO);
 			if (process_redirections(commands) == ERROR)
-			{
-				restore_fds(backup_in, backup_out);
-				return (SHELL_CONTINUE);
-			}
+				return (restore_fds(backup_in, backup_out),
+					SHELL_CONTINUE);
 			restore_fds(backup_in, backup_out);
 		}
 		return (SHELL_CONTINUE);
