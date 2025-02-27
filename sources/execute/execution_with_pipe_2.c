@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_with_pipe_2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:19:16 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@ extern char	**environ;
  *
  * @param path The path to the executable.
  */
-void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path)
+void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path, t_shell *shell)
 {
 	setup_input_output(current, pipe_in, pipe_fd);
-	execute_command_pipe(current, path);
+	execute_command_pipe(current, path, shell);
 }
+
 
 /**
  * @brief Handles the parent branch of a piped command.
@@ -58,7 +59,7 @@ void	handle_parent(int *pipe_fd, int *pipe_in)
  *
  * @return SHELL_CONTINUE upon successful execution.
  */
-int	execution_with_pipe(t_command *commands)
+int	execution_with_pipe(t_command *commands, t_shell *shell)
 {
 	int			pipe_in;
 	t_command	*current;
@@ -67,7 +68,7 @@ int	execution_with_pipe(t_command *commands)
 	current = commands;
 	while (current)
 	{
-		if (process_single_command(current, &pipe_in) == FAIL)
+		if (process_single_command(current, &pipe_in, shell) == FAIL)
 			return (SHELL_CONTINUE);
 		current = current->next;
 	}

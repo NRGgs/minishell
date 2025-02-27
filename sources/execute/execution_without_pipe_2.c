@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/25 13:26:20 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:01:15 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  *
  * @return The shell exit status.
  */
-int	execution_without_pipe(t_command *commands)
+int	execution_without_pipe(t_command *commands, t_shell *shell)
 {
 	int	backup_in;
 	int	backup_out;
@@ -45,6 +45,6 @@ int	execution_without_pipe(t_command *commands)
 		return (SHELL_CONTINUE);
 	}
 	if (is_builtin(commands->command))
-		return (exec_builtin_no_pipe(commands));
-	return (exec_external_no_pipe(commands));
+		return (exec_builtin_no_pipe(commands, shell));
+	return (exec_external_no_pipe(commands, shell));
 }

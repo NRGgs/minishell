@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/26 14:15:47 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:59:52 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*read_input(void)
 	return (input);
 }
 
-static int	parse_and_exec(char *input, t_env *env_list)
+static int	parse_and_exec(char *input, t_env *env_list, t_shell *shell)
 {
 	t_command	*commands;
 	t_command	*tmp;
@@ -63,12 +63,12 @@ static int	parse_and_exec(char *input, t_env *env_list)
 		tmp->env_list = env_list;
 		tmp = tmp->next;
 	}
-	ret = execute_commands(commands);
+	ret = execute_commands(commands, shell);
 	clean_commands(&commands);
 	return (ret);
 }
 
-static void	run_commands(t_env *my_env_list)
+static void	run_commands(t_shell *shell)
 {
 	char	*input;
 	int		ret;
@@ -80,13 +80,13 @@ static void	run_commands(t_env *my_env_list)
 			return ;
 		if (ft_strlen(input) > 0)
 			add_history(input);
-		ret = parse_and_exec(input, my_env_list);
+		ret = parse_and_exec(input, shell->env_list, shell);
 		if (ret == SHELL_EXIT)
 			return ;
 	}
 }
 
-static void	noninteractive_mode(t_env *my_env_list, int argc, char *argv[])
+static void	noninteractive_mode(t_shell *shell, int argc, char *argv[])
 {
 	char	*input;
 
@@ -98,30 +98,31 @@ static void	noninteractive_mode(t_env *my_env_list, int argc, char *argv[])
 			set_error("Invalid option", MAJOR);
 		else
 			set_error("-c: option requires an argument", MAJOR);
-		clear_env_list(my_env_list);
-		exit(g_exit_status);
+		clear_env_list(shell->env_list);
+		exit(shell->exit_status);
 	}
 	input = ft_strdup(argv[2]);
 	if (!input)
 	{
-		clear_env_list(my_env_list);
+		clear_env_list(shell->env_list);
 		set_error("memory allocation error", MAJOR);
-		exit(g_exit_status);
+		exit(shell->exit_status);
 	}
-	parse_and_exec(input, my_env_list);
-	clear_env_list(my_env_list);
-	exit(g_exit_status);
+	parse_and_exec(input, shell->env_list, shell);
+	clear_env_list(shell->env_list);
+	exit(shell->exit_status);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_env		*my_env_list;
+	t_shell	shell;
 
-	my_env_list = init_env_list();
-	noninteractive_mode(my_env_list, argc, argv);
-	run_commands(my_env_list);
+	shell.exit_status = 0;
+	shell.env_list = init_env_list();
+	noninteractive_mode(&shell, argc, argv);
+	run_commands(&shell);
 	clear_history();
 	rl_clear_history();
-	clear_env_list(my_env_list);
-	return (g_exit_status);
+	clear_env_list(shell.env_list);
+	return (shell.exit_status);
 }

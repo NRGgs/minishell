@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:59:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:41:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:22:15 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static int	setup_pipe_if_needed(t_command *current, int pipe_fd[2])
  * @param path The path to the executable.
  */
 static void	child_branch(t_command *current, int *pipe_in, int pipe_fd[2],
-							char *path)
+		char *path, t_shell *shell)
 {
 	if (current->next)
-		handle_child(current, *pipe_in, pipe_fd, path);
+		handle_child(current, *pipe_in, pipe_fd, path, shell);
 	else
 	{
 		if (*pipe_in != STDIN_FILENO)
@@ -68,8 +68,8 @@ static void	child_branch(t_command *current, int *pipe_in, int pipe_fd[2],
 			}
 			close(*pipe_in);
 		}
-		execute_command_pipe(current, path);
-		exit(g_exit_status);
+		execute_command_pipe(current, path, shell);
+		exit(shell->exit_status);
 	}
 }
 
@@ -100,13 +100,13 @@ static void	parent_branch(t_command *current, int *pipe_in, int pipe_fd[2])
  *
  * @return SUCCESS on success, FAIL on failure.
  */
-int	process_single_command(t_command *current, int *pipe_in)
+int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 {
 	char	*path;
 	int		pipe_fd[2];
 	pid_t	pid;
 
-	path = true_path(current->command, current->env_list);
+	path = true_path(current->command, current->env_list, shell);
 	if (current->next && setup_pipe_if_needed(current, pipe_fd) == FAIL)
 		return (free(path), FAIL);
 	pid = fork();
@@ -120,7 +120,7 @@ int	process_single_command(t_command *current, int *pipe_in)
 		return (free(path), FAIL);
 	}
 	else if (pid == 0)
-		child_branch(current, pipe_in, pipe_fd, path);
+		child_branch(current, pipe_in, pipe_fd, path, shell);
 	else
 	{
 		parent_branch(current, pipe_in, pipe_fd);

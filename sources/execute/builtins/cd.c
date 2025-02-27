@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 14:10:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:29:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	cd_home(t_env *env_list)
  *
  * @return 0 on success, non-zero on failure.
  */
-int	cd(t_env *env_list, t_command *command)
+int	cd(t_env *env_list, t_command *command, t_shell *shell)
 {
 	int		exit_code;
 	char	*path;
@@ -101,7 +101,7 @@ int	cd(t_env *env_list, t_command *command)
 	if (exit_code < 0)
 	{
 		fprintf(stderr, "cd: %s: No such file or directory\n", trimmed_path);
-		g_exit_status = 1;
+		shell->exit_status = 1;
 	}
 	free(trimmed_path);
 	return (change_pwd(env_list));

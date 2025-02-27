@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 19:26:53 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:31:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ int	is_builtin(char *command)
  *
  * @return 0 on success, non-zero on failure.
  */
-int	handle_cd(t_command *command)
+int	handle_cd(t_command *command, t_shell *shell)
 {
 	if (command->pattern)
-		return (cd(command->env_list, command));
+		return (cd(command->env_list, command, shell));
 	return (cd_home(command->env_list));
 }
 
-static int	select_builtin(t_command *command)
+static int	select_builtin(t_command *command, t_shell *shell)
 {
 	int	ret;
 
 	if (ft_strncmp(command->command, "cd", 3) == 0)
-		ret = handle_cd(command);
+		ret = handle_cd(command, shell);
 	else if (ft_strncmp(command->command, "echo", 5) == 0)
 		ret = echo(command);
 	else if (ft_strncmp(command->command, "pwd", 4) == 0)
@@ -74,7 +74,7 @@ static int	select_builtin(t_command *command)
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
 		ret = run_unset_builtin(command);
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
-		ret = exit_shell(command->pattern, command);
+		ret = exit_shell(command->pattern, command, shell);
 	else
 	{
 		ft_putstr_fd("Error: Unknown built-in command.\n", 2);
@@ -83,7 +83,7 @@ static int	select_builtin(t_command *command)
 	return (ret);
 }
 
-int	execute_builtin(t_command **cmd_list)
+int	execute_builtin(t_command **cmd_list, t_shell *shell)
 {
 	t_command	*command;
 	int			ret;
@@ -92,12 +92,12 @@ int	execute_builtin(t_command **cmd_list)
 	if (!command || !command->command)
 	{
 		ft_putstr_fd("Error: Invalid command structure.\n", 2);
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return (1);
 	}
-	ret = select_builtin(command);
+	ret = select_builtin(command, shell);
 	if (ret == 0)
-		g_exit_status = 0;
+		shell->exit_status = 0;
 	return (ret);
 }
 

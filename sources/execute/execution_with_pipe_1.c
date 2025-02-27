@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_with_pipe_1.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/21 11:13:38 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:21:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
  * @return SUCCESS on success, ERROR on failure.
  */
 int	create_child_process(t_command *current, int pipe_in,
-		int *pipe_fd, char *path)
+		int *pipe_fd, char *path, t_shell *shell)
 {
 	pid_t	pid;
 
@@ -102,7 +102,7 @@ int	create_child_process(t_command *current, int pipe_in,
 		return (ERROR);
 	}
 	else if (pid == 0)
-		handle_child(current, pipe_in, pipe_fd, path);
+		handle_child(current, pipe_in, pipe_fd, path, shell);
 	else
 		handle_parent(pipe_fd, &pipe_in);
 	return (SUCCESS);

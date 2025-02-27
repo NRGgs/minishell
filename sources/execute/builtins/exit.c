@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 19:16:17 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:30:56 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	handle_exit_arg(char *pattern, t_env *env, int *exit_code)
 	return (check_exit_tokens(tokens, exit_code));
 }
 
-int	exit_shell(char *pattern, t_command *command)
+int	exit_shell(char *pattern, t_command *command, t_shell *shell)
 {
 	int	exit_code;
 	int	ret;
@@ -77,15 +77,15 @@ int	exit_shell(char *pattern, t_command *command)
 		ret = handle_exit_arg(pattern, command->env_list, &exit_code);
 		if (ret != -1)
 		{
-			g_exit_status = exit_code;
+			shell->exit_status = exit_code;
 			return (ret);
 		}
 	}
 	else
 	{
-		exit_code = g_exit_status;
+		exit_code = shell->exit_status;
 	}
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	g_exit_status = exit_code;
+	shell->exit_status = exit_code;
 	return (SHELL_EXIT);
 }

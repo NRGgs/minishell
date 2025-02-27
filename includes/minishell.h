@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 13:14:43 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:32:19 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,12 @@ typedef struct s_env
 	char				*value;
 	struct s_env		*next;
 }						t_env;
+
+typedef struct s_shell
+{
+	int					exit_status;
+	t_env				*env_list;
+}						t_shell;
 
 /* Singly linked list. Stores all commands. */
 typedef struct s_command
@@ -198,65 +204,61 @@ void		clean_commands(t_command **cmds);
 
 /* builtins.c */
 int			is_builtin(char *command);
-int			handle_cd(t_command *command);
-int			execute_builtin(t_command **cmd_list);
+int			handle_cd(t_command *command, t_shell *shell);
+int			execute_builtin(t_command **cmd_list, t_shell *shell);
 void		free_args(char **args);
 
 /* find_path.c */
-char		*true_path(char *argv, t_env *env_list);
+char		*true_path(char *argv, t_env *env_list, t_shell *shell);
 char		*path_finder(char **env);
-char		*find_path(char *command, t_env *env_list);
+char		*find_path(char *command, t_env *env_list, t_shell *shell);
 void		fn_path(char **res_split, char *argv);
 void		free_2d_array(char **arr);
 
 /* find_path_2.c */
-char		*search_in_paths(char **res_split, char **args);
+char		*search_in_paths(char **res_split, char **args, t_shell *shell);
 char		**split_paths_env(t_env *env_list);
 char		**split_args_with_prepare(char *argv, t_env *env_list);
-char		*check_argv_executable(char *argv);
-void		f_error(void);
+char		*check_argv_executable(char *argv, t_shell *shell);
+void		f_error(t_shell *shell);
 
 /* execution.c */
-int			execute_commands(t_command *commands);
+int			execute_commands(t_command *commands, t_shell *shell);
 t_env		*create_env_node(const char *name, const char *value);
 int			count_tokens(char **arr);
 
 /* execution_without_pipe */
-void		handle_child_process(t_command *commands, char *path,
-				char *args[]);
-void		execute_command(t_command *commands, char *path,
-				char *args[]);
-int			exec_external_no_pipe(t_command *commands);
-int			exec_builtin_no_pipe(t_command *commands);
+void		handle_child_process(t_command *commands, char *path, char *args[]);
+void		execute_command(t_command *commands, char *path, char *args[], t_shell *shell);
+int			exec_external_no_pipe(t_command *commands, t_shell *shell);
+int			exec_builtin_no_pipe(t_command *commands, t_shell *shell);
 void		restore_fds(int in, int out);
 
 /* execution_without_pipe_2 */
-int			execution_without_pipe(t_command *commands);
+int			execution_without_pipe(t_command *commands, t_shell *shell);
 
 /* execution_with_pipe_1.c */
 char		**get_command_args(t_command *current);
 void		setup_input_output(t_command *current, int pipe_in,
 				int *pipe_fd);
-void		execute_command_pipe(t_command *current, char *path);
+void		execute_command_pipe(t_command *current, char *path, t_shell *shell);
 int			create_child_process(t_command *current, int pipe_in,
-				int *pipe_fd, char *path);
+				int *pipe_fd, char *path, t_shell *shell);
 void		wait_for_children(void);
 
 /* execution_with_pipe_2.c */
-void		handle_child(t_command *current, int pipe_in,
-				int *pipe_fd, char *path);
+void		handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path, t_shell *shell);
 void		handle_parent(int *pipe_fd, int *pipe_in);
-int			execution_with_pipe(t_command *commands);
+int			execution_with_pipe(t_command *commands, t_shell *shell);
 int			setup_pipe(int *pipe_fd);
 
 /* execution_with_pipe_3.c */
-int			process_single_command(t_command *current,
-				int *pipe_in);
+int			process_single_command(t_command *current, int *pipe_in, t_shell *shell);
 
 /* cd.c */
 int			change_pwd(t_env *env_list);
 int			cd_home(t_env *env_list);
-int			cd(t_env *env_list, t_command *command);
+int			cd(t_env *env_list, t_command *command, t_shell *shell);
 int			check_option(char *argv);
 
 /* pwd.c */
@@ -287,7 +289,7 @@ int			remove_env_var(t_env **env_list, const char *var_name);
 int			run_unset_builtin(t_command *command);
 
 /* exit.c */
-int			exit_shell(char *pattern, t_command *command);
+int			exit_shell(char *pattern, t_command *command, t_shell *shell);
 
 /* env.c */
 int			env(t_env *env_list);

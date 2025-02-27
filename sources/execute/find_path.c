@@ -3,14 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/26 10:43:57 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:15:30 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+static int	calc_length(char const *s)
+{
+	int	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
+
+
+char	*ft_strjoin_my(char const *s1, char const *s2)
+{
+	char	*result;
+	int		len1;
+	int		len2;
+	int		i;
+	int		j;
+
+	if (!s1)
+		s1 = "";
+	if (!s2)
+		s2 = "";
+	len1 = calc_length(s1);
+	len2 = calc_length(s2);
+	result = malloc((len1 + len2 + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < len1)
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (j < len2)
+	{
+		result[i + j] = s2[j];
+		j++;
+	}
+	result[i + j] = '\0';
+	return (result);
+}
 
 /**
  * @brief Appends a '/' and the command to each directory in the array.
@@ -31,8 +75,8 @@ void	fn_path(char **res_split, char *argv)
 	i = 0;
 	while (res_split[i])
 	{
-		tmp = ft_strjoin(res_split[i], "/");
-		new_str = ft_strjoin(tmp, argv);
+		tmp = ft_strjoin_my(res_split[i], "/");
+		new_str = ft_strjoin_my(tmp, argv);
 		free(res_split[i]);
 		res_split[i] = new_str;
 		free(tmp);
@@ -98,7 +142,7 @@ void	free_2d_array(char **arr)
  *
  * @return A duplicated string with the full path, or NULL if not found.
  */
-char	*find_path(char *command, t_env *env_list)
+char	*find_path(char *command, t_env *env_list, t_shell *shell)
 {
 	struct stat	st;
 
@@ -110,7 +154,7 @@ char	*find_path(char *command, t_env *env_list)
 		{
 			ft_putstr_fd(command, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			g_exit_status = CMD_NOT_FOUND;
+			shell->exit_status = CMD_NOT_FOUND;
 			return (NULL);
 		}
 		if (access(command, X_OK) == 0)
@@ -118,7 +162,7 @@ char	*find_path(char *command, t_env *env_list)
 		else
 			return (NULL);
 	}
-	return (true_path(command, env_list));
+	return (true_path(command, env_list, shell));
 }
 
 /**
@@ -130,19 +174,19 @@ char	*find_path(char *command, t_env *env_list)
  *
  * @return A duplicated full path if found, or NULL.
  */
-char	*true_path(char *argv, t_env *env_list)
+char	*true_path(char *argv, t_env *env_list, t_shell *shell)
 {
 	char	*check_exec;
 	char	**res_split;
 	char	**args;
 
-	check_exec = check_argv_executable(argv);
+	check_exec = check_argv_executable(argv, shell);
 	if (check_exec)
 		return (check_exec);
 	res_split = split_paths_env(env_list);
 	if (!res_split)
 	{
-		f_error();
+		f_error(shell);
 		return (NULL);
 	}
 	args = split_args_with_prepare(argv, env_list);
@@ -151,5 +195,5 @@ char	*true_path(char *argv, t_env *env_list)
 		free_2d_array(res_split);
 		return (NULL);
 	}
-	return (search_in_paths(res_split, args));
+	return (search_in_paths(res_split, args, shell));
 }

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:40:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:46:28 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ extern char	**environ;
  *
  * @return The shell exit status.
  */
-int	execute_commands(t_command *commands)
+int	execute_commands(t_command *commands, t_shell *shell)
 {
 	t_command	*current;
 	int			is_pipe;
@@ -46,9 +46,9 @@ int	execute_commands(t_command *commands)
 		current = current->next;
 	}
 	if (is_pipe)
-		ret = execution_with_pipe(commands);
+		ret = execution_with_pipe(commands, shell);
 	else
-		ret = execution_without_pipe(commands);
+		ret = execution_without_pipe(commands, shell);
 	return (ret);
 }
 

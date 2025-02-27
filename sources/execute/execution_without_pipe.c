@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 18:41:41 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:41:52 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	handle_child_process(t_command *commands, char *path, char *args[])
  *
  * @param args The argument vector for execve.
  */
-void	execute_command(t_command *commands, char *path, char *args[])
+void	execute_command(t_command *commands, char *path, char *args[], t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -83,7 +83,7 @@ void	execute_command(t_command *commands, char *path, char *args[])
 	{
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
+			shell->exit_status = WEXITSTATUS(status);
 	}
 }
 
@@ -111,7 +111,7 @@ void	restore_fds(int in, int out)
  *
  * @return The exit status of the built-in command.
  */
-int	exec_builtin_no_pipe(t_command *commands)
+int	exec_builtin_no_pipe(t_command *commands, t_shell *shell)
 {
 	int	backup_in;
 	int	backup_out;
@@ -124,7 +124,7 @@ int	exec_builtin_no_pipe(t_command *commands)
 		restore_fds(backup_in, backup_out);
 		return (SHELL_CONTINUE);
 	}
-	ret = execute_builtin(&commands);
+	ret = execute_builtin(&commands, shell);
 	restore_fds(backup_in, backup_out);
 	return (ret);
 }
@@ -139,21 +139,25 @@ int	exec_builtin_no_pipe(t_command *commands)
  *
  * @return SHELL_CONTINUE on success.
  */
-int	exec_external_no_pipe(t_command *commands)
+int	exec_external_no_pipe(t_command *commands, t_shell *shell)
 {
 	char	**args;
 	char	*path;
 
-	path = true_path(commands->command, commands->env_list);
+	path = true_path(commands->command, commands->env_list, shell);
 	if (!path)
+	{
+		shell->exit_status = CMD_NOT_FOUND;
 		return (SHELL_CONTINUE);
+	}
 	args = build_execve_args(commands);
 	if (!args)
 	{
 		free(path);
+		shell->exit_status = CMD_NOT_FOUND;
 		return (SHELL_CONTINUE);
 	}
-	execute_command(commands, path, args);
+	execute_command(commands, path, args, shell);
 	free(path);
 	free_2d_array(args);
 	return (SHELL_CONTINUE);

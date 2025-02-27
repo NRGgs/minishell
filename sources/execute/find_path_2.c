@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/26 10:44:11 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:01:55 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  *
  * @return A duplicated string if executable, or NULL.
  */
-char	*check_argv_executable(char *argv)
+char	*check_argv_executable(char *argv, t_shell *shell)
 {
 	struct stat	st;
 
@@ -30,13 +30,13 @@ char	*check_argv_executable(char *argv)
 		{
 			ft_putstr_fd(argv, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			g_exit_status = CMD_NOT_FOUND;
+			shell->exit_status = CMD_NOT_FOUND;
 			return (NULL);
 		}
 		if (access(argv, X_OK) == 0)
 			return (ft_strdup(argv));
 		else
-			g_exit_status = CMD_NOT_FOUND;
+			shell->exit_status = CMD_NOT_FOUND;
 		return (NULL);
 	}
 	return (NULL);
@@ -45,10 +45,10 @@ char	*check_argv_executable(char *argv)
 /**
  * @brief Prints an error message for a command not found.
  */
-void	f_error(void)
+void	f_error(t_shell *shell)
 {
 	ft_putstr_fd("Error: Command not found.\n", 2);
-	g_exit_status = CMD_NOT_FOUND;
+	shell->exit_status = CMD_NOT_FOUND;
 }
 
 char	**split_args_with_prepare(char *argv, t_env *env_list)
@@ -92,7 +92,7 @@ char	**split_paths_env(t_env *env_list)
  *
  * @return A duplicated full path if found, or NULL.
  */
-char	*search_in_paths(char **res_split, char **args)
+char	*search_in_paths(char **res_split, char **args, t_shell *shell)
 {
 	int		i;
 	char	*found;
@@ -112,6 +112,6 @@ char	*search_in_paths(char **res_split, char **args)
 	}
 	free_2d_array(res_split);
 	free_2d_array(args);
-	f_error();
+	f_error(shell);
 	return (NULL);
 }
