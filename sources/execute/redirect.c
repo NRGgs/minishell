@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/26 10:44:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:37:14 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,23 @@ int	handle_input_redirection(t_command *cmd)
 	fd = open(cmd->input, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error opening input file");
-		return (ERROR);
+		if (errno == ENOENT)
+		{
+			fd = open(cmd->input, O_CREAT | O_WRONLY, 0644);
+			if (fd == -1)
+				return (perror("Error creating input file"), ERROR);
+			close(fd);
+			fd = open(cmd->input, O_RDONLY);
+			if (fd == -1)
+				return (perror("Error opening input file after creation"),
+					ERROR);
+		}
+		else
+			return (perror("Error opening input file"), ERROR);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("Error duplicating file descriptor for input");
-		close(fd);
-		return (ERROR);
-	}
-	close(fd);
-	return (SUCCESS);
+		return (close(fd), ERROR);
+	return (close(fd), SUCCESS);
 }
 
 /**
