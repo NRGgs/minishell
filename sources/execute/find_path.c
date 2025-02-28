@@ -6,54 +6,11 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 17:34:52 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:52:41 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static int	calc_length(char const *s)
-{
-	int	len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
-char	*ft_strjoin_my(char const *s1, char const *s2)
-{
-	char	*result;
-	int		len1;
-	int		len2;
-	int		i;
-	int		j;
-
-	if (!s1)
-		s1 = "";
-	if (!s2)
-		s2 = "";
-	len1 = calc_length(s1);
-	len2 = calc_length(s2);
-	result = malloc((len1 + len2 + 1) * sizeof(char));
-	if (!result)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (i < len1)
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	while (j < len2)
-	{
-		result[i + j] = s2[j];
-		j++;
-	}
-	result[i + j] = '\0';
-	return (result);
-}
 
 /**
  * @brief Appends a '/' and the command to each directory in the array.
@@ -74,8 +31,8 @@ void	fn_path(char **res_split, char *argv)
 	i = 0;
 	while (res_split[i])
 	{
-		tmp = ft_strjoin_my(res_split[i], "/");
-		new_str = ft_strjoin_my(tmp, argv);
+		tmp = ft_strjoin(res_split[i], "/");
+		new_str = ft_strjoin(tmp, argv);
 		free(res_split[i]);
 		res_split[i] = new_str;
 		free(tmp);

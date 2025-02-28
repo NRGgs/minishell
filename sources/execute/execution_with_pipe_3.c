@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 16:59:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:22:15 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:42:00 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ extern char	**environ;
  * @return SUCCESS if no next command exists or if the pipe was
  * created successfully, FAIL otherwise.
  */
-static int	setup_pipe_if_needed(t_command *current, int pipe_fd[2])
+int	setup_pipe_if_needed(t_command *current, int pipe_fd[2])
 {
 	if (current->next)
 	{
@@ -52,24 +52,26 @@ static int	setup_pipe_if_needed(t_command *current, int pipe_fd[2])
  *
  * @param path The path to the executable.
  */
-static void	child_branch(t_command *current, int *pipe_in, int pipe_fd[2],
-		char *path, t_shell *shell)
+void	child_branch(t_child_data *child)
 {
-	if (current->next)
-		handle_child(current, *pipe_in, pipe_fd, path, shell);
+	if (child->current->next)
+	{
+		setup_input_output(child->current, *(child->pipe_in), child->pipe_fd);
+		execute_command_pipe(child->current, child->path, child->shell);
+	}
 	else
 	{
-		if (*pipe_in != STDIN_FILENO)
+		if (*(child->pipe_in) != STDIN_FILENO)
 		{
-			if (dup2(*pipe_in, STDIN_FILENO) == -1)
+			if (dup2(*(child->pipe_in), STDIN_FILENO) == -1)
 			{
 				perror("dup2");
 				exit(1);
 			}
-			close(*pipe_in);
+			close(*(child->pipe_in));
 		}
-		execute_command_pipe(current, path, shell);
-		exit(shell->exit_status);
+		execute_command_pipe(child->current, child->path, child->shell);
+		exit(child->shell->exit_status);
 	}
 }
 
@@ -83,48 +85,8 @@ static void	child_branch(t_command *current, int *pipe_in, int pipe_fd[2],
  *
  * @param pipe_fd The file descriptors for the pipe.
  */
-static void	parent_branch(t_command *current, int *pipe_in, int pipe_fd[2])
+void	parent_branch(t_command *current, int *pipe_in, int pipe_fd[2])
 {
 	if (current->next)
 		handle_parent(pipe_fd, pipe_in);
-}
-
-/**
- * @brief Processes a single command in a pipeline.
- * Determines the executable path, forks a child process to execute it,
- * and frees resources.
- *
- * @param current The current command structure.
- *
- * @param pipe_in Pointer to the input file descriptor.
- *
- * @return SUCCESS on success, FAIL on failure.
- */
-int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
-{
-	char	*path;
-	int		pipe_fd[2];
-	pid_t	pid;
-
-	path = true_path(current->command, current->env_list, shell);
-	if (current->next && setup_pipe_if_needed(current, pipe_fd) == FAIL)
-		return (free(path), FAIL);
-	pid = fork();
-	if (pid < 0)
-	{
-		if (current->next)
-		{
-			close(pipe_fd[0]);
-			close(pipe_fd[1]);
-		}
-		return (free(path), FAIL);
-	}
-	else if (pid == 0)
-		child_branch(current, pipe_in, pipe_fd, path, shell);
-	else
-	{
-		parent_branch(current, pipe_in, pipe_fd);
-		free(path);
-	}
-	return (SUCCESS);
 }

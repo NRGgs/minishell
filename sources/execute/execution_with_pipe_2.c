@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:13:56 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:19:16 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:38:01 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ extern char	**environ;
  *
  * @param path The path to the executable.
  */
-void	handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path, t_shell *shell)
+void	handle_child(t_command *current, t_exec_data *exec_data)
 {
-	setup_input_output(current, pipe_in, pipe_fd);
-	execute_command_pipe(current, path, shell);
+	setup_input_output(current, exec_data->pipe_in, exec_data->pipe_fd);
+	execute_command_pipe(current, exec_data->path, exec_data->shell);
 }
-
 
 /**
  * @brief Handles the parent branch of a piped command.

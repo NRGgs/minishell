@@ -52,7 +52,8 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(PARSE_DIR)/parse.c \
 		$(SRC_DIR)/$(TKN_DIR)/tokenize.c \
 		$(SRC_DIR)/$(TKN_DIR)/utils.c \
-		$(SRC_DIR)/$(TKN_DIR)/word_length.c
+		$(SRC_DIR)/$(TKN_DIR)/word_length.c \
+		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_5.c
 
 OBJ_DIR = objects
 # OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

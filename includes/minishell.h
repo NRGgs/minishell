@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/27 15:32:19 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:52:00 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,23 @@ typedef struct s_token
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
+
+typedef struct s_exec_data
+{
+	int					pipe_in;
+	int					*pipe_fd;
+	char				*path;
+	t_shell				*shell;
+}						t_exec_data;
+
+typedef struct s_child_data
+{
+	t_command			*current;
+	int					*pipe_in;
+	int					pipe_fd[2];
+	char				*path;
+	t_shell				*shell;
+}						t_child_data;
 
 /*****************************************************************************\
 *                             Function Prototypes                             *
@@ -229,7 +246,8 @@ int			count_tokens(char **arr);
 
 /* execution_without_pipe */
 void		handle_child_process(t_command *commands, char *path, char *args[]);
-void		execute_command(t_command *commands, char *path, char *args[], t_shell *shell);
+void		execute_command(t_command *commands, char *path,
+				char *args[], t_shell *shell);
 int			exec_external_no_pipe(t_command *commands, t_shell *shell);
 int			exec_builtin_no_pipe(t_command *commands, t_shell *shell);
 void		restore_fds(int in, int out);
@@ -241,20 +259,23 @@ int			execution_without_pipe(t_command *commands, t_shell *shell);
 char		**get_command_args(t_command *current);
 void		setup_input_output(t_command *current, int pipe_in,
 				int *pipe_fd);
-void		execute_command_pipe(t_command *current, char *path, t_shell *shell);
-int			create_child_process(t_command *current, int pipe_in,
-				int *pipe_fd, char *path, t_shell *shell);
+void		execute_command_pipe(t_command *current, char *path,
+				t_shell *shell);
+int			create_child_process(t_command *current, t_exec_data *exec_data);
 void		wait_for_children(void);
 
 /* execution_with_pipe_2.c */
-void		handle_child(t_command *current, int pipe_in, int *pipe_fd, char *path, t_shell *shell);
+void		handle_child(t_command *current, t_exec_data *exec_data);
 void		handle_parent(int *pipe_fd, int *pipe_in);
 int			execution_with_pipe(t_command *commands, t_shell *shell);
 int			setup_pipe(int *pipe_fd);
 
 /* execution_with_pipe_3.c */
-int			process_single_command(t_command *current, int *pipe_in, t_shell *shell);
-
+int			process_single_command(t_command *current, int *pipe_in,
+				t_shell *shell);
+void		parent_branch(t_command *current, int *pipe_in, int pipe_fd[2]);
+void		child_branch(t_child_data *child);
+int			setup_pipe_if_needed(t_command *current, int pipe_fd[2]);
 /* cd.c */
 int			change_pwd(t_env *env_list);
 int			cd_home(t_env *env_list);

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:21:20 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/02/28 14:36:47 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,39 +73,6 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 	}
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
-}
-
-/**
- * @brief Creates a child process for a piped command.
- * Forks a new process; in the child, it executes the command; in the parent,
- * it updates the pipe input.
- *
- * @param current The current command structure.
- *
- * @param pipe_in The current input file descriptor.
- *
- * @param pipe_fd The file descriptors for the pipe.
- *
- * @param path The path to the executable.
- *
- * @return SUCCESS on success, ERROR on failure.
- */
-int	create_child_process(t_command *current, int pipe_in,
-		int *pipe_fd, char *path, t_shell *shell)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("fork");
-		return (ERROR);
-	}
-	else if (pid == 0)
-		handle_child(current, pipe_in, pipe_fd, path, shell);
-	else
-		handle_parent(pipe_fd, &pipe_in);
-	return (SUCCESS);
 }
 
 /**
