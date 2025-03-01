@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   assign.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:48:25 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/26 13:12:43 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   assign.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/25 15:48:25 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/03/01 17:13:46 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,15 @@ static int	set_argument(char **arg, char *word)
 	if (temp == NULL)
 		return (FAIL);
 	free(*arg);
-	*arg = temp;
+	*arg = ft_strndup(temp, ft_strlen(temp));
+	if (*arg == NULL)
+		return (FAIL);
+	free(temp);
 	temp = ft_strjoin(*arg, word);
+	free(word);
 	if (temp == NULL)
 		return (FAIL);
+	free(*arg);
 	*arg = temp;
 	return (SUCCESS);
 }
