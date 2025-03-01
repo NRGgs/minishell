@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/01 16:16:21 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/01 16:18:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,7 @@ char	*search_in_paths(char **res_split, char **args, t_shell *shell)
 	{
 		free_2d_array(res_split);
 		free_2d_array(args);
-		f_error(shell);
-		return (NULL);
+		return (f_error(shell), NULL);
 	}
 	fn_path(res_split, args[0]);
 	i = 0;
@@ -119,6 +118,5 @@ char	*search_in_paths(char **res_split, char **args, t_shell *shell)
 	}
 	free_2d_array(res_split);
 	free_2d_array(args);
-	f_error(shell);
-	return (NULL);
+	return (f_error(shell), NULL);
 }
