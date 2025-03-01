@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/25 12:27:22 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   export.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/26 16:22:15 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:03:55 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	print_exported_vars(t_env *env_list)
  *
  * @return 0 on success
  */
-int	my_export(t_env **env_list, char **args)
+int	my_export(t_env **env_list, char **args, t_shell *shell)
 {
 	int	i;
 
@@ -95,7 +95,7 @@ int	my_export(t_env **env_list, char **args)
 	i = 0;
 	while (args[i])
 	{
-		process_export_arg(env_list, args[i]);
+		process_export_arg(env_list, args[i], shell);
 		i++;
 	}
 	return (0);
@@ -108,7 +108,7 @@ int	my_export(t_env **env_list, char **args)
  *
  * @return The exit status.
  */
-int	run_export_builtin(t_command *command)
+int	run_export_builtin(t_command *command, t_shell *shell)
 {
 	char	*pattern_dup;
 	char	*args[2];
@@ -124,6 +124,6 @@ int	run_export_builtin(t_command *command)
 		return (FAIL);
 	args[0] = pattern_dup;
 	args[1] = NULL;
-	ret = my_export(&(command->env_list), args);
+	ret = my_export(&(command->env_list), args, shell);
 	return (ret);
 }

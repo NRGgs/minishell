@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/27 15:59:52 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/03/01 16:54:35 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_exit_status = 0;
 
 /**
  * Reads the user input and returns it as a string.

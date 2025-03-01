@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   variables.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:48:49 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/18 10:57:01 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   variables.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/18 10:48:49 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/01 16:58:47 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*var_exit_status(char *str, char *var_ptr);
+static char	*var_exit_status(char *str, char *var_ptr, t_shell *shell);
 
 /**
  * @brief Replaces the variable in the argument with its value.
@@ -22,7 +22,7 @@ static char	*var_exit_status(char *str, char *var_ptr);
  * @param env_list	The environment variables list.
  * @return 			The new argument.
  */
-char	*replace_var(char *str, char *var_ptr, t_env *env_list)
+char	*replace_var(char *str, char *var_ptr, t_env *env_list, t_shell *shell)
 {
 	t_env	*var;
 	char	*to_replace;
@@ -30,7 +30,7 @@ char	*replace_var(char *str, char *var_ptr, t_env *env_list)
 
 	to_replace = var_ptr;
 	if (ft_strncmp(to_replace, "$?", 2) == 0)
-		return (var_exit_status(str, var_ptr));
+		return (var_exit_status(str, var_ptr, shell));
 	i = 1;
 	while (valid_char(to_replace[i]))
 		i++;
@@ -54,12 +54,12 @@ char	*replace_var(char *str, char *var_ptr, t_env *env_list)
  * @param var_ptr	The pointer to the variable.
  * @return 			The new argument.
  */
-static char	*var_exit_status(char *str, char *var_ptr)
+static char	*var_exit_status(char *str, char *var_ptr, t_shell *shell)
 {
 	char	*exit_status;
 	char	*new_str;
 
-	exit_status = ft_itoa(g_exit_status);
+	exit_status = ft_itoa(shell->exit_status);
 	if (exit_status == NULL)
 		return (free(str), NULL);
 	new_str = ft_strreplace(str, "$?", exit_status, var_ptr);

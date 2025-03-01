@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution_without_pipe.c                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 17:35:58 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution_without_pipe.c                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/23 11:03:43 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:07:15 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_child_process(t_command *commands, char *path, char *args[])
  * @brief Executes an external command by forking a child process.
  * Forks a new process and in the child calls handle_child_process().
  * The parent waits
- * for the child to finish and updates g_exit_status.
+ * for the child to finish and updates exit_status.
  *
  * @param commands The command structure.
  *
@@ -151,7 +151,7 @@ int	exec_external_no_pipe(t_command *commands, t_shell *shell)
 		shell->exit_status = CMD_NOT_FOUND;
 		return (SHELL_CONTINUE);
 	}
-	args = build_execve_args(commands);
+	args = build_execve_args(commands, shell);
 	if (!args)
 	{
 		free(path);

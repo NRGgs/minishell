@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/28 14:52:00 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:07:00 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@
 # define MEMORY_OVERFLOW 137
 # define UNALIGNED_MEM_ACCESS 138
 # define SEG_FAULT 139
-
-extern int				g_exit_status;
 
 /* Singly linked list. Stores all environments. */
 typedef struct s_env
@@ -179,10 +177,11 @@ bool		is_option(char *s);
 /* --------------- Expand -------------------------------------------------- */
 
 /* prepare */
-int			prepare_arg(t_env *env_list, char **arg);
+int			prepare_arg(t_env *env_list, char **arg, t_shell *shell);
 
 /* variables */
-char		*replace_var(char *str, char *var_ptr, t_env *env_list);
+char		*replace_var(char *str, char *var_ptr, \
+				t_env *env_list, t_shell *shell);
 bool		in_single_quotes(char *str, char *c);
 bool		char_is_escaped(char *str, char *c);
 char		*get_nth_var(char *str, int nth_var);
@@ -235,7 +234,8 @@ void		free_2d_array(char **arr);
 /* find_path_2.c */
 char		*search_in_paths(char **res_split, char **args, t_shell *shell);
 char		**split_paths_env(t_env *env_list);
-char		**split_args_with_prepare(char *argv, t_env *env_list);
+char		**split_args_with_prepare(char *argv, t_env *env_list, \
+				t_shell *shell);
 char		*check_argv_executable(char *argv, t_shell *shell);
 void		f_error(t_shell *shell);
 
@@ -261,7 +261,7 @@ void		setup_input_output(t_command *current, int pipe_in,
 				int *pipe_fd);
 void		execute_command_pipe(t_command *current, char *path,
 				t_shell *shell);
-int			create_child_process(t_command *current, t_exec_data *exec_data);
+int			create_child_process(t_command *current, t_exec_data *exec_data, t_shell *shell);
 void		wait_for_children(void);
 
 /* execution_with_pipe_2.c */
@@ -286,15 +286,15 @@ int			check_option(char *argv);
 int			pwd(char **argv);
 
 /* echo.c */
-int			echo(t_command *command);
+int			echo(t_command *command, t_shell *shell);
 
 /* export.c */
 t_env		*find_env_var(t_env *env_list, const char *name);
 t_env		*create_env_var(t_env **env_list, const char *name,
 				const char *value);
 void		print_exported_vars(t_env *env_list);
-int			my_export(t_env **env_list, char **args);
-int			run_export_builtin(t_command *command);
+int			my_export(t_env **env_list, char **args, t_shell *shell);
+int			run_export_builtin(t_command *command, t_shell *shell);
 
 /* export_2.c */
 void		add_env_to_list(t_env **env_list, t_env *new_var);
@@ -302,12 +302,12 @@ t_env		*alloc_env_node(const char *name, const char *value);
 void		handle_export_equal(t_env **env_list, char *arg,
 				char *equal_sign);
 void		handle_export_no_equal(t_env **env_list, char *arg);
-void		process_export_arg(t_env **env_list, char *arg);
+void		process_export_arg(t_env **env_list, char *arg, t_shell *shell);
 
 /* unset.c */
 int			my_unset(t_env **env_list, char **args);
 int			remove_env_var(t_env **env_list, const char *var_name);
-int			run_unset_builtin(t_command *command);
+int			run_unset_builtin(t_command *command, t_shell *shell);
 
 /* exit.c */
 int			exit_shell(char *pattern, t_command *command, t_shell *shell);
@@ -327,6 +327,6 @@ t_env		*init_env_list(void);
 void		clear_env_list(t_env *env_list);
 
 /* build_execve_args.c */
-char		**build_execve_args(t_command *cmd);
+char		**build_execve_args(t_command *cmd, t_shell *shell);
 
 #endif

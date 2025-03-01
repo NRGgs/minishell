@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execution_with_pipe_4.c                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:23:52 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   execution_with_pipe_4.c                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/10 19:22:32 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:07:10 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
  *
  * @param path The path to the executable.
  */
-static void	handle_external_pipe(t_command **cmd_ptr, char *path)
+static void	handle_external_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 {
 	char	**args;
 
@@ -68,7 +68,7 @@ static void	handle_external_pipe(t_command **cmd_ptr, char *path)
 		clean_commands(cmd_ptr);
 		exit(127);
 	}
-	args = build_execve_args(*cmd_ptr);
+	args = build_execve_args(*cmd_ptr, shell);
 	if (!args)
 	{
 		clean_commands(cmd_ptr);
@@ -99,5 +99,5 @@ void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
 	if (is_builtin(current->command))
 		handle_builtin_pipe(&current, path, shell);
 	else
-		handle_external_pipe(&current, path);
+		handle_external_pipe(&current, path, shell);
 }

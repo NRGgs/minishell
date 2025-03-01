@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   find_path_2.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/01 16:18:06 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   find_path_2.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/28 12:39:20 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:04:20 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	f_error(t_shell *shell)
 	shell->exit_status = CMD_NOT_FOUND;
 }
 
-char	**split_args_with_prepare(char *argv, t_env *env_list)
+char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
 {
 	char	*dup;
 	char	**result;
@@ -59,7 +59,7 @@ char	**split_args_with_prepare(char *argv, t_env *env_list)
 	dup = ft_strdup(argv);
 	if (!dup)
 		return (NULL);
-	if (prepare_arg(env_list, &dup) == FAIL)
+	if (prepare_arg(env_list, &dup, shell) == FAIL)
 	{
 		free(dup);
 		return (NULL);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:24:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/24 11:39:35 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   unset.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/26 16:24:43 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:02:19 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	my_unset(t_env **env_list, char **args)
  *
  * @return The exit status.
  */
-int	run_unset_builtin(t_command *command)
+int	run_unset_builtin(t_command *command, t_shell *shell)
 {
 	char	*argument;
 	char	*args[2];
@@ -94,7 +94,7 @@ int	run_unset_builtin(t_command *command)
 	argument = ft_strdup(command->pattern);
 	if (!argument)
 		return (FAIL);
-	if (prepare_arg(command->env_list, &argument) == FAIL)
+	if (prepare_arg(command->env_list, &argument, shell) == FAIL)
 	{
 		free(argument);
 		return (FAIL);

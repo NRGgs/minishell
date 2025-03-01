@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:30:56 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   exit.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/04 13:56:52 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:01:47 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static int	check_exit_tokens(char **tokens, int *exit_code)
 	return (-1);
 }
 
-static int	handle_exit_arg(char *pattern, t_env *env, int *exit_code)
+static int	handle_exit_arg(char *pattern, t_env *env, \
+			int *exit_code, t_shell *shell)
 {
 	char	*proc;
 	char	**tokens;
@@ -55,7 +56,7 @@ static int	handle_exit_arg(char *pattern, t_env *env, int *exit_code)
 		*exit_code = 2;
 		return (SHELL_EXIT);
 	}
-	if (prepare_arg(env, &proc) == FAIL)
+	if (prepare_arg(env, &proc, shell) == FAIL)
 	{
 		free(proc);
 		*exit_code = 2;
@@ -74,7 +75,7 @@ int	exit_shell(char *pattern, t_command *command, t_shell *shell)
 	(void)command;
 	if (pattern)
 	{
-		ret = handle_exit_arg(pattern, command->env_list, &exit_code);
+		ret = handle_exit_arg(pattern, command->env_list, &exit_code, shell);
 		if (ret != -1)
 		{
 			shell->exit_status = exit_code;

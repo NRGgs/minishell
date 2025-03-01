@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   build_execve_args.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 13:25:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/26 10:44:16 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   build_execve_args.c                                :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/17 13:25:30 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:06:55 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ static void	copy_tokens(char **src, char **dest, int *j)
 	}
 }
 
-static char	**get_args(char *str, t_env *env_list)
+static char	**get_args(char *str, t_env *env_list, t_shell *shell)
 {
 	if (!str)
 		return (NULL);
-	return (split_args_with_prepare(str, env_list));
+	return (split_args_with_prepare(str, env_list, shell));
 }
 
 static void	free_all(char **a, char **b, char **c)
@@ -62,14 +62,14 @@ static char	**combine_tokens(char **args_cmd, char **args_opt, char **args_pat)
 	return (result);
 }
 
-char	**build_execve_args(t_command *command)
+char	**build_execve_args(t_command *command, t_shell *shell)
 {
 	char	**args_cmd;
 	char	**args_opt;
 	char	**args_pat;
 
-	args_cmd = get_args(command->command, command->env_list);
-	args_opt = get_args(command->options, command->env_list);
-	args_pat = get_args(command->pattern, command->env_list);
+	args_cmd = get_args(command->command, command->env_list, shell);
+	args_opt = get_args(command->options, command->env_list, shell);
+	args_pat = get_args(command->pattern, command->env_list, shell);
 	return (combine_tokens(args_cmd, args_opt, args_pat));
 }

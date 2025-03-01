@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:29:20 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cd.c                                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/04 13:18:33 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:00:40 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	cd(t_env *env_list, t_command *command, t_shell *shell)
 	trimmed_path = ft_strdup(path);
 	if (!trimmed_path)
 		return (FAIL);
-	if (prepare_arg(env_list, &trimmed_path) == FAIL)
+	if (prepare_arg(env_list, &trimmed_path, shell) == FAIL)
 		return (free(trimmed_path), FAIL);
 	if (check_option(trimmed_path) == 1)
 		return (free(trimmed_path), FAIL);

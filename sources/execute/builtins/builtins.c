@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:31:32 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   builtins.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/26 16:06:42 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:04:13 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ static int	select_builtin(t_command *command, t_shell *shell)
 	if (ft_strncmp(command->command, "cd", 3) == 0)
 		ret = handle_cd(command, shell);
 	else if (ft_strncmp(command->command, "echo", 5) == 0)
-		ret = echo(command);
+		ret = echo(command, shell);
 	else if (ft_strncmp(command->command, "pwd", 4) == 0)
 		ret = pwd(&command->input);
 	else if (ft_strncmp(command->command, "env", 4) == 0)
 		ret = env(command->env_list);
 	else if (ft_strncmp(command->command, "export", 7) == 0)
-		ret = run_export_builtin(command);
+		ret = run_export_builtin(command, shell);
 	else if (ft_strncmp(command->command, "unset", 6) == 0)
-		ret = run_unset_builtin(command);
+		ret = run_unset_builtin(command, shell);
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
 		ret = exit_shell(command->pattern, command, shell);
 	else

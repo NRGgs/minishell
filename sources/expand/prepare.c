@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   prepare.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/24 11:42:10 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   prepare.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/18 10:47:31 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/01 16:58:16 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	handle_variables(t_env *env_list, char **arg);
+static int	handle_variables(t_env *env_list, char **arg, t_shell *shell);
 static int	handle_backslashes(char **arg);
 static int	handle_quotes(char **str);
 static int	trim_memory(char **str);
@@ -25,9 +25,9 @@ static int	trim_memory(char **str);
  * @param arg		The argument to prepare.
  * @return int		SUCCESS or FAIL.
  */
-int	prepare_arg(t_env *env_list, char **arg)
+int	prepare_arg(t_env *env_list, char **arg, t_shell *shell)
 {
-	if (handle_variables(env_list, arg) == FAIL)
+	if (handle_variables(env_list, arg, shell) == FAIL)
 		return (FAIL);
 	if (handle_backslashes(arg) == FAIL)
 		return (FAIL);
@@ -44,7 +44,7 @@ int	prepare_arg(t_env *env_list, char **arg)
  * @param arg		The argument to prepare.
  * @return int		SUCCESS or FAIL.
  */
-static int	handle_variables(t_env *env_list, char **arg)
+static int	handle_variables(t_env *env_list, char **arg, t_shell *shell)
 {
 	char	*var_ptr;
 	int		nth_var;
@@ -56,7 +56,7 @@ static int	handle_variables(t_env *env_list, char **arg)
 		if (char_is_escaped(*arg, var_ptr) == false
 			&& in_single_quotes(*arg, var_ptr) == false)
 		{
-			*arg = replace_var(*arg, var_ptr, env_list);
+			*arg = replace_var(*arg, var_ptr, env_list, shell);
 			if (*arg == NULL)
 				return (FAIL);
 		}

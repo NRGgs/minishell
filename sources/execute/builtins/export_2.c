@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export_2.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 13:58:16 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   export_2.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/27 14:12:55 by iriadyns      #+#    #+#                 */
+/*   Updated: 2025/03/01 17:02:58 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,14 +126,14 @@ void	handle_export_no_equal(t_env **env_list, char *arg)
  *
  * @param arg The export argument.
  */
-void	process_export_arg(t_env **env_list, char *arg)
+void	process_export_arg(t_env **env_list, char *arg, t_shell *shell)
 {
 	char	*equal_sign;
 
 	equal_sign = ft_strchr(arg, '=');
 	if (equal_sign)
 	{
-		if (prepare_arg(*env_list, &arg) == FAIL)
+		if (prepare_arg(*env_list, &arg, shell) == FAIL)
 			return ;
 		equal_sign = ft_strchr(arg, '=');
 		handle_export_equal(env_list, arg, equal_sign);
