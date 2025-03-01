@@ -3,6 +3,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 LFLAGS = -lreadline
 # -fsanitize=address
+
 # Libraries
 LIBFT_PATH	= ./includes/libft
 LIBFT		= $(LIBFT_PATH)/libft.a
@@ -67,7 +68,8 @@ all: $(NAME)
 
 # Name rule to create executable
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LFLAGS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME) $(LFLAGS)
+	@echo "Executable $(NAME) created"
 
 # Rule to create libft.a
 $(LIBFT):
@@ -76,41 +78,50 @@ $(LIBFT):
 # Rule to compile .c files into .o files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(EXP_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(TKN_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(PARSE_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(EXE_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(BLT_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$(MEM_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(LIBFT_PATH) -c $< -o $@
+	@echo "Compiled $<"
 
 # Clean up object files
 clean:
-	rm -f $(OBJS)
-	rm -rf $(OBJ_DIR)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@make clean -C $(LIBFT_PATH)
 
 # Clean up object files, libraries, and executable(s)
 fclean: clean
-	rm -f $(NAME)
+	@echo "Cleaning executable..."
+	@rm -f $(NAME)
 	@make fclean -C $(LIBFT_PATH)
 
 # Recompile all files
