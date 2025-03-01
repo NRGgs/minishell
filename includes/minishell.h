@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:07:00 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/03/01 17:15:23 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,6 @@ void		setup_input_output(t_command *current, int pipe_in,
 				int *pipe_fd);
 void		execute_command_pipe(t_command *current, char *path,
 				t_shell *shell);
-int			create_child_process(t_command *current, t_exec_data *exec_data, t_shell *shell);
 void		wait_for_children(void);
 
 /* execution_with_pipe_2.c */
