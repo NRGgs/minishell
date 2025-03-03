@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   find_path.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/04 12:07:33 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:06:14 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   find_path.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/03 17:34:12 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ char	*true_path(char *argv, t_env *env_list, t_shell *shell)
 	res_split = split_paths_env(env_list);
 	if (!res_split)
 	{
-		f_error(shell);
+		f_error(shell, argv);
 		return (NULL);
 	}
 	args = split_args_with_prepare(argv, env_list, shell);
@@ -151,5 +151,5 @@ char	*true_path(char *argv, t_env *env_list, t_shell *shell)
 		free_2d_array(res_split);
 		return (NULL);
 	}
-	return (search_in_paths(res_split, args, shell));
+	return (search_in_paths(res_split, args, shell, argv));
 }

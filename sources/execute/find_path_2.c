@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   find_path_2.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/28 12:39:20 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:04:20 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   find_path_2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/03 17:34:24 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ char	*check_argv_executable(char *argv, t_shell *shell)
 	return (NULL);
 }
 
-/**
- * @brief Prints an error message for a command not found.
- */
-void	f_error(t_shell *shell)
+void	f_error(t_shell *shell, char *command)
 {
-	ft_putstr_fd("Error: Command not found.\n", 2);
+	if (!command || !*command)
+		command = "(null)";
+	ft_putstr_fd(command, 2);
+	ft_putstr_fd(": command not found\n", 2);
 	shell->exit_status = CMD_NOT_FOUND;
 }
 
@@ -92,19 +92,19 @@ char	**split_paths_env(t_env *env_list)
  *
  * @return A duplicated full path if found, or NULL.
  */
-char	*search_in_paths(char **res_split, char **args, t_shell *shell)
+char	*search_in_paths(char **res_split, char **args, t_shell *shell, char *argv)
 {
 	int		i;
 	char	*found;
 
+	i = 0;
 	if (!args || !args[0] || args[0][0] == '\0')
 	{
 		free_2d_array(res_split);
 		free_2d_array(args);
-		return (f_error(shell), NULL);
+		return (f_error(shell, "(null)"), NULL);
 	}
 	fn_path(res_split, args[0]);
-	i = 0;
 	while (res_split[i])
 	{
 		if (access(res_split[i], X_OK) == 0)
@@ -118,5 +118,5 @@ char	*search_in_paths(char **res_split, char **args, t_shell *shell)
 	}
 	free_2d_array(res_split);
 	free_2d_array(args);
-	return (f_error(shell), NULL);
+	return (f_error(shell, argv), NULL);
 }
