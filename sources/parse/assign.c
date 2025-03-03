@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   assign.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/25 15:48:25 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/03/01 17:13:46 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   assign.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:48:25 by nmattos           #+#    #+#             */
+/*   Updated: 2025/03/03 12:40:59 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	set_filename(t_command **cmd, t_token *tokens, t_token **current)
 		if (here_doc_redirection((*current)->token, cmd) == FAIL)
 			return (FAIL);
 	}
-	else if ((*cmd)->out_type == TEXTFILE)
+	else if ((*cmd)->out_type == TEXTFILE || (*cmd)->out_type == APPEND)
 	{
 		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
 		if (word == NULL)
