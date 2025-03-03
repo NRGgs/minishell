@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   execution_with_pipe_4.c                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/10 19:22:32 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:07:10 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   execution_with_pipe_4.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/03 16:21:31 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ static void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
  *
  * @param path The path to the executable.
  */
-static void	handle_external_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
+static void	handle_external_pipe(t_command **cmd_ptr, char *path, \
+		t_shell *shell)
 {
 	char	**args;
 

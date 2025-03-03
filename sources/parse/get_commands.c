@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:40:45 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/26 13:08:28 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:21:18 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_command	*get_commands(t_token *tokens)
 	return (commands);
 }
 
-static int	create_command(t_command **commands, t_token **tokens, t_token **current)
+static int	create_command(t_command **commands, \
+		t_token **tokens, t_token **current)
 {
 	t_command	*cmd;
 
