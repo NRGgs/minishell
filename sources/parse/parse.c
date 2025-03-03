@@ -1,18 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/25 15:40:41 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 15:52:07 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:40:41 by nmattos           #+#    #+#             */
+/*   Updated: 2025/03/03 16:32:59 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	check_open_quotes(char *str, size_t i);
+
+void	print_commands(t_command *commands)
+{
+	while (commands)
+	{
+		printf("Command: %s\n", commands->command);
+		printf("Pattern: %s\n", commands->pattern);
+		printf("input: %s\n", commands->input);
+		printf("output: %s\n", commands->output);
+		commands = commands->next;
+	}
+}
+
+void	print_tokens(t_token *tokens)
+{
+	while (tokens)
+	{
+		printf("Token: %s\n", tokens->token);
+		printf("Type: %d\n", tokens->type);
+		tokens = tokens->next;
+	}
+}
 
 t_command	*parse_input(char *input)
 {
@@ -33,6 +55,8 @@ t_command	*parse_input(char *input)
 	if (tokens == NULL)
 		return (NULL);
 	commands = get_commands(tokens);
+	print_commands(commands);
+	print_tokens(tokens);
 	clean_tokens(&tokens);
 	return (commands);
 }
@@ -50,8 +74,6 @@ static char	check_open_quotes(char *str, size_t i)
 		if ((str[i] == '\'' || str[i] == '\"') && !escaped)
 		{
 			quote = str[i++];
-			while (str[i] != '\0' && str[i] != quote)
-				i++;
 			if (str[i] == '\0')
 				return (quote);
 		}
