@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:48:25 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 12:40:59 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:37:46 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	set_filename(t_command **cmd, t_token *tokens, t_token **current)
 	char	*word;
 
 	if ((*cmd)->in_type == TEXTFILE
-		&& previous_token(tokens, *current)->type == E_REDIRECTION)
+		&& prev_token(tokens, *current)->type == E_REDIRECTION)
 	{
 		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
 		if (word == NULL)

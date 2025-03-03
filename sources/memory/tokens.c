@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 10:57:28 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 10:57:57 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:40:10 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ void	token_add_back(t_token **tokens, t_token *new)
 	current->next = new;
 }
 
-t_token	*previous_token(t_token *tokens, t_token *current)
+t_token	*prev_token(t_token *tokens, t_token *current)
 {
 	t_token	*previous;
 
 	previous = tokens;
+	if (previous == current)
+		return (NULL);
 	while (previous->next != current)
 		previous = previous->next;
 	if (previous == current)

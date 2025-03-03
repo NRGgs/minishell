@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:15:23 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/03/03 16:37:46 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 /* tokens.c */
 t_token		*token_new(char *word, t_token_type type);
 void		token_add_back(t_token **tokens, t_token *new);
-t_token		*previous_token(t_token *tokens, t_token *current);
+t_token		*prev_token(t_token *tokens, t_token *current);
 void		clean_tokens(t_token **tokens);
 
 /* free.c */

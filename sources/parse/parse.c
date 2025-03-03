@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:40:41 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 16:32:59 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:33:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_command	*parse_input(char *input)
 	if (tokens == NULL)
 		return (NULL);
 	commands = get_commands(tokens);
-	print_commands(commands);
-	print_tokens(tokens);
+	print_commands(commands);					// Debugging
+	print_tokens(tokens);						// Debugging
 	clean_tokens(&tokens);
 	return (commands);
 }

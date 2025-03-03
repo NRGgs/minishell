@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   tokenize.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/25 15:37:47 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/02/25 15:52:17 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/25 15:37:47 by nmattos           #+#    #+#             */
+/*   Updated: 2025/03/03 16:49:24 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,27 +68,28 @@ static int	get_word(char **str, char **word)
 static void	give_token_types(t_token **tokens)
 {
 	t_token	*current;
+	t_token	*previous;
 
 	current = *tokens;
-	while (current != NULL)
+	while (current != NULL && current->type == E_NONE)
 	{
-		if (current->type == E_NONE)
-		{
-			if (current == *tokens && !is_redirect(current->token))
-				current->type = E_COMMAND;
-			else if (is_redirect(current->token))
-				current->type = E_REDIRECTION;
-			else if (ft_strcmp(current->token, "|") == 0)
-				current->type = E_PIPE;
-			else if (previous_token(*tokens, current)->type == E_REDIRECTION)
-				current->type = E_FILENAME;
-			else if (previous_token(*tokens, current)->type == E_PIPE)
-				current->type = E_COMMAND;
-			else if (is_option(current->token))
-				current->type = E_OPTION;
-			else
-				current->type = E_ARGUMENT;
-		}
+		previous = prev_token(*tokens, current);
+		current->type = E_ARGUMENT;
+		if (previous != NULL && previous->type == E_REDIRECTION)
+			current->type = E_FILENAME;
+		else if (is_redirect(current->token))
+			current->type = E_REDIRECTION;
+		else if (ft_strcmp(current->token, "|") == 0)
+			current->type = E_PIPE;
+		else if (current == *tokens && !is_redirect(current->token))
+			current->type = E_COMMAND;
+		else if ((previous != NULL && previous->type == E_FILENAME)
+			&& !is_redirect(current->token))
+			current->type = E_COMMAND;
+		else if (previous != NULL && previous->type == E_PIPE)
+			current->type = E_COMMAND;
+		else if (is_option(current->token))
+			current->type = E_OPTION;
 		current = current->next;
 	}
 }
