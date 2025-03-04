@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:37:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 16:49:24 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:50:33 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ static void	give_token_types(t_token **tokens)
 		else if ((previous != NULL && previous->type == E_FILENAME)
 			&& !is_redirect(current->token))
 			current->type = E_COMMAND;
+		else if ((previous != NULL && previous->type == E_PIPE) && is_option(current->token))
+			current->type = E_OPTION;
 		else if (previous != NULL && previous->type == E_PIPE)
 			current->type = E_COMMAND;
-		else if (is_option(current->token))
-			current->type = E_OPTION;
 		current = current->next;
 	}
 }
