@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/03 17:33:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:00:09 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ char		*read_till_quotes(char delimiter, char **pattern);
 void		check_signals(void);
 void		signal_heredoc(int signum);
 void		set_error(char *error_msg, int error_code);
+void		command_handler(int signum);
 
 /* --------------- Parse --------------------------------------------------- */
 
