@@ -6,13 +6,14 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:40:41 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 16:33:52 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:49:07 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	check_open_quotes(char *str, size_t i);
+static void	update_escape(bool *escaped, char c);
 
 void	print_commands(t_command *commands)
 {
@@ -63,21 +64,34 @@ t_command	*parse_input(char *input)
 
 static char	check_open_quotes(char *str, size_t i)
 {
-	char	quote;
+	bool	in_single;
+	bool	in_double;
 	bool	escaped;
 
-	quote = '0';
+	in_single = false;
+	in_double = false;
 	escaped = false;
 	while (str[i] != '\0')
 	{
-		escaped = skip_escapes(str, &i, escaped);
-		if ((str[i] == '\'' || str[i] == '\"') && !escaped)
-		{
-			quote = str[i++];
-			if (str[i] == '\0')
-				return (quote);
-		}
+		if (str[i] == '\'' && !in_double && escaped == false)
+			in_single = !in_single;
+		else if (str[i] == '\"' && !in_single && escaped == false)
+			in_double = !in_double;
+		else if (!in_single)
+			update_escape(&escaped, str[i]);
 		i++;
 	}
+	if (in_single)
+		return ('\'');
+	if (in_double)
+		return ('\"');
 	return ('0');
+}
+
+static void	update_escape(bool *escaped, char c)
+{
+	if (c == '\\')
+		*escaped = !*escaped;
+	if (c != '\\')
+		*escaped = false;
 }
