@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/03 17:34:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:33:44 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char	**split_paths_env(t_env *env_list)
  *
  * @return A duplicated full path if found, or NULL.
  */
-char	*search_in_paths(char **res_split, char **args, t_shell *shell, char *argv)
+char	*search_in_paths(char **res_split, char **args, \
+		t_shell *shell, char *argv)
 {
 	int		i;
 	char	*found;

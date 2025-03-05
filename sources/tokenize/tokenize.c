@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:37:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/04 09:50:33 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:38:09 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,29 +67,29 @@ static int	get_word(char **str, char **word)
 
 static void	give_token_types(t_token **tokens)
 {
-	t_token	*current;
-	t_token	*previous;
+	t_token	*curr;
+	t_token	*prev;
 
-	current = *tokens;
-	while (current != NULL && current->type == E_NONE)
+	curr = *tokens;
+	while (curr && curr->type == E_NONE)
 	{
-		previous = prev_token(*tokens, current);
-		current->type = E_ARGUMENT;
-		if (previous != NULL && previous->type == E_REDIRECTION)
-			current->type = E_FILENAME;
-		else if (is_redirect(current->token))
-			current->type = E_REDIRECTION;
-		else if (ft_strcmp(current->token, "|") == 0)
-			current->type = E_PIPE;
-		else if (current == *tokens && !is_redirect(current->token))
-			current->type = E_COMMAND;
-		else if ((previous != NULL && previous->type == E_FILENAME)
-			&& !is_redirect(current->token))
-			current->type = E_COMMAND;
-		else if ((previous != NULL && previous->type == E_PIPE) && is_option(current->token))
-			current->type = E_OPTION;
-		else if (previous != NULL && previous->type == E_PIPE)
-			current->type = E_COMMAND;
-		current = current->next;
+		prev = prev_token(*tokens, curr);
+		curr->type = E_ARGUMENT;
+		if (prev && prev->type == E_REDIRECTION)
+			curr->type = E_FILENAME;
+		else if (is_redirect(curr->token))
+			curr->type = E_REDIRECTION;
+		else if (ft_strcmp(curr->token, "|") == 0)
+			curr->type = E_PIPE;
+		else if (curr == *tokens && !is_redirect(curr->token))
+			curr->type = E_COMMAND;
+		else if ((prev && prev->type == E_FILENAME)
+			&& !is_redirect(curr->token))
+			curr->type = E_COMMAND;
+		else if ((prev && prev->type == E_PIPE) && is_option(curr->token))
+			curr->type = E_OPTION;
+		else if (prev && prev->type == E_PIPE)
+			curr->type = E_COMMAND;
+		curr = curr->next;
 	}
 }

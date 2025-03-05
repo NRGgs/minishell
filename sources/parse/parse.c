@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:40:41 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/05 11:49:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:34:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,6 @@
 
 static char	check_open_quotes(char *str, size_t i);
 static void	update_escape(bool *escaped, char c);
-
-void	print_commands(t_command *commands)
-{
-	while (commands)
-	{
-		printf("Command: %s\n", commands->command);
-		printf("Pattern: %s\n", commands->pattern);
-		printf("input: %s\n", commands->input);
-		printf("output: %s\n", commands->output);
-		commands = commands->next;
-	}
-}
-
-void	print_tokens(t_token *tokens)
-{
-	while (tokens)
-	{
-		printf("Token: %s\n", tokens->token);
-		printf("Type: %d\n", tokens->type);
-		tokens = tokens->next;
-	}
-}
 
 t_command	*parse_input(char *input)
 {
@@ -56,8 +34,6 @@ t_command	*parse_input(char *input)
 	if (tokens == NULL)
 		return (NULL);
 	commands = get_commands(tokens);
-	print_commands(commands);					// Debugging
-	print_tokens(tokens);						// Debugging
 	clean_tokens(&tokens);
 	return (commands);
 }

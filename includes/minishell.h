@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/05 12:31:06 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:34:15 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,8 @@ void		fn_path(char **res_split, char *argv);
 void		free_2d_array(char **arr);
 
 /* find_path_2.c */
-char		*search_in_paths(char **res_split, char **args, t_shell *shell, char *argv);
+char		*search_in_paths(char **res_split, char **args, \
+				t_shell *shell, char *argv);
 char		**split_paths_env(t_env *env_list);
 char		**split_args_with_prepare(char *argv, t_env *env_list, \
 				t_shell *shell);
