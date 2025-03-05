@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/05 12:00:09 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:31:06 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ t_command	*get_commands(t_token *tokens);
 /* heredoc.c */
 int			here_doc_redirection(char *delimiter, t_command **last);
 int			restore_stdin(int stdin_backup, char **input);
+char		*create_heredoc_file(char *input, t_env *env_list, t_shell *shell);
 
 /* --------------- Tokenize ------------------------------------------------ */
 
@@ -179,6 +180,7 @@ bool		is_option(char *s);
 
 /* prepare */
 int			prepare_arg(t_env *env_list, char **arg, t_shell *shell);
+int			handle_variables(t_env *env_list, char **arg, t_shell *shell);
 
 /* variables */
 char		*replace_var(char *str, char *var_ptr, \

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 14:12:26 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:32:10 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,6 @@ int	here_doc_redirection(char *delimiter, t_command **last)
 	(*last)->pattern = input;
 	return (SUCCESS);
 }
-
-// int	custom_getc(FILE *stream)
-// {
-// 	int	c;
-
-// 	c = getc(stream);
-// 	if (c == EOF)
-// 	{
-// 		rl_done = 1;
-// 	}
-// }
 
 /**
  * Reads input from user until delimiter is found.
@@ -81,6 +70,33 @@ static int	read_here_doc(char *delimiter, char **input)
 			return (FAIL);
 	}
 	return (SUCCESS);
+}
+
+char	*create_heredoc_file(char *input, t_env *env_list, t_shell *shell)
+{
+	int		fd;
+	char	*fn;
+	ssize_t	bytes_written;
+
+	fn = ft_strdup("heredoc");
+	if (fn == NULL)
+		return (NULL);
+	fd = open(fn, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd == -1)
+		return (free(fn), NULL);
+	if (handle_variables(env_list, &input, shell) == FAIL)
+	{
+		close(fd);
+		return (free(fn), NULL);
+	}
+	bytes_written = write(fd, input, ft_strlen(input));
+	if (bytes_written == -1 || bytes_written != (ssize_t)ft_strlen(input))
+	{
+		close(fd);
+		return (free(fn), NULL);
+	}
+	close(fd);
+	return (fn);
 }
 
 /**

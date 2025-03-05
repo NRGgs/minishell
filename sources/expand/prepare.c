@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   prepare.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/18 10:47:31 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/01 16:58:16 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   prepare.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/03/05 12:30:49 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	handle_variables(t_env *env_list, char **arg, t_shell *shell);
 static int	handle_backslashes(char **arg);
 static int	handle_quotes(char **str);
 static int	trim_memory(char **str);
@@ -44,7 +43,7 @@ int	prepare_arg(t_env *env_list, char **arg, t_shell *shell)
  * @param arg		The argument to prepare.
  * @return int		SUCCESS or FAIL.
  */
-static int	handle_variables(t_env *env_list, char **arg, t_shell *shell)
+int	handle_variables(t_env *env_list, char **arg, t_shell *shell)
 {
 	char	*var_ptr;
 	int		nth_var;
