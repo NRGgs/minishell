@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 13:48:08 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:02:56 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,6 @@ typedef struct s_child_data
 *                             Function Prototypes                             *
 \*****************************************************************************/
 
-// TEMP ------------------------------------
-bool		valid_char(char c);
-char		*read_till_quotes(char delimiter, char **pattern);
-
 /* signal.c */
 void		check_signals(void);
 void		signal_heredoc(int signum);
@@ -150,6 +146,10 @@ void		command_handler(int signum);
 
 /* parse.c */
 t_command	*parse_input(char *input);
+
+/* parse_utils.c */
+bool		valid_char(char c);
+char		*read_till_quotes(char delimiter, char **pattern);
 
 /* assign.c */
 int			assign_token(t_command **cmd, t_token **tokens, t_token **current);

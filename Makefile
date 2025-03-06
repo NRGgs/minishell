@@ -47,7 +47,7 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(MEM_DIR)/free.c \
 		$(SRC_DIR)/$(MEM_DIR)/commands.c \
 		$(SRC_DIR)/$(MEM_DIR)/tokens.c \
-		$(SRC_DIR)/$(PARSE_DIR)/necessary.c \
+		$(SRC_DIR)/$(PARSE_DIR)/parse_utils.c \
 		$(SRC_DIR)/$(PARSE_DIR)/assign.c \
 		$(SRC_DIR)/$(PARSE_DIR)/get_commands.c \
 		$(SRC_DIR)/$(PARSE_DIR)/heredoc.c \
