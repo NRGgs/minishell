@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_with_pipe_4.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/03 16:21:31 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:42:01 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ extern char	**environ;
  *
  * @param current The current command structure.
  */
-static void	process_redir_or_exit(t_command *current)
+void	process_redir_or_exit(t_command *current)
 {
 	if (process_redirections(current) == ERROR)
 	{
@@ -37,7 +37,7 @@ static void	process_redir_or_exit(t_command *current)
  *
  * @param path The path to the executable (unused for built-ins).
  */
-static void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
+void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 {
 	t_env	*env_copy;
 	int		builtin_ret;
@@ -50,6 +50,34 @@ static void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 	exit(builtin_ret);
 }
 
+char	**get_args_without_heredoc(t_command *cmd)
+{
+	char	*saved_pattern;
+	char	**args;
+
+	saved_pattern = NULL;
+	if (cmd->in_type == HERE_DOC && cmd->pattern && ft_strlen(cmd->pattern) > 0)
+	{
+		saved_pattern = ft_strdup(cmd->pattern);
+		if (!saved_pattern)
+			return (NULL);
+		free(cmd->pattern);
+		cmd->pattern = ft_strdup("");
+		if (!cmd->pattern)
+		{
+			free(saved_pattern);
+			return (NULL);
+		}
+	}
+	args = get_command_args(cmd);
+	if (saved_pattern)
+	{
+		free(cmd->pattern);
+		cmd->pattern = saved_pattern;
+	}
+	return (args);
+}
+
 /**
  * @brief Handles the execution of an external command in a pipeline.
  * Builds the argument vector, executes the command via execve,
@@ -59,8 +87,7 @@ static void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
  *
  * @param path The path to the executable.
  */
-static void	handle_external_pipe(t_command **cmd_ptr, char *path, \
-		t_shell *shell)
+static void	handle_external_pipe(t_command **cmd_ptr, char *path)
 {
 	char	**args;
 
@@ -69,7 +96,7 @@ static void	handle_external_pipe(t_command **cmd_ptr, char *path, \
 		clean_commands(cmd_ptr);
 		exit(127);
 	}
-	args = build_execve_args(*cmd_ptr, shell);
+	args = get_args_without_heredoc(*cmd_ptr);
 	if (!args)
 	{
 		clean_commands(cmd_ptr);
@@ -83,22 +110,4 @@ static void	handle_external_pipe(t_command **cmd_ptr, char *path, \
 		perror("execve");
 		exit(126);
 	}
-}
-
-/**
- * @brief Executes a command in a pipeline.
- * Processes redirections and then dispatches to either the built-in
- * or external pipe handler.
- *
- * @param current The current command structure.
- *
- * @param path The path to the executable.
- */
-void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
-{
-	process_redir_or_exit(current);
-	if (is_builtin(current->command))
-		handle_builtin_pipe(&current, path, shell);
-	else
-		handle_external_pipe(&current, path, shell);
 }
