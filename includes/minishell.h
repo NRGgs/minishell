@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 10:44:51 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:46:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,8 @@ t_env		*create_env_node(const char *name, const char *value);
 int			count_tokens(char **arr);
 
 /* execution_without_pipe */
-void	handle_child_process(t_command *commands, char *path, char *args[], t_shell *shell);
+void		handle_child_process(t_command *commands, char *path,
+				char *args[], t_shell *shell);
 void		execute_command(t_command *commands, char *path,
 				char *args[], t_shell *shell);
 int			exec_external_no_pipe(t_command *commands, t_shell *shell);
