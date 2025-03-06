@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 07:49:10 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:55:04 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	f_error(t_shell *shell, char *command)
 {
 	if (!command || !*command)
 		command = "(null)";
-	if(is_builtin(command))
+	if (is_builtin(command))
 		return ;
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": command not found\n", 2);
@@ -56,6 +56,7 @@ void	f_error(t_shell *shell, char *command)
 char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
 {
 	char	*dup;
+	char	*processed;
 	char	**result;
 
 	dup = ft_strdup(argv);
@@ -66,8 +67,12 @@ char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
 		free(dup);
 		return (NULL);
 	}
-	result = ft_split(dup, ' ');
+	processed = handle_double_spaces(dup);
 	free(dup);
+	if (!processed)
+		return (NULL);
+	result = ft_split(processed, ' ');
+	free(processed);
 	return (result);
 }
 

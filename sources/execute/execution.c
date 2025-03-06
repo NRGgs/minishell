@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 07:49:00 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:57:06 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ static int	ft_isspace(int c)
 
 int	is_all_whitespace(const char *str)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (!str)
 		return (1);
 	while (str[i])

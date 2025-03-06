@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:40:23 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/28 14:50:08 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:56:22 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,33 @@ int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 		free(path);
 	}
 	return (SUCCESS);
+}
+
+char	*handle_double_spaces(const char *str)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*new_str;
+
+	len = strlen(str);
+	i = 0;
+	j = 0;
+	new_str = malloc(3 * len + 1);
+	if (!new_str)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == ' ' && str[i + 1] == ' ')
+		{
+			new_str[j++] = ' ';
+			new_str[j++] = '\001';
+			new_str[j++] = ' ';
+			i += 2;
+		}
+		else
+			new_str[j++] = str[i++];
+	}
+	new_str[j] = '\0';
+	return (new_str);
 }

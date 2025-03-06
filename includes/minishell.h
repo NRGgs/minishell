@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 07:48:57 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 09:56:19 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,7 @@ int			process_single_command(t_command *current, int *pipe_in,
 void		parent_branch(t_command *current, int *pipe_in, int pipe_fd[2]);
 void		child_branch(t_child_data *child);
 int			setup_pipe_if_needed(t_command *current, int pipe_fd[2]);
+char		*handle_double_spaces(const char *str);
 /* cd.c */
 int			change_pwd(t_env *env_list);
 int			cd_home(t_env *env_list);
