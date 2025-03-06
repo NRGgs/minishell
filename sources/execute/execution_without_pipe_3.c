@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe_3.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:54 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:38:44 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:34:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,12 @@ static void	restore_heredoc(t_command *cmd, char *saved)
 	}
 }
 
-static int	cleanup_and_return(char *path, char *heredoc,
-				int exit_status, t_shell *shell)
+static int	cleanup_and_return(char *path, char *heredoc)
 {
 	if (path)
 		free(path);
 	if (heredoc)
 		free(heredoc);
-	shell->exit_status = exit_status;
 	return (SHELL_CONTINUE);
 }
 
@@ -62,12 +60,10 @@ int	exec_external_no_pipe(t_command *commands, t_shell *shell)
 	heredoc_content = prepare_heredoc(commands);
 	path = true_path(commands->command, commands->env_list, shell);
 	if (!path)
-		return (cleanup_and_return(NULL, heredoc_content,
-				CMD_NOT_FOUND, shell));
+		return (cleanup_and_return(NULL, heredoc_content));
 	args = build_execve_args(commands, shell);
 	if (!args)
-		return (cleanup_and_return(path, heredoc_content,
-				CMD_NOT_FOUND, shell));
+		return (cleanup_and_return(path, heredoc_content));
 	restore_heredoc(commands, heredoc_content);
 	execute_command(commands, path, args, shell);
 	free(path);

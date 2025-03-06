@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 13:39:49 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:47:47 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*check_argv_executable(char *argv, t_shell *shell)
 		{
 			ft_putstr_fd(argv, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			shell->exit_status = CMD_NOT_FOUND;
+			shell->exit_status = IS_DIRECTORY;
 			return (NULL);
 		}
 		if (access(argv, X_OK) == 0)

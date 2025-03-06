@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 13:43:03 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:48:08 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 /* Exit Statuses */
 # define MINOR 1
 # define MAJOR 2
+# define IS_DIRECTORY 126
 # define CMD_NOT_FOUND 127
 # define SIGINT_CANCELLATION 130
 # define ILLEGAL_INSTRUCTION 132

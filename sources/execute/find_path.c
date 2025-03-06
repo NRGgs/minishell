@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 12:07:33 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 09:37:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:32:10 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*find_path(char *command, t_env *env_list, t_shell *shell)
 		{
 			ft_putstr_fd(command, 2);
 			ft_putstr_fd(": Is a directory\n", 2);
-			shell->exit_status = CMD_NOT_FOUND;
+			shell->exit_status = IS_DIRECTORY;
 			return (NULL);
 		}
 		if (access(command, X_OK) == 0)
@@ -139,6 +139,8 @@ char	*true_path(char *argv, t_env *env_list, t_shell *shell)
 	check_exec = check_argv_executable(argv, shell);
 	if (check_exec)
 		return (check_exec);
+	if (shell->exit_status == IS_DIRECTORY)
+		return (NULL);
 	res_split = split_paths_env(env_list);
 	if (!res_split)
 	{
