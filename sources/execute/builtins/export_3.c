@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:42:55 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 10:51:53 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:00:00 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	valid_export_arg(char *arg, t_shell *shell)
 	char	*equal_sign;
 
 	i = 0;
-	while (ft_isalnum(arg[i]) || arg[i] == '_')
+	while (ft_isalnum(arg[i]) || arg[i] == ' ')
 		i++;
 	equal_sign = ft_strchr(arg, '=');
 	if (!equal_sign)

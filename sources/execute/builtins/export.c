@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   export.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/26 16:22:15 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:03:55 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/06 11:01:34 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	my_export(t_env **env_list, char **args, t_shell *shell)
 	if (!args || !args[0])
 	{
 		print_exported_vars(*env_list);
-		return (0);
+		return (shell->exit_status);
 	}
 	i = 0;
 	while (args[i])
@@ -98,7 +98,7 @@ int	my_export(t_env **env_list, char **args, t_shell *shell)
 		process_export_arg(env_list, args[i], shell);
 		i++;
 	}
-	return (0);
+	return (shell->exit_status);
 }
 
 /**
