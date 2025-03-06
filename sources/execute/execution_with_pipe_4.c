@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:42:01 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:44:36 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**get_args_without_heredoc(t_command *cmd)
  *
  * @param path The path to the executable.
  */
-static void	handle_external_pipe(t_command **cmd_ptr, char *path)
+void	handle_external_pipe(t_command **cmd_ptr, char *path)
 {
 	char	**args;
 
