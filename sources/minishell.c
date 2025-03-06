@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/05 12:00:20 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 07:49:49 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ static void	run_commands(t_shell *shell)
 		input = read_input();
 		if (!input)
 			return ;
+		if (is_all_whitespace(input))
+		{
+			free(input);
+			continue ;
+		}
 		if (ft_strlen(input) > 0)
 			add_history(input);
 		ret = parse_and_exec(input, shell->env_list, shell);

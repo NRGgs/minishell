@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/27 15:46:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 07:49:00 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,24 @@ int	count_tokens(char **arr)
 	while (arr && arr[cnt])
 		cnt++;
 	return (cnt);
+}
+
+static int	ft_isspace(int c)
+{
+	return ((c == ' ')
+		|| (c >= 9 && c <= 13));
+}
+
+int	is_all_whitespace(const char *str)
+{
+	int i = 0;
+	if (!str)
+		return (1);
+	while (str[i])
+	{
+		if (!ft_isspace(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
