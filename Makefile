@@ -2,7 +2,6 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
 LFLAGS = -lreadline
-# -fsanitize=address
 
 # Libraries
 LIBFT_PATH	= ./includes/libft
@@ -60,7 +59,6 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_without_pipe_3.c
 
 OBJ_DIR = objects
-# OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))
 
 # Output executable
