@@ -6,14 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:38:15 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/06 10:13:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:42:12 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static size_t	length_redirect(char *str);
-static size_t	quote_length(char *str, size_t len);
 
 size_t	next_word_length(char *str)
 {
@@ -38,7 +37,7 @@ size_t	next_word_length(char *str)
 	return (len);
 }
 
-static size_t	quote_length(char *str, size_t len)
+size_t	quote_length(char *str, size_t len)
 {
 	char	quote;
 

@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 10:53:51 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:39:16 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ t_token		*tokenize(char *str);
 
 /* word_length.c */
 size_t		next_word_length(char *str);
+size_t		quote_length(char *str, size_t len);
 
 /* utils.c */
 void		skip_spaces(char **s);

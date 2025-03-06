@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 11:19:25 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:20:39 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ int	execute_builtin(t_command **cmd_list, t_shell *shell)
 		return (1);
 	}
 	ret = select_builtin(command, shell);
-	// if (ret == 0)
-	// 	shell->exit_status = 0;
 	return (ret);
 }
 

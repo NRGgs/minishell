@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   cd.c                                               :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/04 13:18:33 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:00:40 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 13:18:33 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/06 11:48:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
+
+static bool	too_many_args(char *str);
 
 /**
  * @brief Updates the PWD environment variable after a directory change.
@@ -98,13 +100,34 @@ int	cd(t_env *env_list, t_command *command, t_shell *shell)
 	if (check_option(trimmed_path) == 1)
 		return (free(trimmed_path), FAIL);
 	exit_code = chdir(trimmed_path);
-	if (exit_code < 0)
+	if (too_many_args(command->pattern))
+		shell->exit_status = 1;
+	else if (exit_code < 0)
 	{
 		fprintf(stderr, "cd: %s: No such file or directory\n", trimmed_path);
 		shell->exit_status = 1;
 	}
 	free(trimmed_path);
 	return (change_pwd(env_list));
+}
+
+static bool	too_many_args(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i = quote_length(str, i);
+		if (str[i] == ' ')
+		{
+			ft_putstr_fd("bash: cd: too many arguments\n", 2);
+			return (true);
+		}
+		i++;
+	}
+	return (false);
 }
 
 /**
