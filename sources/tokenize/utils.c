@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:40:33 by nmattos           #+#    #+#             */
-/*   Updated: 2025/02/26 10:57:07 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:18:55 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ bool	is_redirect(char *s)
 
 bool	is_option(char *s)
 {
-	if (*s == '-')
+	if (*s == '-' && ft_isalpha(*(s + 1)))
 		return (true);
 	return (false);
 }
