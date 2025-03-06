@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:51 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 12:41:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:35:28 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
 	if (is_builtin(current->command))
 		handle_builtin_pipe(&current, path, shell);
 	else
-		handle_external_pipe(&current, path);
+		handle_external_pipe(&current, path, shell);
 }

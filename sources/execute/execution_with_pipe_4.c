@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 12:41:21 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:42:44 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,39 @@ void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 	exit(builtin_ret);
 }
 
-char	**get_args_without_heredoc(t_command *cmd)
+static char	*save_and_prepare_pattern(t_command *cmd, t_shell *shell)
+{
+	char	*saved;
+	char	*temp;
+
+	if (!(cmd->pattern && ft_strlen(cmd->pattern) > 0))
+		return (NULL);
+	saved = ft_strdup(cmd->pattern);
+	if (!saved)
+		return (NULL);
+	temp = ft_strdup(saved);
+	if (!temp)
+	{
+		free(saved);
+		return (NULL);
+	}
+	if (prepare_arg(cmd->env_list, &temp, shell) == FAIL)
+	{
+		free(saved);
+		free(temp);
+		return (NULL);
+	}
+	free(cmd->pattern);
+	cmd->pattern = temp;
+	return (saved);
+}
+
+char	**get_args_without_heredoc(t_command *cmd, t_shell *shell)
 {
 	char	*saved_pattern;
 	char	**args;
 
-	saved_pattern = NULL;
-	if (cmd->in_type == HERE_DOC && cmd->pattern && ft_strlen(cmd->pattern) > 0)
-	{
-		saved_pattern = ft_strdup(cmd->pattern);
-		if (!saved_pattern)
-			return (NULL);
-		free(cmd->pattern);
-		cmd->pattern = ft_strdup("");
-		if (!cmd->pattern)
-		{
-			free(saved_pattern);
-			return (NULL);
-		}
-	}
+	saved_pattern = save_and_prepare_pattern(cmd, shell);
 	args = get_command_args(cmd);
 	if (saved_pattern)
 	{
@@ -87,7 +101,7 @@ char	**get_args_without_heredoc(t_command *cmd)
  *
  * @param path The path to the executable.
  */
-void	handle_external_pipe(t_command **cmd_ptr, char *path)
+void	handle_external_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 {
 	char	**args;
 
@@ -96,7 +110,7 @@ void	handle_external_pipe(t_command **cmd_ptr, char *path)
 		clean_commands(cmd_ptr);
 		exit(127);
 	}
-	args = get_args_without_heredoc(*cmd_ptr);
+	args = get_args_without_heredoc(*cmd_ptr, shell);
 	if (!args)
 	{
 		clean_commands(cmd_ptr);

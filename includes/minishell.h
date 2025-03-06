@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 12:46:56 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:43:03 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,8 @@ char		*handle_double_spaces(const char *str);
 void		handle_builtin_pipe(t_command **cmd_ptr, char *path,
 				t_shell *shell);
 void		process_redir_or_exit(t_command *current, t_shell *shell);
-void		handle_external_pipe(t_command **cmd_ptr, char *path);
+void		handle_external_pipe(t_command **cmd_ptr,
+				char *path, t_shell *shell);
 
 /* cd.c */
 int			change_pwd(t_env *env_list);
