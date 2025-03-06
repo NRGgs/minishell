@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/05 12:32:10 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:56:17 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*create_heredoc_file(char *input, t_env *env_list, t_shell *shell)
 		return (free(fn), NULL);
 	}
 	bytes_written = write(fd, input, ft_strlen(input));
+	write(fd, "\n", 1);
 	if (bytes_written == -1 || bytes_written != (ssize_t)ft_strlen(input))
 	{
 		close(fd);
