@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   exit.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/04 13:56:52 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:01:47 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/06 11:17:37 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@ static int	exit_numeric_error(char **tokens, int *exit_code)
 	ft_putstr_fd(tokens[0], STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 	free_2d_array(tokens);
-	*exit_code = 2;
+	*exit_code = MAJOR;
 	return (SHELL_EXIT);
 }
 
-static int	exit_too_many_args(char **tokens)
+static int	exit_too_many_args(char **tokens, int *exit_code)
 {
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
 	free_2d_array(tokens);
+	*exit_code = MINOR;
 	return (SHELL_CONTINUE);
 }
 
@@ -39,7 +40,7 @@ static int	check_exit_tokens(char **tokens, int *exit_code)
 	if (error)
 		return (exit_numeric_error(tokens, exit_code));
 	if (count_tokens(tokens) > 1)
-		return (exit_too_many_args(tokens));
+		return (exit_too_many_args(tokens, exit_code));
 	free_2d_array(tokens);
 	return (-1);
 }
