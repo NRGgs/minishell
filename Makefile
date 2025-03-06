@@ -41,6 +41,7 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(BLT_DIR)/exit.c \
 		$(SRC_DIR)/$(BLT_DIR)/export.c \
 		$(SRC_DIR)/$(BLT_DIR)/export_2.c \
+		$(SRC_DIR)/$(BLT_DIR)/export_3.c \
 		$(SRC_DIR)/$(BLT_DIR)/pwd.c \
 		$(SRC_DIR)/$(BLT_DIR)/unset.c \
 		$(SRC_DIR)/$(MEM_DIR)/free.c \

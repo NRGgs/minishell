@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 10:46:17 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:53:51 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,6 +313,9 @@ void		handle_export_equal(t_env **env_list, char *arg,
 				char *equal_sign);
 void		handle_export_no_equal(t_env **env_list, char *arg);
 void		process_export_arg(t_env **env_list, char *arg, t_shell *shell);
+
+/* export_3.c */
+bool		valid_export_arg(char *arg, t_shell *shell);
 
 /* unset.c */
 int			my_unset(t_env **env_list, char **args);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   export_2.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/27 14:12:55 by iriadyns      #+#    #+#                 */
-/*   Updated: 2025/03/01 17:02:58 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   export_2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 14:12:55 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/06 10:48:33 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,17 @@ void	process_export_arg(t_env **env_list, char *arg, t_shell *shell)
 	char	*equal_sign;
 
 	equal_sign = ft_strchr(arg, '=');
-	if (equal_sign)
+	if (valid_export_arg(arg, shell))
 	{
-		if (prepare_arg(*env_list, &arg, shell) == FAIL)
-			return ;
-		equal_sign = ft_strchr(arg, '=');
-		handle_export_equal(env_list, arg, equal_sign);
-		free(arg);
-	}
-	else
-	{
-		handle_export_no_equal(env_list, arg);
+		if (equal_sign)
+		{
+			if (prepare_arg(*env_list, &arg, shell) == FAIL)
+				return ;
+			equal_sign = ft_strchr(arg, '=');
+			handle_export_equal(env_list, arg, equal_sign);
+		}
+		else
+			handle_export_no_equal(env_list, arg);
 		free(arg);
 	}
 }
