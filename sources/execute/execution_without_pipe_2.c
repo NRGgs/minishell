@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:32:08 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:42:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 		{
 			backup_in = dup(STDIN_FILENO);
 			backup_out = dup(STDOUT_FILENO);
-			if (process_redirections(commands) == ERROR)
+			if (process_redirections(commands, shell) == ERROR)
 				return (restore_fds(backup_in, backup_out),
 					SHELL_CONTINUE);
 			restore_fds(backup_in, backup_out);
@@ -81,7 +81,7 @@ static void	handle_here_doc(t_command *commands, t_shell *shell)
 void	handle_child_process(t_command *commands, char *path,
 			char *args[], t_shell *shell)
 {
-	if (process_redirections(commands) == ERROR)
+	if (process_redirections(commands, shell) == ERROR)
 		exit(1);
 	if (commands->in_type == HERE_DOC)
 		handle_here_doc(commands, shell);

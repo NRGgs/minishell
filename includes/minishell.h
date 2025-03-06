@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 11:39:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:46:56 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ int			setup_pipe_if_needed(t_command *current, int pipe_fd[2]);
 char		*handle_double_spaces(const char *str);
 void		handle_builtin_pipe(t_command **cmd_ptr, char *path,
 				t_shell *shell);
-void		process_redir_or_exit(t_command *current);
+void		process_redir_or_exit(t_command *current, t_shell *shell);
 void		handle_external_pipe(t_command **cmd_ptr, char *path);
 
 /* cd.c */
@@ -330,9 +330,9 @@ int			exit_shell(char *pattern, t_command *command, t_shell *shell);
 int			env(t_env *env_list);
 
 /* redirect.c */
-int			handle_input_redirection(t_command *cmd);
-int			handle_output_redirection(t_command *cmd);
-int			process_redirections(t_command *cmd);
+int			handle_input_redirection(t_command *cmd, t_shell *shell);
+int			handle_output_redirection(t_command *cmd, t_shell *shell);
+int			process_redirections(t_command *cmd, t_shell *shell);
 
 /* init_env_list.c */
 int			parse_env_var(char *env_str, char **name, char **value);

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:44:36 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:41:21 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ extern char	**environ;
  *
  * @param current The current command structure.
  */
-void	process_redir_or_exit(t_command *current)
+void	process_redir_or_exit(t_command *current, t_shell *shell)
 {
-	if (process_redirections(current) == ERROR)
+	if (process_redirections(current, shell) == ERROR)
 	{
 		ft_putstr_fd("Error: Redirection failed.\n", 2);
 		exit(1);
