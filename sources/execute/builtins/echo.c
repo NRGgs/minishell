@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:00:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:19:47 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,20 +55,6 @@ static int	process_echo_options(char **args, int *start_index)
 	return (flag);
 }
 
-static void	print_echo_arguments(char **args, int start_index)
-{
-	int	i;
-
-	i = start_index;
-	while (args[i])
-	{
-		ft_putstr_fd(args[i], STDOUT_FILENO);
-		if (args[i + 1])
-			ft_putstr_fd(" ", STDOUT_FILENO);
-		i++;
-	}
-}
-
 int	echo(t_command *command, t_shell *shell)
 {
 	int		flag;
@@ -79,13 +65,13 @@ int	echo(t_command *command, t_shell *shell)
 		return (1);
 	if (!command->pattern)
 		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
-	if (prepare_arg(command->env_list, &command->pattern, shell) == FAIL)
-		return (1);
 	args = ft_split(command->pattern, ' ');
 	if (!args)
 		return (1);
 	flag = process_echo_options(args, &start_index);
-	print_echo_arguments(args, start_index);
+	if (prepare_arg(command->env_list, &command->pattern, shell) == FAIL)
+		return (1);
+	ft_putstr_fd(command->pattern, STDOUT_FILENO);
 	if (!flag)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	free_split(args);
