@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:47:31 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/05 12:30:49 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/06 10:28:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ int	handle_variables(t_env *env_list, char **arg, t_shell *shell)
 	nth_var = 0;
 	while (var_ptr)
 	{
-		if (char_is_escaped(*arg, var_ptr) == false
+		if (var_ptr[1] == ' ' || var_ptr[1] == '\0' || var_ptr[1] == '\\'
+			|| var_ptr[1] == '\'' || var_ptr[1] == '\"')
+			nth_var++;
+		else if (char_is_escaped(*arg, var_ptr) == false
 			&& in_single_quotes(*arg, var_ptr) == false)
 		{
 			*arg = replace_var(*arg, var_ptr, env_list, shell);
