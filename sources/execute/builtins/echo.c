@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 10:19:47 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/10 16:49:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	echo(t_command *command, t_shell *shell)
 		return (1);
 	if (!command->pattern)
 		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
-	args = ft_split(command->pattern, ' ');
+	args = ft_split(command->options, ' ');
 	if (!args)
 		return (1);
 	flag = process_echo_options(args, &start_index);
