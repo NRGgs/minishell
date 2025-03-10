@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:37:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/06 12:52:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/10 15:25:39 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	give_token_types(t_token **tokens)
 		else if ((prev && (prev->type == E_COMMAND || prev->type == E_OPTION))
 			&& is_option(curr->token))
 			curr->type = E_OPTION;
-		else if (prev && prev->type == E_PIPE)
+		else if (prev && (prev->type == E_PIPE || prev->type == E_FILENAME))
 			curr->type = E_COMMAND;
 		curr = curr->next;
 	}
