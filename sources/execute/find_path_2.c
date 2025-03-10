@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path_2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 13:47:47 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:35:40 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	f_error(t_shell *shell, char *command)
 	ft_putstr_fd(": command not found\n", 2);
 	shell->exit_status = CMD_NOT_FOUND;
 }
+
 
 char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
 {
@@ -110,7 +111,7 @@ char	*search_in_paths(char **res_split, char **args, \
 	{
 		free_2d_array(res_split);
 		free_2d_array(args);
-		return (f_error(shell, "(null)"), NULL);
+		return (f_error(shell, "''"), NULL);
 	}
 	fn_path(res_split, args[0]);
 	while (res_split[i])
