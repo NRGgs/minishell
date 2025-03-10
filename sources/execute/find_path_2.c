@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/10 18:35:40 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:51:25 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
 	free(dup);
 	if (!processed)
 		return (NULL);
-	result = ft_split(processed, ' ');
+	result = special_split(processed, ' ');
 	free(processed);
 	return (result);
 }

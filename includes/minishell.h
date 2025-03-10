@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/06 14:02:56 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/10 18:50:15 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,5 +345,6 @@ void		clear_env_list(t_env *env_list);
 /* build_execve_args.c */
 char		**build_execve_args(t_command *cmd, t_shell *shell);
 int			is_all_whitespace(const char *str);
+char		**special_split(char const *s, char c);
 
 #endif

@@ -56,7 +56,8 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(TKN_DIR)/word_length.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_5.c \
 		$(SRC_DIR)/$(EXE_DIR)/execution_with_pipe_6.c \
-		$(SRC_DIR)/$(EXE_DIR)/execution_without_pipe_3.c
+		$(SRC_DIR)/$(EXE_DIR)/execution_without_pipe_3.c \
+		$(SRC_DIR)/$(EXE_DIR)/special_split.c
 
 OBJ_DIR = objects
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))
