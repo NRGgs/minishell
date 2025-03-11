@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/10 18:50:15 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:58:45 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,5 +346,7 @@ void		clear_env_list(t_env *env_list);
 char		**build_execve_args(t_command *cmd, t_shell *shell);
 int			is_all_whitespace(const char *str);
 char		**special_split(char const *s, char c);
+char		**fill_tokens(const char *s, char c,
+				int token_count);
 
 #endif

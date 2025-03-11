@@ -6,99 +6,56 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/10 18:49:08 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/10 19:05:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:58:55 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	get_word_count(char *s, char c)
-{
-	int	word_count;
-
-	word_count = 0;
-	if (*s == '\0')
-		return (0);
-	if (c == 0)
-		return (1);
-	while (*s == c)
-		s++;
-	while (*s != '\0')
-	{
-		if (*s == c)
-		{
-			word_count++;
-			while (*s == c)
-				s++;
-		}
-		else
-			s++;
-	}
-	if (*(s - 1) != c)
-		word_count++;
-	return (word_count);
-}
-
-static void	free_result(char **result, int nth_word)
-{
-	while (nth_word >= 0)
-		free(result[nth_word++]);
-	free(result);
-	return ;
-}
-
-static char	**allocate_words(char *s, char c, char **result)
-{
-	int	length;
-	int	nth_word;
-
-	nth_word = 0;
-	length = 1;
-	while (*s == c)
-		s++;
-	while (*s != '\0')
-	{
-		while (*s != '\0' && *(s++) != c)
-			length++;
-		if (length > 0)
-		{
-			result[nth_word] = malloc((length) * sizeof(char));
-			if (result[nth_word] == NULL)
-				return (free_result(result, nth_word - 1), NULL);
-			length = 1;
-			nth_word++;
-		}
-		while (*s == c && *s != '\0')
-			s++;
-	}
-	return (result);
-}
-
-static char	**split_words(char *s, char c, char **result)
+static int	is_all_delim(const char *s, char c)
 {
 	int	i;
-	int	nth_word;
+	int	all;
 
-	nth_word = 0;
 	i = 0;
-	while (*s == c)
-		s++;
-	while (*s != '\0')
+	all = 1;
+	while (s[i])
 	{
-		while (*s != '\0' && *s != c)
-			result[nth_word][i++] = *(s++);
-		result[nth_word++][i] = '\0';
-		i = 0;
-		while (*s == c && *s != '\0')
-			s++;
+		if (s[i] != c && s[i] != '\001')
+		{
+			all = 0;
+			break ;
+		}
+		i++;
 	}
-	result[nth_word] = NULL;
-	return (result);
+	return (all);
+}
+
+static int	count_tokens_split(const char *s, char c)
+{
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 0;
+	while (s[i])
+	{
+		while (s[i] && (s[i] == c || s[i] == '\001'))
+			i++;
+		if (s[i])
+		{
+			count++;
+			while (s[i] && s[i] != c && s[i] != '\001')
+				i++;
+		}
+	}
+	return (count);
 }
 
 char	**special_split(char const *s, char c)
 {
 	char	**result;
+	int		token_count;
 
 	if (s == NULL)
 		return (NULL);
@@ -111,17 +68,14 @@ char	**special_split(char const *s, char c)
 		result[1] = NULL;
 		return (result);
 	}
-	result = malloc((get_word_count((char *)s, c) + 1) * sizeof(char *));
-	if (result == NULL)
-		return (NULL);
-	if (get_word_count((char *)s, c) == 0)
+	if (is_all_delim(s, c))
 	{
-		result[0] = NULL;
+		result = malloc(2 * sizeof(char *));
+		result[0] = ft_strdup(s);
+		result[1] = NULL;
 		return (result);
 	}
-	result = allocate_words((char *)s, c, result);
-	if (result == NULL)
-		return (NULL);
-	result = split_words((char *)s, c, result);
+	token_count = count_tokens_split(s, c);
+	result = fill_tokens(s, c, token_count);
 	return (result);
 }

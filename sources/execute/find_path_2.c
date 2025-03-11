@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/10 18:51:25 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:50:44 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,30 +51,6 @@ void	f_error(t_shell *shell, char *command)
 	ft_putstr_fd(command, 2);
 	ft_putstr_fd(": command not found\n", 2);
 	shell->exit_status = CMD_NOT_FOUND;
-}
-
-
-char	**split_args_with_prepare(char *argv, t_env *env_list, t_shell *shell)
-{
-	char	*dup;
-	char	*processed;
-	char	**result;
-
-	dup = ft_strdup(argv);
-	if (!dup)
-		return (NULL);
-	if (prepare_arg(env_list, &dup, shell) == FAIL)
-	{
-		free(dup);
-		return (NULL);
-	}
-	processed = handle_double_spaces(dup);
-	free(dup);
-	if (!processed)
-		return (NULL);
-	result = special_split(processed, ' ');
-	free(processed);
-	return (result);
 }
 
 char	**split_paths_env(t_env *env_list)
