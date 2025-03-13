@@ -3,88 +3,100 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:21:35 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 11:11:48 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:39:23 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static int	check_for_echo_option(t_command *command, bool *flag);
-
-int	echo(t_command *command, t_shell *shell)
+static void	copy_tokens(char **tokens, int start_index, char *result)
 {
-	bool	flag;
+	int	i;
+	int	j;
+	int	pos;
 
-	if (!command)
-		return (1);
-	// if (command->options && command->options[0] != '\0')
-	// 	flag = 1;
-	// else
-	// 	flag = 0;
-	flag = false;
-	if (check_for_echo_option(command, &flag) == FAIL)
-		return (1);
-	if (!command->pattern)
-		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
-	if (prepare_arg(command->env_list, &command->pattern, shell) == FAIL)
-		return (1);
-	ft_putstr_fd(command->pattern, STDOUT_FILENO);
-	if (!flag)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (0);
-}
-
-static int	check_for_echo_option(t_command *command, bool *flag)
-{
-	char	*option;
-	char	*temp;
-	int		i;
-
-	option = command->options;
-	if (!option)
-		return (SUCCESS);
-	if (option[1] == 'n')
+	pos = 0;
+	i = start_index;
+	while (tokens[i])
 	{
-		i = 1;
-		while (option[i] == 'n')
-			i++;
-		if (option[i] == ' ' || option[i] == '\0')
+		j = 0;
+		while (tokens[i][j])
 		{
-			while (option[i] == ' ')
-				i++;
-			temp = malloc(ft_strlen(option + i) + ft_strlen(command->pattern) + 2);
-			if (!temp)
-				return (FAIL);
-			temp[0] = '\0';
-			ft_strlcat(temp, (option + i), ft_strlen(option + i) + ft_strlen(command->pattern) + 2);
-			ft_strlcat(temp, " ", ft_strlen(option + i) + ft_strlen(command->pattern) + 2);
-			ft_strlcat(temp, command->pattern, ft_strlen(option + i) + ft_strlen(command->pattern) + 2);
-			if (!temp)
-				return (FAIL);
-			free(command->pattern);
-			command->pattern = temp;
-			*flag = true;
-			return (SUCCESS);
+			result[pos] = tokens[i][j];
+			pos++;
+			j++;
+		}
+		i++;
+		if (tokens[i])
+		{
+			result[pos] = ' ';
+			pos++;
 		}
 	}
-	if (!command->pattern)
-		temp = ft_strndup(option, sizeof(option));
-	else
+	result[pos] = '\0';
+}
+
+char	*join_tokens(char **tokens, int start_index)
+{
+	int		total_len;
+	char	*result;
+
+	total_len = compute_total_length(tokens, start_index);
+	result = malloc(total_len + 1);
+	if (!result)
+		return (NULL);
+	copy_tokens(tokens, start_index, result);
+	return (result);
+}
+
+static int	join_space_length(char *s1, char *s2)
+{
+	int	len1;
+	int	len2;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	return (len1 + len2 + 2);
+}
+
+static void	copy_join_with_space(char *s1, char *s2, char *result)
+{
+	int	pos;
+	int	i;
+	int	j;
+
+	pos = 0;
+	i = 0;
+	while (s1[i])
 	{
-		temp = malloc(ft_strlen(option) + ft_strlen(command->pattern) + 2);
-		if (!temp)
-			return (FAIL);
-		temp[0] = '\0';
-		ft_strlcat(temp, option, ft_strlen(option) + ft_strlen(command->pattern) + 2);
-		ft_strlcat(temp, " ", ft_strlen(option) + ft_strlen(command->pattern) + 2);
-		ft_strlcat(temp, command->pattern, ft_strlen(option) + ft_strlen(command->pattern) + 2);
+		result[pos] = s1[i];
+		pos++;
+		i++;
 	}
-	if (!temp)
-		return (FAIL);
-	free(command->pattern);
-	command->pattern = temp;
-	return (SUCCESS);
+	result[pos] = ' ';
+	pos++;
+	j = 0;
+	while (s2[j])
+	{
+		result[pos] = s2[j];
+		pos++;
+		j++;
+	}
+	result[pos] = '\0';
+}
+
+char	*join_with_space(char *s1, char *s2)
+{
+	int		total_len;
+	char	*result;
+
+	total_len = join_space_length(s1, s2);
+	result = malloc(total_len);
+	if (!result)
+		return (NULL);
+	copy_join_with_space(s1, s2, result);
+	return (result);
 }

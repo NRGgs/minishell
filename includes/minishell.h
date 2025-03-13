@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/11 14:58:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:39:40 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,11 @@ int			pwd(char **argv);
 
 /* echo.c */
 int			echo(t_command *command, t_shell *shell);
+int			process_echo_options(char **args, int *start_index);
+char		*join_tokens(char **tokens, int start_index);
+void		free_split(char **split);
+char		*join_with_space(char *s1, char *s2);
+int			compute_total_length(char **tokens, int start_index);
 
 /* export.c */
 t_env		*find_env_var(t_env *env_list, const char *name);

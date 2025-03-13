@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   echo_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 13:56:48 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 12:39:53 by iriadyns         ###   ########.fr       */
+/*   Created: 2025/03/13 12:39:07 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/03/13 12:39:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-/**
- * @brief Prints the environment variables.
- *
- * @param env_list The environment list.
- *
- * @return 0
- */
-int	env(t_env *env_list)
+int	compute_total_length(char **tokens, int start_index)
 {
-	t_env	*tmp;
+	int	total_len;
+	int	i;
 
-	tmp = env_list;
-	while (tmp)
+	total_len = 0;
+	i = start_index;
+	while (tokens[i])
 	{
-		if (tmp->value)
-			printf("%s=%s\n", tmp->name, tmp->value);
-		else
-			printf("%s=\n", tmp->name);
-		tmp = tmp->next;
+		total_len += ft_strlen(tokens[i]);
+		i++;
+		if (tokens[i])
+			total_len++;
 	}
-	return (0);
+	return (total_len);
 }
