@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:29:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 14:29:00 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:20:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ static char	*get_final_output(char *pattern, char *opt_output)
 	}
 	else
 		final_output = opt_output;
+	if (!final_output)
+		final_output = ft_strdup("");
 	return (final_output);
 }
 
