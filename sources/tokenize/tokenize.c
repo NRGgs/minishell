@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:37:47 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/10 15:25:39 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:34:01 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static int	create_token(char **str, t_token **tokens)
 
 	if (get_word(str, &word) == FAIL)
 		return (FAIL);
+	if (!word)
+		return (SUCCESS);
 	token = token_new(word, E_NONE);
 	if (token == NULL)
 		return (FAIL);
@@ -57,6 +59,11 @@ static int	get_word(char **str, char **word)
 
 	skip_spaces(str);
 	len = next_word_length(*str);
+	if (len == 0)
+	{
+		*word = NULL;
+		return (SUCCESS);
+	}
 	*word = malloc(sizeof(char) * (len + 1));
 	if (*word == NULL)
 		return (FAIL);
