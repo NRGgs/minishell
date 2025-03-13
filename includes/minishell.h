@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/13 12:39:40 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:11:50 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,5 +353,7 @@ int			is_all_whitespace(const char *str);
 char		**special_split(char const *s, char c);
 char		**fill_tokens(const char *s, char c,
 				int token_count);
+void		handle_special_commands_in_structure(t_command *cmd,
+				t_env *env_list, t_shell *shell);
 
 #endif

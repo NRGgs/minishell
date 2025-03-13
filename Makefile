@@ -61,7 +61,8 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(EXE_DIR)/find_path_3.c \
 		$(SRC_DIR)/$(EXE_DIR)/special_split_2.c \
 		$(SRC_DIR)/$(BLT_DIR)/echo_2.c \
-		$(SRC_DIR)/$(BLT_DIR)/echo_3.c
+		$(SRC_DIR)/$(BLT_DIR)/echo_3.c \
+		$(SRC_DIR)/$(EXE_DIR)/handle_special.c
 
 OBJ_DIR = objects
 OBJS = $(patsubst %.c, $(OBJ_DIR)/%.o, $(notdir $(SRCS)))

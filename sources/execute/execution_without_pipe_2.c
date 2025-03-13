@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 12:42:20 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/13 16:10:56 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 	int	backup_in;
 	int	backup_out;
 
+	handle_special_commands_in_structure(commands, shell->env_list, shell);
 	if (!commands)
 	{
 		ft_putstr_fd("Error: Invalid command structure.\n", 2);
 		return (SHELL_CONTINUE);
 	}
-	if (!commands->command)
+	if (!commands->command || commands->command[0] == '\0')
 	{
 		if (commands->input || commands->output)
 		{
