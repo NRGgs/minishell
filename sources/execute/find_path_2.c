@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/11 14:50:44 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:08:30 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,31 @@ char	*check_argv_executable(char *argv, t_shell *shell)
 
 void	f_error(t_shell *shell, char *command)
 {
+	char	*expanded;
+	char	*path_value;
+
 	if (!command || !*command)
 		command = "(null)";
-	if (is_builtin(command))
+	expanded = ft_strdup(command);
+	if (!expanded)
 		return ;
-	ft_putstr_fd(command, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (prepare_arg(shell->env_list, &expanded, shell) == FAIL)
+		return (free(expanded), (void)0);
+	if (is_builtin(expanded))
+		return (free(expanded), (void)0);
+	path_value = get_env_value(shell->env_list, "PATH");
+	if (ft_strcmp(expanded, path_value) == 0)
+	{
+		ft_putstr_fd(expanded, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else
+	{
+		ft_putstr_fd(expanded, 2);
+		ft_putstr_fd(": command not found\n", 2);
+	}
 	shell->exit_status = CMD_NOT_FOUND;
+	free(expanded);
 }
 
 char	**split_paths_env(t_env *env_list)

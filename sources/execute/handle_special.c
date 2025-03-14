@@ -6,13 +6,13 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:14:09 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 16:15:20 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:10:28 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*get_env_value(t_env *env_list, char *name)
+char	*get_env_value(t_env *env_list, char *name)
 {
 	t_env	*var;
 
@@ -52,7 +52,7 @@ static void	handle_empty_command(t_command *cmd, t_shell *shell)
 }
 
 void	handle_special_commands_in_structure(t_command *cmd,
-		t_env *env_list, t_shell *shell)
+	t_env *env_list, t_shell *shell)
 {
 	if (!cmd || !cmd->command)
 		return ;
@@ -60,4 +60,13 @@ void	handle_special_commands_in_structure(t_command *cmd,
 		handle_pwd_command(cmd, env_list, shell);
 	else if (ft_strcmp(cmd->command, "$EMPTY") == 0)
 		handle_empty_command(cmd, shell);
+	else if (cmd->command[0] == '$')
+	{
+		if (get_env_value(env_list, cmd->command + 1) == NULL)
+		{
+			shell->exit_status = 0;
+			free(cmd->command);
+			cmd->command = ft_strdup("");
+		}
+	}
 }

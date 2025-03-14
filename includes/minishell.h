@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/13 16:11:50 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:04:51 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -355,5 +355,6 @@ char		**fill_tokens(const char *s, char c,
 				int token_count);
 void		handle_special_commands_in_structure(t_command *cmd,
 				t_env *env_list, t_shell *shell);
+char		*get_env_value(t_env *env_list, char *name);
 
 #endif
