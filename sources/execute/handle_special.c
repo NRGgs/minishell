@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 16:14:09 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/14 13:10:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/14 13:24:40 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,27 @@ void	handle_special_commands_in_structure(t_command *cmd,
 			cmd->command = ft_strdup("");
 		}
 	}
+}
+
+int	handle_dollar_commands(t_command *cmd, t_shell *shell)
+{
+	char	*tmp;
+
+	if (cmd->command && cmd->command[0] == '$' && ft_strlen(cmd->command) == 1)
+	{
+		ft_putstr_fd("$: command not found\n", 2);
+		shell->exit_status = CMD_NOT_FOUND;
+		return (1);
+	}
+	if (cmd->command && cmd->command[0] == '$' && ft_strlen(cmd->command) == 2
+		&& cmd->command[1] == '?')
+	{
+		tmp = ft_itoa(shell->exit_status);
+		ft_putstr_fd(tmp, 2);
+		free(tmp);
+		ft_putstr_fd(": command not found\n", 2);
+		shell->exit_status = CMD_NOT_FOUND;
+		return (1);
+	}
+	return (0);
 }
