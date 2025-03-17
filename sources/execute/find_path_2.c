@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 12:39:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/14 13:08:30 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/17 08:11:39 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	f_error(t_shell *shell, char *command)
 	if (is_builtin(expanded))
 		return (free(expanded), (void)0);
 	path_value = get_env_value(shell->env_list, "PATH");
-	if (ft_strcmp(expanded, path_value) == 0)
+	if (path_value && ft_strcmp(expanded, path_value) == 0)
 	{
 		ft_putstr_fd(expanded, 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
