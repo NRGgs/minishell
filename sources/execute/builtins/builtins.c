@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 11:20:39 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/17 08:15:34 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static int	select_builtin(t_command *command, t_shell *shell)
 		ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 		ret = 1;
 	}
+	shell->exit_status = ret;
 	return (ret);
 }
 
