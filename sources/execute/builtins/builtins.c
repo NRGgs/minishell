@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 12:50:12 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:03:53 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ static int	select_builtin(t_command *command, t_shell *shell)
 	else if (ft_strncmp(command->command, "exit", 5) == 0)
 		ret = exit_shell(command->pattern, command, shell);
 	else
-	{
-		ft_putstr_fd("Error: Unknown built-in command.\n", 2);
 		ret = 1;
-	}
 	if (ft_strncmp(command->command, "exit", 5) != 0)
-		shell->exit_status = ret;
+	{
+		if (ft_strncmp(command->command, "cd", 3) != 0)
+			shell->exit_status = ret;
+	}
 	return (ret);
 }
 
