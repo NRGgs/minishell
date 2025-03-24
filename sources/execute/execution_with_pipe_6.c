@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:51 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 13:35:28 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:19:27 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
 		handle_builtin_pipe(&current, path, shell);
 	else
 		handle_external_pipe(&current, path, shell);
+}
+
+int	count_tokens(char **arr)
+{
+	int	cnt;
+
+	cnt = 0;
+	while (arr && arr[cnt])
+		cnt++;
+	return (cnt);
 }

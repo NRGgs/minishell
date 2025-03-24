@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 16:27:48 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:19:22 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,13 @@
 
 extern char	**environ;
 
-/**
- * @brief Executes the list of commands.
- * Scans the linked list of commands to decide
- * whether to use pipe execution or not.
- *
- * @param commands The linked list of commands.
- *
- * @return The shell exit status.
- */
-int	execute_commands(t_command *commands, t_shell *shell)
+static int	check_commands_for_pipe(t_command *commands, t_shell *shell)
 {
 	t_command	*current;
 	int			is_pipe;
-	int			ret;
 
-	if (!commands)
-	{
-		ft_putstr_fd("Error: Command structure is NULL.\n", 2);
-		return (SHELL_CONTINUE);
-	}
-	current = commands;
 	is_pipe = 0;
+	current = commands;
 	while (current)
 	{
 		if (!current->command || current->command[0] == '\0')
@@ -43,7 +28,7 @@ int	execute_commands(t_command *commands, t_shell *shell)
 			ft_putstr_fd("minishell: syntax"
 				"error near unexpected token `newline'\n", 2);
 			shell->exit_status = 2;
-			return (SHELL_CONTINUE);
+			return (-1);
 		}
 		if (current->out_type == PIPE || current->in_type == PIPE)
 		{
@@ -52,6 +37,22 @@ int	execute_commands(t_command *commands, t_shell *shell)
 		}
 		current = current->next;
 	}
+	return (is_pipe);
+}
+
+int	execute_commands(t_command *commands, t_shell *shell)
+{
+	int	is_pipe;
+	int	ret;
+
+	if (!commands)
+	{
+		ft_putstr_fd("Error: Command structure is NULL.\n", 2);
+		return (SHELL_CONTINUE);
+	}
+	is_pipe = check_commands_for_pipe(commands, shell);
+	if (is_pipe == -1)
+		return (SHELL_CONTINUE);
 	if (is_pipe)
 		ret = execution_with_pipe(commands, shell);
 	else
@@ -84,16 +85,6 @@ t_env	*create_env_node(const char *name, const char *value)
 		new_node->value = NULL;
 	new_node->next = NULL;
 	return (new_node);
-}
-
-int	count_tokens(char **arr)
-{
-	int	cnt;
-
-	cnt = 0;
-	while (arr && arr[cnt])
-		cnt++;
-	return (cnt);
 }
 
 static int	ft_isspace(int c)
