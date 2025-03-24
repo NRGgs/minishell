@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/14 13:22:45 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:44:33 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ typedef struct s_child_data
 	char				*path;
 	t_shell				*shell;
 }						t_child_data;
+
+typedef struct s_exec_context
+{
+	char	*path;
+	t_shell	*shell;
+}	t_exec_context;
 
 /*****************************************************************************\
 *                             Function Prototypes                             *
@@ -357,5 +363,10 @@ void		handle_special_commands_in_structure(t_command *cmd,
 				t_env *env_list, t_shell *shell);
 char		*get_env_value(t_env *env_list, char *name);
 int			handle_dollar_commands(t_command *cmd, t_shell *shell);
+int			prepare_path_and_pipe(t_command *current,
+				int *pipe_fd, t_shell *shell, char **path);
+int			fork_error_cleanup(t_command *current, char *path, int pipe_fd[2]);
+void		fill_child_data(t_child_data *child_data, t_command *current,
+				int pipe_fd[2], t_shell *shell);
 
 #endif

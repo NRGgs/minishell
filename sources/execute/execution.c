@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 16:03:13 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:27:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ int	execute_commands(t_command *commands, t_shell *shell)
 	is_pipe = 0;
 	while (current)
 	{
+		if (!current->command || current->command[0] == '\0')
+		{
+			ft_putstr_fd("minishell: syntax"
+				"error near unexpected token `newline'\n", 2);
+			shell->exit_status = 2;
+			return (SHELL_CONTINUE);
+		}
 		if (current->out_type == PIPE || current->in_type == PIPE)
 		{
 			is_pipe = 1;

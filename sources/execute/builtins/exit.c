@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 13:56:52 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 11:17:37 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:09:14 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ static int	check_exit_tokens(char **tokens, int *exit_code)
 {
 	int	error;
 
+	if (!tokens || !tokens[0] || tokens[0][0] == '\0')
+	{
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
+		ft_putstr_fd("exit: : numeric argument required\n", STDERR_FILENO);
+		if (tokens)
+			free_2d_array(tokens);
+		*exit_code = MAJOR;
+		return (SHELL_EXIT);
+	}
 	*exit_code = ft_atoi(tokens[0], &error);
 	if (error)
 		return (exit_numeric_error(tokens, exit_code));

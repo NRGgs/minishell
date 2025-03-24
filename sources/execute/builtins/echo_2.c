@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/13 12:29:55 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/13 16:20:48 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:38:37 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ int	echo(t_command *command, t_shell *shell)
 		return (ft_putstr_fd("\n", STDOUT_FILENO), 0);
 	flag = 0;
 	opt_output = get_opt_output(command->options, &flag);
+	if (!command->pattern)
+		command->pattern = ft_strdup("");
 	if (prepare_arg(shell->env_list, &command->pattern, shell) == FAIL)
-	{
 		return (1);
-	}
 	final_output = get_final_output(command->pattern, opt_output);
 	if (!final_output)
 		return (1);
