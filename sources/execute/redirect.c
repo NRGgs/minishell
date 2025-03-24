@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 12:52:12 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:48:57 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ int	process_redirections(t_command *cmd, t_shell *shell)
 		if (handle_input_redirection(cmd, shell) == ERROR)
 			return (ERROR);
 	}
-	if (cmd->out_type == TEXTFILE || cmd->out_type == APPEND)
+	if ((cmd->output && ft_strlen(cmd->output) > 0)
+		|| (cmd->out_type == TEXTFILE || cmd->out_type == APPEND))
 	{
 		if (handle_output_redirection(cmd, shell) == ERROR)
 			return (ERROR);

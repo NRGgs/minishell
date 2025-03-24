@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/02/28 14:36:47 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:48:07 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,13 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 	}
 	if (current->next)
 	{
-		if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+		if (!current->output || ft_strlen(current->output) == 0)
 		{
-			perror("dup2");
-			exit(1);
+			if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
+			{
+				perror("dup2");
+				exit(1);
+			}
 		}
 	}
 	close(pipe_fd[0]);
