@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:22:32 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/11 14:45:57 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/24 13:27:17 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,6 @@ void	handle_builtin_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 	exit(builtin_ret);
 }
 
-char	**get_args_with_preparation(t_command *cmd, t_shell *shell)
-{
-	char	*saved;
-	char	**args;
-
-	saved = NULL;
-	if (cmd->pattern && ft_strlen(cmd->pattern) > 0)
-	{
-		if (prepare_arg(cmd->env_list, &cmd->pattern, shell) == FAIL)
-			return (NULL);
-		if (cmd->in_type == HERE_DOC)
-		{
-			saved = ft_strdup(cmd->pattern);
-			free(cmd->pattern);
-			cmd->pattern = ft_strdup("");
-			if (!cmd->pattern)
-				return (free(saved), NULL);
-		}
-	}
-	args = get_command_args(cmd);
-	if (cmd->in_type == HERE_DOC)
-	{
-		free(cmd->pattern);
-		cmd->pattern = saved;
-	}
-	return (args);
-}
-
 /**
  * @brief Handles the execution of an external command in a pipeline.
  * Builds the argument vector, executes the command via execve,
@@ -96,7 +68,7 @@ void	handle_external_pipe(t_command **cmd_ptr, char *path, t_shell *shell)
 		clean_commands(cmd_ptr);
 		exit(127);
 	}
-	args = get_args_with_preparation(*cmd_ptr, shell);
+	args = build_execve_args(*cmd_ptr, shell);
 	if (!args)
 	{
 		clean_commands(cmd_ptr);
