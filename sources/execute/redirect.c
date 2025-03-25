@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 16:26:35 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/25 17:39:44 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,16 @@ int	handle_input_redirection(t_command *cmd, t_shell *shell)
 {
 	int	fd;
 
+	if (!cmd->input || cmd->input[0] == '\0')
+	{
+		ft_putstr_fd("minishell: syntax error near"
+			"unexpected token `newline'\n", 2);
+		shell->exit_status = 2;
+		return (ERROR);
+	}
 	if (prepare_arg(cmd->env_list, &cmd->input, shell) == FAIL)
 	{
-		ft_putstr_fd("Error: Failed to prepare output argument\n", 2);
+		ft_putstr_fd("Error: Failed to prepare input argument\n", 2);
 		return (ERROR);
 	}
 	fd = open_input_file(cmd->input);
@@ -75,11 +82,16 @@ int	handle_output_redirection(t_command *cmd, t_shell *shell)
 	int	fd;
 	int	flags;
 
-	if (prepare_arg(cmd->env_list, &cmd->output, shell) == FAIL)
+	if (!cmd->output || cmd->output[0] == '\0')
 	{
-		ft_putstr_fd("Error: Failed to prepare output argument\n", 2);
+		ft_putstr_fd("minishell: syntax error"
+			"near unexpected token `newline'\n", 2);
+		shell->exit_status = 2;
 		return (ERROR);
 	}
+	if (prepare_arg(cmd->env_list, &cmd->output, shell) == FAIL)
+		return (ft_putstr_fd("Error: Failed to"
+				"prepare output argument\n", 2), ERROR);
 	if (cmd->out_type == APPEND)
 		flags = O_WRONLY | O_CREAT | O_APPEND;
 	else
@@ -88,10 +100,8 @@ int	handle_output_redirection(t_command *cmd, t_shell *shell)
 	if (fd == -1)
 		return (perror("Error opening output file"), ERROR);
 	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		perror("Error duplicating file descriptor for output");
-		return (close(fd), ERROR);
-	}
+		return (perror("Error duplicating file"
+				"descriptor for output"), close(fd), ERROR);
 	return (close(fd), SUCCESS);
 }
 
