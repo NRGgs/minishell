@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 10:48:34 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/14 13:26:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/28 11:38:28 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ bool	back_backslash_handler(char **str, char **new_str, int *i, int *j)
 		consecutive_backslashes++;
 		(*i)++;
 	}
-	(*i)--;
 	if (consecutive_backslashes % 2 == 1)
 		escaped = true;
 	if ((*str)[*i] != '\'' && (*str)[*i] != '\"')
 		consecutive_backslashes /= 2;
 	while (consecutive_backslashes-- > 0)
 		(*new_str)[(*j)++] = '\\';
-	consecutive_backslashes = 0;
 	return (escaped);
 }
