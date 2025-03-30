@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_commands.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:40:45 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 16:21:18 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   get_commands.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/25 15:40:45 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/03/30 13:05:53 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ static int	fill_command(t_command **cmd, t_token **tokens, t_token **current)
 		{
 			if (assignments > 0)
 			{
-				(*cmd)->out_type = PIPE;
+				add_redirect(&(*cmd)->redirect, new_redirect(PIPE, false, NULL));
 				return (SUCCESS);
 			}
-			(*cmd)->in_type = PIPE;
+			add_redirect(&(*cmd)->redirect, new_redirect(PIPE, true, NULL));
 		}
 		else
 		{

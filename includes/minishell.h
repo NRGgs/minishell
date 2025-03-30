@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/30 12:36:27 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/03/30 13:06:48 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_shell
 typedef struct s_redirect
 {
 	int					type;
+	bool				is_input;
 	char				*arg;
 	struct s_redirect	*next;
 }	t_redirect;
@@ -219,16 +220,18 @@ t_command	*cmd_new(char *command, char *options);
 t_command	*cmd_last(t_command *cmds);
 void		cmd_add_back(t_command **cmds, t_command *new_cmd);
 
-/* redirects.c */
-t_redirect	*new_redirect(int type, char *arg);
-t_redirect	*redirect_last(t_redirect *node);
-void		add_redirect(t_redirect **head, t_redirect *new);
-
 /* tokens.c */
 t_token		*token_new(char *word, t_token_type type);
 void		token_add_back(t_token **tokens, t_token *new);
 t_token		*prev_token(t_token *tokens, t_token *current);
 void		clean_tokens(t_token **tokens);
+
+
+/* redirects.c */
+t_redirect	*new_redirect(int type, bool is_input, char *arg);
+t_redirect	*redirect_last(t_redirect *node);
+void		add_redirect(t_redirect **head, t_redirect *new);
+
 
 /* free.c */
 void		free_null(void **ptr);

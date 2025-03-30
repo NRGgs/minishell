@@ -45,6 +45,7 @@ SRCS =	$(SRC_DIR)/minishell.c \
 		$(SRC_DIR)/$(BLT_DIR)/unset.c \
 		$(SRC_DIR)/$(MEM_DIR)/free.c \
 		$(SRC_DIR)/$(MEM_DIR)/commands.c \
+		$(SRC_DIR)/$(MEM_DIR)/redirects.c \
 		$(SRC_DIR)/$(MEM_DIR)/tokens.c \
 		$(SRC_DIR)/$(PARSE_DIR)/parse_utils.c \
 		$(SRC_DIR)/$(PARSE_DIR)/assign.c \

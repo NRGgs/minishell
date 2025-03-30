@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 13:08:56 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   free.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/05 15:40:40 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/30 13:02:04 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,35 @@ void	clean_commands(t_command **cmds)
 }
 
 /**
+ * @brief Clean the redirects linked list
+ *
+ * @param node The linked list to clean
+ */
+void	clean_redirect(t_redirect **node)
+{
+	t_redirect	*current;
+	t_redirect	*next;
+
+	current = *node;
+	while (current != NULL)
+	{
+		next = current->next;
+		free_null((void **)&current->arg);
+		current = next;
+	}
+	*node = NULL;
+}
+
+/**
  * @brief Clean a single command
  *
  * @param cmd The command to clean
  */
 void	cmd_clear(t_command **cmd)
 {
+	clean_redirect(&(*cmd)->redirect);
 	free_null((void **)&(*cmd)->command);
 	free_null((void **)&(*cmd)->options);
-	free_null((void **)&(*cmd)->input);
-	free_null((void **)&(*cmd)->output);
 	free_null((void **)&(*cmd)->pattern);
 	free_null((void **)cmd);
 }

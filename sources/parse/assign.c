@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   assign.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 15:48:25 by nmattos           #+#    #+#             */
-/*   Updated: 2025/03/03 16:37:46 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   assign.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/02/25 15:48:25 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/03/30 12:57:37 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,39 @@ static int	allocate_and_assign(t_command **cmd, t_token **tokens)
 static void	set_redirection(t_command **cmd, char *redirection)
 {
 	if (ft_strncmp(redirection, ">>", 2) == 0)
-		(*cmd)->out_type = APPEND;
+		add_redirect(&(*cmd)->redirect, new_redirect(APPEND, false, NULL));
 	else if (ft_strncmp(redirection, "<<", 2) == 0)
-		(*cmd)->in_type = HERE_DOC;
+		add_redirect(&(*cmd)->redirect, new_redirect(HERE_DOC, true, NULL));
 	else if (redirection[0] == '>')
-		(*cmd)->out_type = TEXTFILE;
+		add_redirect(&(*cmd)->redirect, new_redirect(TEXTFILE, false, NULL));
 	else if (redirection[0] == '<')
-		(*cmd)->in_type = TEXTFILE;
+		add_redirect(&(*cmd)->redirect, new_redirect(TEXTFILE, true, NULL));
 }
 
 static int	set_filename(t_command **cmd, t_token *tokens, t_token **current)
 {
 	char	*word;
 
-	if ((*cmd)->in_type == TEXTFILE
+	if (redirect_last((*cmd)->redirect)->type == TEXTFILE
 		&& prev_token(tokens, *current)->type == E_REDIRECTION)
 	{
 		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
 		if (word == NULL)
 			return (FAIL);
-		(*cmd)->input = word;
+		redirect_last((*cmd)->redirect)->arg = word;
 	}
-	else if ((*cmd)->in_type == HERE_DOC)
+	else if (redirect_last((*cmd)->redirect)->type == HERE_DOC)
 	{
 		if (here_doc_redirection((*current)->token, cmd) == FAIL)
 			return (FAIL);
 	}
-	else if ((*cmd)->out_type == TEXTFILE || (*cmd)->out_type == APPEND)
+	else if (redirect_last((*cmd)->redirect)->type == TEXTFILE
+			|| redirect_last((*cmd)->redirect)->type == APPEND)
 	{
 		word = ft_strndup((*current)->token, ft_strlen((*current)->token));
 		if (word == NULL)
 			return (FAIL);
-		(*cmd)->output = word;
+		redirect_last((*cmd)->redirect)->arg = word;
 	}
 	return (SUCCESS);
 }

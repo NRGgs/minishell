@@ -6,13 +6,13 @@
 /*   By: nmattos <nmattos@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/30 12:27:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/03/30 12:34:49 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/03/30 13:00:47 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_redirect	*new_redirect(int type, char *arg)
+t_redirect	*new_redirect(int type, bool is_input, char *arg)
 {
 	t_redirect	*node;
 
@@ -26,6 +26,7 @@ t_redirect	*new_redirect(int type, char *arg)
 			return (free(node), NULL);
 	}
 	node->type = type;
+	node->is_input = is_input;
 	node->next = NULL;
 	return (node);
 }
