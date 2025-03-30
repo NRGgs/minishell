@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/24 16:44:33 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/30 12:25:33 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,20 @@ typedef struct s_shell
 	t_env				*env_list;
 }						t_shell;
 
+typedef struct s_redirect
+{
+	int					type;
+	char				*arg;
+	struct s_redirect	*next;
+}	t_redirect;
+
 /* Singly linked list. Stores all commands. */
 typedef struct s_command
 {
 	char				*command;
 	char				*options;
 	char				*pattern;
-	int					in_type;
-	int					out_type;
-	char				*input;
-	char				*output;
+	t_redirect			redirect;
 	struct s_command	*next;
 	struct s_env		*env_list;
 }						t_command;
