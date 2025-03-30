@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/30 12:25:33 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/03/30 12:36:27 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct s_command
 	char				*command;
 	char				*options;
 	char				*pattern;
-	t_redirect			redirect;
+	t_redirect			*redirect;
 	struct s_command	*next;
 	struct s_env		*env_list;
 }						t_command;
@@ -218,6 +218,11 @@ bool		quote_backslash_handler(char **str, char **new_str,
 t_command	*cmd_new(char *command, char *options);
 t_command	*cmd_last(t_command *cmds);
 void		cmd_add_back(t_command **cmds, t_command *new_cmd);
+
+/* redirects.c */
+t_redirect	*new_redirect(int type, char *arg);
+t_redirect	*redirect_last(t_redirect *node);
+void		add_redirect(t_redirect **head, t_redirect *new);
 
 /* tokens.c */
 t_token		*token_new(char *word, t_token_type type);

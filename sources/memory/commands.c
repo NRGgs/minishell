@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 10:47:18 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/02/26 13:08:11 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   commands.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/02 10:47:18 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/03/30 12:36:04 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
  */
 static void	initialize_command(t_command **cmd)
 {
-	(*cmd)->in_type = STDIN;
-	(*cmd)->out_type = STDOUT;
-	(*cmd)->input = NULL;
-	(*cmd)->output = NULL;
+	(*cmd)->redirect = NULL;
 	(*cmd)->pattern = NULL;
 	(*cmd)->next = NULL;
 	(*cmd)->env_list = NULL;
