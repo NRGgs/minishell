@@ -128,9 +128,12 @@ clean:
 	@make clean -C $(LIBFT_PATH)
 
 # Clean up object files, libraries, and executable(s)
-fclean: clean
+fclean:
 	@echo "Cleaning executable..."
 	@rm -f $(NAME)
+	@echo "Cleaning object files..."
+	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
 	@make fclean -C $(LIBFT_PATH)
 
 # Recompile all files
