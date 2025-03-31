@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:51 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 18:19:27 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:01:25 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,22 @@ static void	process_here_doc(t_command *current, t_shell *shell)
 	free(filename);
 }
 
+static bool	has_here_doc(t_command *cmd)
+{
+	t_redirect *redir = cmd->redirect;
+	while (redir)
+	{
+		if (redir->is_input && redir->type == HERE_DOC)
+			return (true);
+		redir = redir->next;
+	}
+	return (false);
+}
+
 void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
 {
 	process_redir_or_exit(current, shell);
-	if (current->in_type == HERE_DOC)
+	if (has_here_doc(current))
 		process_here_doc(current, shell);
 	if (is_builtin(current->command))
 		handle_builtin_pipe(&current, path, shell);

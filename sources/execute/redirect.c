@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/25 17:39:44 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:00:15 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,94 +36,66 @@ static int	open_input_file(const char *filename)
 		}
 	}
 	else
-		return (perror("Error opening input file"), -1);
+	{
+		perror("Error opening input file");
+		return (-1);
+	}
 	return (fd);
 }
 
-int	handle_input_redirection(t_command *cmd, t_shell *shell)
-{
-	int	fd;
-
-	if (!cmd->input || cmd->input[0] == '\0')
-	{
-		ft_putstr_fd("minishell: syntax error near"
-			"unexpected token `newline'\n", 2);
-		shell->exit_status = 2;
-		return (ERROR);
-	}
-	if (prepare_arg(cmd->env_list, &cmd->input, shell) == FAIL)
-	{
-		ft_putstr_fd("Error: Failed to prepare input argument\n", 2);
-		return (ERROR);
-	}
-	fd = open_input_file(cmd->input);
-	if (fd == -1)
-		return (ERROR);
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		close(fd);
-		return (ERROR);
-	}
-	close(fd);
-	return (SUCCESS);
-}
-
-/**
- * @brief Handles output redirection for a command.
- * Opens the output file (in append or truncate mode)
- * and duplicates its file descriptor to stdout.
- *
- * @param cmd The command structure.
- *
- * @return SUCCESS on success, ERROR on failure.
- */
-int	handle_output_redirection(t_command *cmd, t_shell *shell)
-{
-	int	fd;
-	int	flags;
-
-	if (!cmd->output || cmd->output[0] == '\0')
-	{
-		ft_putstr_fd("minishell: syntax error"
-			"near unexpected token `newline'\n", 2);
-		shell->exit_status = 2;
-		return (ERROR);
-	}
-	if (prepare_arg(cmd->env_list, &cmd->output, shell) == FAIL)
-		return (ft_putstr_fd("Error: Failed to"
-				"prepare output argument\n", 2), ERROR);
-	if (cmd->out_type == APPEND)
-		flags = O_WRONLY | O_CREAT | O_APPEND;
-	else
-		flags = O_WRONLY | O_CREAT | O_TRUNC;
-	fd = open(cmd->output, flags, 0777);
-	if (fd == -1)
-		return (perror("Error opening output file"), ERROR);
-	if (dup2(fd, STDOUT_FILENO) == -1)
-		return (perror("Error duplicating file"
-				"descriptor for output"), close(fd), ERROR);
-	return (close(fd), SUCCESS);
-}
-
-/**
- * @brief Processes all redirections for a command.
- *
- * @param cmd The command structure.
- *
- * @return SUCCESS on success, ERROR on failure.
- */
 int	process_redirections(t_command *cmd, t_shell *shell)
 {
-	if (cmd->in_type == TEXTFILE)
+	t_redirect	*redir;
+	int			fd;
+	int			flags;
+
+	redir = cmd->redirect;
+	while (redir)
 	{
-		if (handle_input_redirection(cmd, shell) == ERROR)
+		if (!redir->arg || redir->arg[0] == '\0')
+		{
+			ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+			shell->exit_status = 2;
 			return (ERROR);
-	}
-	if ((cmd->output && ft_strlen(cmd->output) > 0)
-		|| (cmd->out_type == TEXTFILE || cmd->out_type == APPEND))
-	{
-		if (handle_output_redirection(cmd, shell) == ERROR)
+		}
+		if (prepare_arg(cmd->env_list, &redir->arg, shell) == FAIL)
+		{
+			ft_putstr_fd("Error: Failed to prepare redirection argument\n", 2);
 			return (ERROR);
+		}
+		if (redir->is_input)
+		{
+			fd = open_input_file(redir->arg);
+			if (fd == -1)
+				return (ERROR);
+			if (dup2(fd, STDIN_FILENO) == -1)
+			{
+				close(fd);
+				return (ERROR);
+			}
+			close(fd);
+		}
+		else
+		{
+			if (redir->type == APPEND)
+				flags = O_WRONLY | O_CREAT | O_APPEND;
+			else
+				flags = O_WRONLY | O_CREAT | O_TRUNC;
+			fd = open(redir->arg, flags, 0777);
+			if (fd == -1)
+			{
+				perror("Error opening output file");
+				return (ERROR);
+			}
+			if (dup2(fd, STDOUT_FILENO) == -1)
+			{
+				close(fd);
+				perror("Error duplicating file descriptor for output");
+				return (ERROR);
+			}
+			close(fd);
+		}
+		redir = redir->next;
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 13:48:07 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:02:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ char	**get_command_args(t_command *current)
 	return (args);
 }
 
-/**
- * @brief Sets up input and output redirections for a command in a pipeline.
- * Duplicates file descriptors as necessary.
- *
- * @param current The current command structure.
- *
- * @param pipe_in The input file descriptor.
- *
- * @param pipe_fd The file descriptors for the current pipe.
- */
+static int	has_output_redirection(t_command *cmd)
+{
+	t_redirect *redir = cmd->redirect;
+	while (redir)
+	{
+		if (!redir->is_input)
+			return (1);
+		redir = redir->next;
+	}
+	return (0);
+}
+
 void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 {
 	if (pipe_in != STDIN_FILENO)
@@ -65,7 +67,7 @@ void	setup_input_output(t_command *current, int pipe_in, int *pipe_fd)
 	}
 	if (current->next)
 	{
-		if (!current->output || ft_strlen(current->output) == 0)
+		if (!has_output_redirection(current))
 		{
 			if (dup2(pipe_fd[1], STDOUT_FILENO) == -1)
 			{

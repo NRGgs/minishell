@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/14 13:25:54 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:01:19 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 
 extern char	**environ;
 
-/**
- * @brief Executes commands when there is no pipe.
- * Chooses between built-in and external command execution.
- *
- * @param commands The command structure.
- *
- * @return The shell exit status.
- */
 int	execution_without_pipe(t_command *commands, t_shell *shell)
 {
 	int	backup_in;
@@ -35,13 +27,12 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 			SHELL_CONTINUE);
 	if (!commands->command || commands->command[0] == '\0')
 	{
-		if (commands->input || commands->output)
+		if (commands->redirect)
 		{
 			backup_in = dup(STDIN_FILENO);
 			backup_out = dup(STDOUT_FILENO);
 			if (process_redirections(commands, shell) == ERROR)
-				return (restore_fds(backup_in, backup_out),
-					SHELL_CONTINUE);
+				return (restore_fds(backup_in, backup_out), SHELL_CONTINUE);
 			restore_fds(backup_in, backup_out);
 		}
 		return (SHELL_CONTINUE);
@@ -51,13 +42,24 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 	return (exec_external_no_pipe(commands, shell));
 }
 
+static bool	has_here_doc(t_command *cmd)
+{
+	t_redirect *redir = cmd->redirect;
+	while (redir)
+	{
+		if (redir->is_input && redir->type == HERE_DOC)
+			return (true);
+		redir = redir->next;
+	}
+	return (false);
+}
+
 static void	handle_here_doc(t_command *commands, t_shell *shell)
 {
 	char	*filename;
 	int		fd;
 
-	filename = create_heredoc_file(commands->pattern,
-			commands->env_list, shell);
+	filename = create_heredoc_file(commands->pattern, commands->env_list, shell);
 	if (!filename)
 		exit(1);
 	fd = open(filename, O_RDONLY);
@@ -80,11 +82,11 @@ static void	handle_here_doc(t_command *commands, t_shell *shell)
 }
 
 void	handle_child_process(t_command *commands, char *path,
-			char *args[], t_shell *shell)
+		char *args[], t_shell *shell)
 {
 	if (process_redirections(commands, shell) == ERROR)
 		exit(1);
-	if (commands->in_type == HERE_DOC)
+	if (has_here_doc(commands))
 		handle_here_doc(commands, shell);
 	if (!path)
 		exit(127);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe_3.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:54 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 13:34:16 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/31 07:59:46 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,49 @@
 
 static char	*prepare_heredoc(t_command *cmd)
 {
-	char	*saved;
+	char		*saved;
+	t_redirect	*redir;
 
 	saved = NULL;
-	if (cmd->in_type == HERE_DOC)
+	redir = cmd->redirect;
+	while (redir)
 	{
-		saved = ft_strdup(cmd->pattern);
-		if (!saved)
-			return (NULL);
-		free(cmd->pattern);
-		cmd->pattern = ft_strdup("");
-		if (!cmd->pattern)
+		if (redir->is_input && redir->type == HERE_DOC)
 		{
-			free(saved);
-			return (NULL);
+			saved = ft_strdup(redir->arg);
+			if (!saved)
+				return (NULL);
+			free(redir->arg);
+			redir->arg = ft_strdup("");
+			if (!redir->arg)
+			{
+				free(saved);
+				return (NULL);
+			}
+			break;
 		}
+		redir = redir->next;
 	}
 	return (saved);
 }
 
 static void	restore_heredoc(t_command *cmd, char *saved)
 {
-	if (cmd->in_type == HERE_DOC && saved)
+	t_redirect	*redir;
+
+	redir = cmd->redirect;
+	while (redir)
 	{
-		free(cmd->pattern);
-		cmd->pattern = saved;
+		if (redir->is_input && redir->type == HERE_DOC && saved)
+		{
+			free(redir->arg);
+			redir->arg = saved;
+			break;
+		}
+		redir = redir->next;
 	}
 }
+
 
 static int	cleanup_and_return(char *path, char *heredoc)
 {

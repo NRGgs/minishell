@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:06:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 15:03:53 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:02:30 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	select_builtin(t_command *command, t_shell *shell)
 	else if (ft_strncmp(command->command, "echo", 5) == 0)
 		ret = echo(command, shell);
 	else if (ft_strncmp(command->command, "pwd", 4) == 0)
-		ret = pwd(&command->input);
+		ret = pwd(&command->options);
 	else if (ft_strncmp(command->command, "env", 4) == 0)
 		ret = env(command->env_list);
 	else if (ft_strncmp(command->command, "export", 7) == 0)
