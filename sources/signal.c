@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 11:12:40 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:16:02 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ static void	signal_handler(int signum)
  * @brief Handle CTRL-C signal.
  * @param signum The signal number received.
  */
-void	command_handler(void)
+void	command_handler(int signum)
 {
-		printf("\n");
+	(void)signum;
+	printf("\n");
 }
 
 /**
