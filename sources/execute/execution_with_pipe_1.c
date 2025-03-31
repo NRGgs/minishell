@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 08:02:26 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:21:13 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	has_output_redirection(t_command *cmd)
 	t_redirect *redir = cmd->redirect;
 	while (redir)
 	{
-		if (!redir->is_input)
+		if (!redir->is_input && redir->type != PIPE)
 			return (1);
 		redir = redir->next;
 	}
