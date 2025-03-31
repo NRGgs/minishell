@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 10:49:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:14:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ typedef struct s_exec_context
 void		check_signals(void);
 void		signal_heredoc(int signum);
 void		set_error(char *error_msg, int error_code);
-void		command_handler(int signum);
+void		command_handler(void);
 
 /* --------------- Parse --------------------------------------------------- */
 

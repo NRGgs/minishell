@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/03/30 12:50:37 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
+/*   Updated: 2025/03/31 11:08:31 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int	parse_and_exec(char *input, t_env *env_list, t_shell *shell)
 		tmp = tmp->next;
 	}
 	signal(SIGINT, command_handler);
+	signal(SIGQUIT, command_handler);
 	ret = execute_commands(commands, shell);
 	clean_commands(&commands);
 	return (ret);
