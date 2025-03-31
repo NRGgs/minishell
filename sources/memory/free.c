@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   free.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/02/05 15:40:40 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/30 13:02:04 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/03/31 12:23:52 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	clean_redirect(t_redirect **node)
 	{
 		next = current->next;
 		free_null((void **)&current->arg);
+		free_null((void**)&current);
 		current = next;
 	}
 	*node = NULL;
