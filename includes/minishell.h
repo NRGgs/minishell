@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/10 11:59:51 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/03/30 13:06:48 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/03/31 10:49:59 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,5 +380,6 @@ int			prepare_path_and_pipe(t_command *current,
 int			fork_error_cleanup(t_command *current, char *path, int pipe_fd[2]);
 void		fill_child_data(t_child_data *child_data, t_command *current,
 				int pipe_fd[2], t_shell *shell);
+void		process_here_doc(t_command *current, t_shell *shell);
 
 #endif

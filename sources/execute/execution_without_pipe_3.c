@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:54 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 07:59:46 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:47:08 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ static char	*prepare_heredoc(t_command *cmd)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
-			saved = ft_strdup(redir->arg);
+			saved = ft_strdup(cmd->pattern);
 			if (!saved)
 				return (NULL);
-			free(redir->arg);
-			redir->arg = ft_strdup("");
-			if (!redir->arg)
+			free(cmd->pattern);
+			cmd->pattern = ft_strdup("");
+			if (!cmd->pattern)
 			{
 				free(saved);
 				return (NULL);
@@ -40,21 +40,23 @@ static char	*prepare_heredoc(t_command *cmd)
 	return (saved);
 }
 
-static void	restore_heredoc(t_command *cmd, char *saved)
+static void restore_heredoc(t_command *cmd, char *saved)
 {
-	t_redirect	*redir;
-
-	redir = cmd->redirect;
-	while (redir)
-	{
-		if (redir->is_input && redir->type == HERE_DOC && saved)
-		{
-			free(redir->arg);
-			redir->arg = saved;
-			break;
-		}
-		redir = redir->next;
-	}
+    t_redirect *redir = cmd->redirect;
+    while (redir)
+    {
+        if (redir->is_input && redir->type == HERE_DOC)
+        {
+            if (redir->arg)
+                free(redir->arg);
+            redir->arg = ft_strdup(saved); // переносим содержимое в redir->arg
+            // Если требуется вернуть содержимое в cmd->pattern:
+            free(cmd->pattern);
+            cmd->pattern = ft_strdup(saved);
+            break;
+        }
+        redir = redir->next;
+    }
 }
 
 

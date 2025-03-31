@@ -6,38 +6,11 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 10:33:51 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 08:01:25 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:54:48 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	process_here_doc(t_command *current, t_shell *shell)
-{
-	int		fd;
-	char	*filename;
-
-	filename = create_heredoc_file(current->pattern, current->env_list, shell);
-	if (!filename)
-		exit(1);
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		perror("open");
-		free(filename);
-		exit(1);
-	}
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("dup2");
-		close(fd);
-		free(filename);
-		exit(1);
-	}
-	close(fd);
-	unlink(filename);
-	free(filename);
-}
 
 static bool	has_here_doc(t_command *cmd)
 {
@@ -71,3 +44,46 @@ int	count_tokens(char **arr)
 		cnt++;
 	return (cnt);
 }
+
+void process_here_doc(t_command *current, t_shell *shell)
+{
+	int fd;
+	char *filename;
+	char *heredoc_content;
+
+	heredoc_content = current->pattern;
+	if (has_here_doc(current))
+	{
+		t_redirect *redir = current->redirect;
+		while (redir)
+		{
+			if (redir->is_input && redir->type == HERE_DOC && redir->arg)
+			{
+				heredoc_content = redir->arg;
+				break;
+			}
+			redir = redir->next;
+		}
+	}
+	filename = create_heredoc_file(heredoc_content, current->env_list, shell);
+	if (!filename)
+		exit(1);
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		free(filename);
+		exit(1);
+	}
+	if (dup2(fd, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
+		close(fd);
+		free(filename);
+		exit(1);
+	}
+	close(fd);
+	unlink(filename);
+	free(filename);
+}
+

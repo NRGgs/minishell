@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 12:10:41 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 07:59:52 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:54:58 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,6 @@
 static int	read_here_doc(char *delimiter, char **input);
 static char	*strjoin_free(char **s1, char *s2);
 
-int	here_doc_redirection(char *delimiter, t_command **last)
-{
-	char		*input;
-	t_redirect	*redir;
-	t_redirect	*tmp;
-
-	input = ft_calloc(1, 1);
-	if (input == NULL)
-		return (FAIL);
-	if (read_here_doc(delimiter, &input) == FAIL)
-	{
-		free(input);
-		return (FAIL);
-	}
-	redir = malloc(sizeof(t_redirect));
-	if (!redir)
-	{
-		free(input);
-		return (FAIL);
-	}
-	redir->type = HERE_DOC;
-	redir->is_input = true;
-	redir->arg = input;
-	redir->next = NULL;
-	if ((*last)->redirect == NULL)
-		(*last)->redirect = redir;
-	else
-	{
-		tmp = (*last)->redirect;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = redir;
-	}
-	return (SUCCESS);
-}
-
 /**
  * Handles here_doc redirection.
  *
@@ -58,19 +22,19 @@ int	here_doc_redirection(char *delimiter, t_command **last)
  * @param last linked list of commands
  * @return SUCCESS (1) / FAIL (0)
  */
-// int	here_doc_redirection(char *delimiter, t_command **last)
-// {
-// 	char	*input;
+int	here_doc_redirection(char *delimiter, t_command **last)
+{
+	char	*input;
 
-// 	(*last)->in_type = HERE_DOC;
-// 	input = ft_calloc(1, 1);
-// 	if (input == NULL)
-// 		return (FAIL);
-// 	if (read_here_doc(delimiter, &input) == FAIL)
-// 		return (FAIL);
-// 	(*last)->pattern = input;
-// 	return (SUCCESS);
-// }
+	redirect_last((*last)->redirect)->type = HERE_DOC;
+	input = ft_calloc(1, 1);
+	if (input == NULL)
+		return (FAIL);
+	if (read_here_doc(delimiter, &input) == FAIL)
+		return (FAIL);
+	(*last)->pattern = input;
+	return (SUCCESS);
+}
 
 /**
  * Reads input from user until delimiter is found.
