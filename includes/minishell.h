@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 11:16:06 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:55:26 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,5 +381,7 @@ int			fork_error_cleanup(t_command *current, char *path, int pipe_fd[2]);
 void		fill_child_data(t_child_data *child_data, t_command *current,
 				int pipe_fd[2], t_shell *shell);
 void		process_here_doc(t_command *current, t_shell *shell);
+char			*prepare_heredoc(t_command *cmd);
+void		restore_heredoc(t_command *cmd, char *saved);
 
 #endif

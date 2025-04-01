@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 10:33:51 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 10:54:48 by iriadyns         ###   ########.fr       */
+/*   Created: 2025/04/01 15:42:28 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/04/01 15:42:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,32 +47,46 @@ int	count_tokens(char **arr)
 
 void process_here_doc(t_command *current, t_shell *shell)
 {
-	int fd;
-	char *filename;
-	char *heredoc_content;
+	int		 fd;
+	char		*filename;
+	char		*saved;
+	char		*heredoc_content = NULL;
+	t_redirect  *redir;
 
-	heredoc_content = current->pattern;
-	if (has_here_doc(current))
+	saved = prepare_heredoc(current);
+	if (!saved)
 	{
-		t_redirect *redir = current->redirect;
-		while (redir)
+		exit(2);
+	}
+	restore_heredoc(current, saved);
+	redir = current->redirect;
+	while (redir)
+	{
+		if (redir->is_input && redir->type == HERE_DOC)
 		{
-			if (redir->is_input && redir->type == HERE_DOC && redir->arg)
-			{
-				heredoc_content = redir->arg;
-				break;
-			}
-			redir = redir->next;
+			heredoc_content = redir->arg;
+			break;
 		}
+		redir = redir->next;
+	}
+	if (!heredoc_content)
+	{
+		ft_putstr_fd("minishell: syntax error: missing here-doc delimiter\n", 2);
+		free(saved);
+		exit(2);
 	}
 	filename = create_heredoc_file(heredoc_content, current->env_list, shell);
 	if (!filename)
+	{
+		free(saved);
 		exit(1);
+	}
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
 		perror("open");
 		free(filename);
+		free(saved);
 		exit(1);
 	}
 	if (dup2(fd, STDIN_FILENO) == -1)
@@ -80,10 +94,11 @@ void process_here_doc(t_command *current, t_shell *shell)
 		perror("dup2");
 		close(fd);
 		free(filename);
+		free(saved);
 		exit(1);
 	}
 	close(fd);
 	unlink(filename);
 	free(filename);
+	free(saved);
 }
-

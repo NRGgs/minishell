@@ -5,59 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/06 10:33:54 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 10:47:08 by iriadyns         ###   ########.fr       */
+/*   Created: 2025/04/01 15:41:42 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/04/01 15:41:47 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static char	*prepare_heredoc(t_command *cmd)
+char *prepare_heredoc(t_command *cmd)
 {
-	char		*saved;
-	t_redirect	*redir;
+	t_redirect *redir = cmd->redirect;
 
-	saved = NULL;
+	while (redir)
+	{
+		if (redir->is_input && redir->type == HERE_DOC)
+		{
+			if (!cmd->pattern || cmd->pattern[0] == '\0')
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+				return (NULL);
+			}
+			return ft_strdup(cmd->pattern);
+		}
+		redir = redir->next;
+	}
+	return (NULL);
+}
+
+void restore_heredoc(t_command *cmd, char *saved)
+{
+	t_redirect *redir;
+
+	if (!saved)
+		return;
+
 	redir = cmd->redirect;
 	while (redir)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
-			saved = ft_strdup(cmd->pattern);
-			if (!saved)
-				return (NULL);
-			free(cmd->pattern);
-			cmd->pattern = ft_strdup("");
-			if (!cmd->pattern)
+			if (redir->arg)
+				free(redir->arg);
+			redir->arg = ft_strdup(saved);
+			if (cmd->pattern)
 			{
-				free(saved);
-				return (NULL);
+				free(cmd->pattern);
+				cmd->pattern = ft_strdup(saved);
 			}
 			break;
 		}
 		redir = redir->next;
 	}
-	return (saved);
 }
 
-static void restore_heredoc(t_command *cmd, char *saved)
-{
-    t_redirect *redir = cmd->redirect;
-    while (redir)
-    {
-        if (redir->is_input && redir->type == HERE_DOC)
-        {
-            if (redir->arg)
-                free(redir->arg);
-            redir->arg = ft_strdup(saved); // переносим содержимое в redir->arg
-            // Если требуется вернуть содержимое в cmd->pattern:
-            free(cmd->pattern);
-            cmd->pattern = ft_strdup(saved);
-            break;
-        }
-        redir = redir->next;
-    }
-}
 
 
 static int	cleanup_and_return(char *path, char *heredoc)

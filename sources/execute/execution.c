@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:20:14 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 08:00:25 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:28:29 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,24 @@ static int	check_commands_for_pipe(t_command *commands, t_shell *shell)
 	current = commands;
 	while (current)
 	{
-		if (!current->command || current->command[0] == '\0')
+		if ((!current->command || current->command[0] == '\0'))
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
-			shell->exit_status = 2;
-			return (-1);
+			if (current->redirect)
+			{
+				current->command = ft_strdup("cat");
+				if (!current->command)
+				{
+					ft_putstr_fd("minishell: allocation error\n", 2);
+					shell->exit_status = 2;
+					return (2);
+				}
+			}
+			else
+			{
+				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+				shell->exit_status = 2;
+				return (2);
+			}
 		}
 		if (current->next != NULL)
 		{
@@ -38,7 +51,6 @@ static int	check_commands_for_pipe(t_command *commands, t_shell *shell)
 	}
 	return (is_pipe);
 }
-
 
 int	execute_commands(t_command *commands, t_shell *shell)
 {

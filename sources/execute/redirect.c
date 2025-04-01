@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 12:54:43 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 14:39:38 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,26 +21,14 @@ static int	open_input_file(const char *filename)
 		return (fd);
 	if (errno == ENOENT)
 	{
-		fd = open(filename, O_CREAT | O_WRONLY, 0644);
-		if (fd == -1)
-		{
-			perror("Error creating input file");
-			return (-1);
-		}
-		close(fd);
-		fd = open(filename, O_RDONLY);
-		if (fd == -1)
-		{
-			perror("Error opening input file after creation");
-			return (-1);
-		}
+		printf("minishell: %s: No such file or directory\n", filename);
+		return (-1);
 	}
 	else
 	{
 		perror("Error opening input file");
 		return (-1);
 	}
-	return (fd);
 }
 
 int	process_redirections(t_command *cmd, t_shell *shell)
