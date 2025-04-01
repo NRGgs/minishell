@@ -36,7 +36,8 @@ char	**get_command_args(t_command *current)
 	args[i++] = ft_strdup(current->command);
 	if (current->options && ft_strlen(current->options) > 0)
 		args[i++] = ft_strdup(current->options);
-	if (current->pattern && ft_strlen(current->pattern) > 0 && !has_here_doc(current))
+	if (current->pattern && ft_strlen(current->pattern) > 0
+		&& !has_here_doc(current))
 		args[i++] = ft_strdup(current->pattern);
 	args[i] = NULL;
 	return (args);
@@ -44,7 +45,9 @@ char	**get_command_args(t_command *current)
 
 static int	has_output_redirection(t_command *cmd)
 {
-	t_redirect *redir = cmd->redirect;
+	t_redirect	*redir;
+
+	redir = cmd->redirect;
 	while (redir)
 	{
 		if (!redir->is_input && redir->type != PIPE)

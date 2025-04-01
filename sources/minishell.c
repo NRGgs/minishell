@@ -55,13 +55,6 @@ static int	parse_and_exec(char *input, t_env *env_list, t_shell *shell)
 	commands = parse_input(input);
 	if (!commands)
 		return (SHELL_CONTINUE);
-	// printf("redirects:\n");
-	// t_redirect *node = commands->redirect;
-	// while (node)
-	// {
-	// 	printf("%d\t{%s}\n", node->type, node->arg);
-	// 	node = node->next;
-	// }
 	tmp = commands;
 	while (tmp)
 	{

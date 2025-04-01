@@ -44,7 +44,9 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 
 bool	has_here_doc(t_command *cmd)
 {
-	t_redirect *redir = cmd->redirect;
+	t_redirect	*redir;
+
+	redir = cmd->redirect;
 	while (redir)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
@@ -59,7 +61,8 @@ static void	handle_here_doc(t_command *commands, t_shell *shell)
 	char	*filename;
 	int		fd;
 
-	filename = create_heredoc_file(commands->pattern, commands->env_list, shell);
+	filename = create_heredoc_file(commands->pattern,
+			commands->env_list, shell);
 	if (!filename)
 		exit(1);
 	fd = open(filename, O_RDONLY);

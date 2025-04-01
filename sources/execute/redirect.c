@@ -43,17 +43,17 @@ int	process_redirections(t_command *cmd, t_shell *shell)
 		if (redir->type == PIPE)
 		{
 			redir = redir->next;
-			continue;
+			continue ;
 		}
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
 			redir = redir->next;
-			continue;
+			continue ;
 		}
-
 		if (!redir->arg || redir->arg[0] == '\0')
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token 'newline'\n", 2);
+			ft_putstr_fd("minishell: syntax error near"
+				"unexpected token 'newline'\n", 2);
 			shell->exit_status = 2;
 			return (ERROR);
 		}

@@ -33,19 +33,18 @@ int	count_tokens(char **arr)
 	return (cnt);
 }
 
-void process_here_doc(t_command *current, t_shell *shell)
+void	process_here_doc(t_command *current, t_shell *shell)
 {
-	int		 fd;
+	int			fd;
 	char		*filename;
 	char		*saved;
-	char		*heredoc_content = NULL;
-	t_redirect  *redir;
+	char		*heredoc_content;
+	t_redirect	*redir;
 
+	heredoc_content = NULL;
 	saved = prepare_heredoc(current);
 	if (!saved)
-	{
 		exit(2);
-	}
 	restore_heredoc(current, saved);
 	redir = current->redirect;
 	while (redir)
@@ -53,13 +52,14 @@ void process_here_doc(t_command *current, t_shell *shell)
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
 			heredoc_content = redir->arg;
-			break;
+			break ;
 		}
 		redir = redir->next;
 	}
 	if (!heredoc_content)
 	{
-		ft_putstr_fd("minishell: syntax error: missing here-doc delimiter\n", 2);
+		ft_putstr_fd("minishell: syntax error:"
+			"missing here-doc delimiter\n", 2);
 		free(saved);
 		exit(2);
 	}

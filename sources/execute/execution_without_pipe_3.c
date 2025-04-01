@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-char *prepare_heredoc(t_command *cmd)
+char	*prepare_heredoc(t_command *cmd)
 {
-	char *saved;
-	t_redirect *redir;
+	char		*saved;
+	t_redirect	*redir;
 
 	saved = NULL;
 	redir = cmd->redirect;
@@ -25,7 +25,8 @@ char *prepare_heredoc(t_command *cmd)
 		{
 			if (!cmd->pattern || cmd->pattern[0] == '\0')
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+				ft_putstr_fd("minishell: syntax error near"
+					"unexpected token `newline'\n", 2);
 				return (NULL);
 			}
 			saved = ft_strdup(cmd->pattern);
@@ -38,21 +39,19 @@ char *prepare_heredoc(t_command *cmd)
 				free(saved);
 				return (NULL);
 			}
-			break;
+			break ;
 		}
 		redir = redir->next;
 	}
 	return (saved);
 }
 
-
-void restore_heredoc(t_command *cmd, char *saved)
+void	restore_heredoc(t_command *cmd, char *saved)
 {
-	t_redirect *redir;
+	t_redirect	*redir;
 
 	if (!saved)
-		return;
-
+		return ;
 	redir = cmd->redirect;
 	while (redir)
 	{
@@ -66,13 +65,11 @@ void restore_heredoc(t_command *cmd, char *saved)
 				free(cmd->pattern);
 				cmd->pattern = ft_strdup(saved);
 			}
-			break;
+			break ;
 		}
 		redir = redir->next;
 	}
 }
-
-
 
 static int	cleanup_and_return(char *path, char *heredoc)
 {

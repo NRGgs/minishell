@@ -42,11 +42,11 @@ static void	parent_helper(int *pipe_fd, int *pipe_in, char *path)
 	free(path);
 }
 
-int process_single_command(t_command *current, int *pipe_in, t_shell *shell)
+int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 {
-	int	pipe_fd[2];
-	pid_t	pid;
-	char	*path;
+	int			pipe_fd[2];
+	pid_t		pid;
+	char		*path;
 	t_exec_data	ctx;
 
 	if (check_cmd_validity(current, shell) == FAIL)

@@ -37,7 +37,8 @@ static int	check_commands_for_pipe(t_command *commands, t_shell *shell)
 			}
 			else
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+				ft_putstr_fd("minishell: syntax error near"
+					"unexpected token `newline'\n", 2);
 				shell->exit_status = 2;
 				return (2);
 			}
