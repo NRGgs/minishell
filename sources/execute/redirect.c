@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 10:37:30 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 10:53:05 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:54:43 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	process_redirections(t_command *cmd, t_shell *shell)
 	redir = cmd->redirect;
 	while (redir)
 	{
+		if (redir->type == PIPE)
+		{
+			redir = redir->next;
+			continue;
+		}
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
 			redir = redir->next;

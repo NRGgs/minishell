@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:30:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/24 16:51:15 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:54:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ static void	parent_helper(int *pipe_fd, int *pipe_in, char *path)
 	free(path);
 }
 
-int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
+int process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 {
-	int			pipe_fd[2];
-	pid_t		pid;
-	char		*path;
+	int	pipe_fd[2];
+	pid_t	pid;
+	char	*path;
 	t_exec_data	ctx;
 
 	if (check_cmd_validity(current, shell) == FAIL)
@@ -61,6 +61,11 @@ int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 	if (pid == 0)
 		return (child_helper(current, pipe_in, pipe_fd, &ctx));
 	else
-		parent_helper(pipe_fd, pipe_in, path);
+	{
+		if (current->next)
+			parent_helper(pipe_fd, pipe_in, path);
+		else
+			free(path);
+	}
 	return (SUCCESS);
 }
