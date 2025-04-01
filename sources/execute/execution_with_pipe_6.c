@@ -6,23 +6,11 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:42:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 15:42:32 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:05:05 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static bool	has_here_doc(t_command *cmd)
-{
-	t_redirect *redir = cmd->redirect;
-	while (redir)
-	{
-		if (redir->is_input && redir->type == HERE_DOC)
-			return (true);
-		redir = redir->next;
-	}
-	return (false);
-}
 
 void	execute_command_pipe(t_command *current, char *path, t_shell *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:19 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/31 10:21:13 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:04:05 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**get_command_args(t_command *current)
 	args[i++] = ft_strdup(current->command);
 	if (current->options && ft_strlen(current->options) > 0)
 		args[i++] = ft_strdup(current->options);
-	if (current->pattern && ft_strlen(current->pattern) > 0)
+	if (current->pattern && ft_strlen(current->pattern) > 0 && !has_here_doc(current))
 		args[i++] = ft_strdup(current->pattern);
 	args[i] = NULL;
 	return (args);

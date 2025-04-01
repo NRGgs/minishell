@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 15:41:42 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 15:41:47 by iriadyns         ###   ########.fr       */
+/*   Created: 2025/04/01 16:07:57 by iriadyns          #+#    #+#             */
+/*   Updated: 2025/04/01 16:08:00 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 char *prepare_heredoc(t_command *cmd)
 {
-	t_redirect *redir = cmd->redirect;
+	char *saved;
+	t_redirect *redir;
 
+	saved = NULL;
+	redir = cmd->redirect;
 	while (redir)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
@@ -25,12 +28,23 @@ char *prepare_heredoc(t_command *cmd)
 				ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 				return (NULL);
 			}
-			return ft_strdup(cmd->pattern);
+			saved = ft_strdup(cmd->pattern);
+			if (!saved)
+				return (NULL);
+			free(cmd->pattern);
+			cmd->pattern = ft_strdup("");
+			if (!cmd->pattern)
+			{
+				free(saved);
+				return (NULL);
+			}
+			break;
 		}
 		redir = redir->next;
 	}
-	return (NULL);
+	return (saved);
 }
+
 
 void restore_heredoc(t_command *cmd, char *saved)
 {

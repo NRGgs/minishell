@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 16:53:50 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 14:43:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:04:20 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execution_without_pipe(t_command *commands, t_shell *shell)
 	return (exec_external_no_pipe(commands, shell));
 }
 
-static bool	has_here_doc(t_command *cmd)
+bool	has_here_doc(t_command *cmd)
 {
 	t_redirect *redir = cmd->redirect;
 	while (redir)

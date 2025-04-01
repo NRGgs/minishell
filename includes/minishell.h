@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/04/01 14:55:26 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:04:32 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,5 +383,6 @@ void		fill_child_data(t_child_data *child_data, t_command *current,
 void		process_here_doc(t_command *current, t_shell *shell);
 char			*prepare_heredoc(t_command *cmd);
 void		restore_heredoc(t_command *cmd, char *saved);
+bool		has_here_doc(t_command *cmd);
 
 #endif
