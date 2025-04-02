@@ -14,7 +14,6 @@
 
 static int	exit_numeric_error(char **tokens, int *exit_code)
 {
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	ft_putstr_fd("exit: ", STDERR_FILENO);
 	ft_putstr_fd(tokens[0], STDERR_FILENO);
 	ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
@@ -96,7 +95,6 @@ int	exit_shell(char *pattern, t_command *command, t_shell *shell)
 	{
 		exit_code = shell->exit_status;
 	}
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	shell->exit_status = exit_code;
 	return (SHELL_EXIT);
 }

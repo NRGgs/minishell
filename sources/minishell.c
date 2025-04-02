@@ -87,7 +87,10 @@ static void	run_commands(t_shell *shell)
 			add_history(input);
 		ret = parse_and_exec(input, shell->env_list, shell);
 		if (ret == SHELL_EXIT)
+		{
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			return ;
+		}
 	}
 }
 
