@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:42:28 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 16:05:05 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:18:12 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,24 @@ int	count_tokens(char **arr)
 	return (cnt);
 }
 
-void	process_here_doc(t_command *current, t_shell *shell)
+static char	*get_heredoc_content(t_command *cmd)
 {
-	int			fd;
-	char		*filename;
-	char		*saved;
-	char		*heredoc_content;
 	t_redirect	*redir;
 
-	heredoc_content = NULL;
-	saved = prepare_heredoc(current);
-	if (!saved)
-		exit(2);
-	restore_heredoc(current, saved);
-	redir = current->redirect;
+	redir = cmd->redirect;
 	while (redir)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
-		{
-			heredoc_content = redir->arg;
-			break ;
-		}
+			return (redir->arg);
 		redir = redir->next;
 	}
-	if (!heredoc_content)
-	{
-		ft_putstr_fd("minishell: syntax error:"
-			"missing here-doc delimiter\n", 2);
-		free(saved);
-		exit(2);
-	}
-	filename = create_heredoc_file(heredoc_content, current->env_list, shell);
-	if (!filename)
-	{
-		free(saved);
-		exit(1);
-	}
+	return (NULL);
+}
+
+static void	setup_heredoc_fd(char *filename, char *saved)
+{
+	int	fd;
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -88,5 +70,31 @@ void	process_here_doc(t_command *current, t_shell *shell)
 	close(fd);
 	unlink(filename);
 	free(filename);
-	free(saved);
+}
+
+void	process_here_doc(t_command *current, t_shell *shell)
+{
+	char	*saved;
+	char	*heredoc_content;
+	char	*filename;
+
+	saved = prepare_heredoc(current);
+	if (!saved)
+		exit(2);
+	restore_heredoc(current, saved);
+	heredoc_content = get_heredoc_content(current);
+	if (!heredoc_content)
+	{
+		ft_putstr_fd("minishell: syntax error:"
+			"missing here-doc delimiter\n", 2);
+		free(saved);
+		exit(2);
+	}
+	filename = create_heredoc_file(heredoc_content, current->env_list, shell);
+	if (!filename)
+	{
+		free(saved);
+		exit(1);
+	}
+	setup_heredoc_fd(filename, saved);
 }

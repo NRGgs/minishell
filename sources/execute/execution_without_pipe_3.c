@@ -6,16 +6,39 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:07:57 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 16:08:00 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:15:08 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static char	*handle_here_doc(t_command *cmd)
+{
+	char	*saved;
+
+	if (!cmd->pattern || cmd->pattern[0] == '\0')
+	{
+		ft_putstr_fd("minishell: syntax error near"
+			"unexpected token `newline'\n", 2);
+		return (NULL);
+	}
+	saved = ft_strdup(cmd->pattern);
+	if (!saved)
+		return (NULL);
+	free(cmd->pattern);
+	cmd->pattern = ft_strdup("");
+	if (!cmd->pattern)
+	{
+		free(saved);
+		return (NULL);
+	}
+	return (saved);
+}
+
 char	*prepare_heredoc(t_command *cmd)
 {
-	char		*saved;
 	t_redirect	*redir;
+	char		*saved;
 
 	saved = NULL;
 	redir = cmd->redirect;
@@ -23,22 +46,7 @@ char	*prepare_heredoc(t_command *cmd)
 	{
 		if (redir->is_input && redir->type == HERE_DOC)
 		{
-			if (!cmd->pattern || cmd->pattern[0] == '\0')
-			{
-				ft_putstr_fd("minishell: syntax error near"
-					"unexpected token `newline'\n", 2);
-				return (NULL);
-			}
-			saved = ft_strdup(cmd->pattern);
-			if (!saved)
-				return (NULL);
-			free(cmd->pattern);
-			cmd->pattern = ft_strdup("");
-			if (!cmd->pattern)
-			{
-				free(saved);
-				return (NULL);
-			}
+			saved = handle_here_doc(cmd);
 			break ;
 		}
 		redir = redir->next;

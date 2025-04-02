@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 16:10:45 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/02 16:11:59 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:15:15 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static int	validate_and_fix_command(t_command *cmd, t_shell *shell)
 		}
 		else
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			ft_putstr_fd("minishell: syntax error near"
+				"unexpected token `newline'\n", 2);
 			shell->exit_status = 2;
 			return (2);
 		}
