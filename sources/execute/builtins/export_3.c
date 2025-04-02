@@ -30,6 +30,6 @@ bool	valid_export_arg(char *arg, t_shell *shell)
 	ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-	shell->exit_status = MINOR;
+	shell->exit_status = 11;
 	return (false);
 }
