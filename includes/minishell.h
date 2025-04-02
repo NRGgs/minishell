@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:59:51 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/04/01 16:04:32 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/02 16:11:36 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,20 +226,16 @@ void		token_add_back(t_token **tokens, t_token *new);
 t_token		*prev_token(t_token *tokens, t_token *current);
 void		clean_tokens(t_token **tokens);
 
-
 /* redirects.c */
 t_redirect	*new_redirect(int type, bool is_input, char *arg);
 t_redirect	*redirect_last(t_redirect *node);
 void		add_redirect(t_redirect **head, t_redirect *new);
-
 
 /* free.c */
 void		free_null(void **ptr);
 void		clean_2d_array(char **array);
 void		cmd_clear(t_command **cmd);
 void		clean_commands(t_command **cmds);
-
-/* --------------- Execute ------------------------------------------------- */
 
 /* builtins.c */
 int			is_builtin(char *command);
@@ -381,8 +377,9 @@ int			fork_error_cleanup(t_command *current, char *path, int pipe_fd[2]);
 void		fill_child_data(t_child_data *child_data, t_command *current,
 				int pipe_fd[2], t_shell *shell);
 void		process_here_doc(t_command *current, t_shell *shell);
-char			*prepare_heredoc(t_command *cmd);
+char		*prepare_heredoc(t_command *cmd);
 void		restore_heredoc(t_command *cmd, char *saved);
 bool		has_here_doc(t_command *cmd);
+int			check_commands_for_pipe(t_command *commands, t_shell *shell);
 
 #endif

@@ -129,7 +129,7 @@ void	handle_export_no_equal(t_env **env_list, char *arg)
 void	process_export_arg(t_env **env_list, char *arg, t_shell *shell)
 {
 	char	*equal_sign;
- 
+
 	equal_sign = ft_strchr(arg, '=');
 	if (valid_export_arg(arg, shell))
 	{
