@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 12:55:29 by nmattos-         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   signal.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/10 11:38:36 by nmattos-      #+#    #+#                 */
+/*   Updated: 2025/04/05 10:26:58 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	signal_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_signal = 130;
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);

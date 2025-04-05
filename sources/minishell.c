@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/04/01 12:39:54 by iriadyns         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
+/*   Updated: 2025/04/05 10:27:56 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+volatile int g_signal;
 
 /**
  * Reads the user input and returns it as a string.
@@ -75,6 +77,7 @@ static void	run_commands(t_shell *shell)
 
 	while (1)
 	{
+		g_signal = 0;
 		input = read_input();
 		if (!input)
 			return ;
@@ -91,6 +94,8 @@ static void	run_commands(t_shell *shell)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			return ;
 		}
+		if (g_signal == 130)
+			shell->exit_status = 130;
 	}
 }
 
