@@ -6,7 +6,7 @@
 /*   By: iriadyns <iriadyns@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/12/08 10:48:10 by nmattos       #+#    #+#                 */
-/*   Updated: 2025/04/05 10:27:56 by nmattos       ########   odam.nl         */
+/*   Updated: 2025/04/07 10:24:28 by nmattos       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static void	run_commands(t_shell *shell)
 		input = read_input();
 		if (!input)
 			return ;
+		if (g_signal == 130)
+			shell->exit_status = 130;
 		if (is_all_whitespace(input))
 		{
 			free(input);
@@ -94,8 +96,6 @@ static void	run_commands(t_shell *shell)
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			return ;
 		}
-		if (g_signal == 130)
-			shell->exit_status = 130;
 	}
 }
 
