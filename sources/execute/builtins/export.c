@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 16:22:15 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/03/06 11:01:34 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/08 13:15:08 by iriadyns         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,15 @@ int	run_export_builtin(t_command *command, t_shell *shell)
 	char	*args[2];
 	int		ret;
 
-	if (!command->pattern)
+	if (!command->pattern && command->options == NULL)
 	{
 		print_exported_vars(command->env_list);
 		return (0);
+	}
+	if (command->options)
+	{
+		printf("minishell: %s: invalid option\n", command->options);
+		return (2);
 	}
 	pattern_dup = ft_strdup(command->pattern);
 	if (!pattern_dup)
