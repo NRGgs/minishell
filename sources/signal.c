@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/04/09 14:18:35 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:21:54 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	signal_handler(int signum)
  */
 void	command_handler(int signum)
 {
+	(void)signum;
 	write(1, "\n", 1);
 }
 

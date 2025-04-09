@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 12:27:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/04/02 12:36:03 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:19:13 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_redirect	*new_redirect(int type, bool is_input, char *arg)
 
 	node = malloc(sizeof(t_redirect));
 	if (!node)
-			return (NULL);
+		return (NULL);
 	if (arg)
 	{
 		node->arg = ft_strdup(arg);

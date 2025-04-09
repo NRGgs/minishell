@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:30:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/09 12:02:31 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:21:14 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	child_helper(t_command *current, int *pipe_in, int pipe_fd[2],
 {
 	t_child_data	child;
 
+	signal(SIGINT, command_handler);
+	signal(SIGQUIT, command_handler);
 	child.pipe_in = pipe_in;
 	child.path = ctx->path;
 	fill_child_data(&child, current, pipe_fd, ctx->shell);
@@ -59,11 +61,7 @@ int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 	if (pid < 0)
 		return (fork_error_cleanup(current, path, pipe_fd));
 	if (pid == 0)
-	{
-		signal(SIGINT, command_handler);
-		signal(SIGQUIT, command_handler);
 		return (child_helper(current, pipe_in, pipe_fd, &ctx));
-	}
 	else
 	{
 		if (current->next)

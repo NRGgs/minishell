@@ -6,7 +6,7 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:40:40 by nmattos-          #+#    #+#             */
-/*   Updated: 2025/03/31 12:23:52 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:19:02 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	clean_redirect(t_redirect **node)
 	{
 		next = current->next;
 		free_null((void **)&current->arg);
-		free_null((void**)&current);
+		free_null((void **)&current);
 		current = next;
 	}
 	*node = NULL;

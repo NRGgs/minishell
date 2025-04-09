@@ -6,13 +6,13 @@
 /*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 10:48:10 by nmattos           #+#    #+#             */
-/*   Updated: 2025/04/09 14:18:10 by nmattos-         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:20:30 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-volatile int g_signal;
+volatile int	g_signal;
 
 /**
  * Reads the user input and returns it as a string.
