@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_single_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:30:20 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 12:54:32 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/09 12:02:31 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,11 @@ int	process_single_command(t_command *current, int *pipe_in, t_shell *shell)
 	if (pid < 0)
 		return (fork_error_cleanup(current, path, pipe_fd));
 	if (pid == 0)
+	{
+		signal(SIGINT, command_handler);
+		signal(SIGQUIT, command_handler);
 		return (child_helper(current, pipe_in, pipe_fd, &ctx));
+	}
 	else
 	{
 		if (current->next)

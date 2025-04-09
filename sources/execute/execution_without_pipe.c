@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_without_pipe.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: iriadyns <iriadyns@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:03:43 by iriadyns          #+#    #+#             */
-/*   Updated: 2025/04/01 14:35:24 by iriadyns         ###   ########.fr       */
+/*   Updated: 2025/04/09 14:16:51 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ void	execute_command(t_command *commands, char *path,
 		return ;
 	}
 	else if (pid == 0)
+	{
+		signal(SIGINT, command_handler);
+		signal(SIGQUIT, command_handler);
 		handle_child_process(commands, path, args, shell);
+	}
 	else
 	{
 		waitpid(pid, &status, 0);

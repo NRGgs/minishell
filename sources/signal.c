@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   signal.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: nmattos- <nmattos-@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2024/12/10 11:38:36 by nmattos-      #+#    #+#                 */
-/*   Updated: 2025/04/05 10:26:58 by nmattos       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nmattos- <nmattos-@student.codam.nl>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/10 11:38:36 by nmattos-          #+#    #+#             */
+/*   Updated: 2025/04/09 14:18:35 by nmattos-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ static void	signal_handler(int signum)
  */
 void	command_handler(int signum)
 {
-	if (signum == SIGQUIT)
-		printf("Quit (core dumped)");
-	printf("\n");
+	write(1, "\n", 1);
 }
 
 /**
